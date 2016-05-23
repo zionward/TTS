@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Time Series is Great!</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="Time Series is Great!">
+  <meta name="generator" content="bookdown 0.0.71 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Time Series is Great!" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://coatless.github.io/timeseriesisgreat/" />
+  
+  
+  <meta name="github-repo" content="coatless/timeseriesisgreat" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Time Series is Great!" />
+  
+  
+  
+
+<meta name="author" content="James Balamuta">
+
+<meta name="date" content="2016-05-23">
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="basic-models.html">
+<link rel="next" href="stationarity.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Time Series is Great!</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#a-foreword"><i class="fa fa-check"></i><b>1.1</b> A foreword</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#notation"><i class="fa fa-check"></i><b>1.2</b> Notation</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#r-code"><i class="fa fa-check"></i><b>1.3</b> R Code</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="the-world-of-time-series.html"><a href="the-world-of-time-series.html"><i class="fa fa-check"></i><b>2</b> The World of Time Series</a><ul>
+<li class="chapter" data-level="2.1" data-path="the-world-of-time-series.html"><a href="the-world-of-time-series.html#objective-of-time-series"><i class="fa fa-check"></i><b>2.1</b> Objective of Time Series</a></li>
+<li class="chapter" data-level="2.2" data-path="the-world-of-time-series.html"><a href="the-world-of-time-series.html#what-is-a-time-series-and-can-i-eat-it"><i class="fa fa-check"></i><b>2.2</b> What is a Time Series and can I eat it?</a></li>
+<li class="chapter" data-level="2.3" data-path="the-world-of-time-series.html"><a href="the-world-of-time-series.html#exploratory-data-analysis-eda-for-time-series"><i class="fa fa-check"></i><b>2.3</b> Exploratory Data Analysis (EDA) for Time Series</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="the-world-of-time-series.html"><a href="the-world-of-time-series.html#identifying-trends"><i class="fa fa-check"></i><b>2.3.1</b> Identifying Trends</a></li>
+<li class="chapter" data-level="2.3.2" data-path="the-world-of-time-series.html"><a href="the-world-of-time-series.html#noticing-changes-in-time-and-outliers"><i class="fa fa-check"></i><b>2.3.2</b> Noticing changes in time and outliers</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="basic-models.html"><a href="basic-models.html"><i class="fa fa-check"></i><b>3</b> Basic Models</a><ul>
+<li class="chapter" data-level="3.1" data-path="basic-models.html"><a href="basic-models.html#white-noise"><i class="fa fa-check"></i><b>3.1</b> White Noise</a></li>
+<li class="chapter" data-level="3.2" data-path="basic-models.html"><a href="basic-models.html#moving-average-process-of-order-q-1-a.k.a-ma1"><i class="fa fa-check"></i><b>3.2</b> Moving Average Process of Order q = 1 a.k.a MA(1)</a></li>
+<li class="chapter" data-level="3.3" data-path="basic-models.html"><a href="basic-models.html#drift"><i class="fa fa-check"></i><b>3.3</b> Drift</a></li>
+<li class="chapter" data-level="3.4" data-path="basic-models.html"><a href="basic-models.html#random-walk"><i class="fa fa-check"></i><b>3.4</b> Random Walk</a></li>
+<li class="chapter" data-level="3.5" data-path="basic-models.html"><a href="basic-models.html#random-walk-with-drift"><i class="fa fa-check"></i><b>3.5</b> Random Walk with Drift</a></li>
+<li class="chapter" data-level="3.6" data-path="basic-models.html"><a href="basic-models.html#autoregressive-process-of-order-p-1-a.k.a-ar1"><i class="fa fa-check"></i><b>3.6</b> Autoregressive Process of Order p = 1 a.k.a AR(1)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="dependency.html"><a href="dependency.html"><i class="fa fa-check"></i><b>4</b> Dependency</a><ul>
+<li class="chapter" data-level="4.1" data-path="dependency.html"><a href="dependency.html#measuring-linear-dependence"><i class="fa fa-check"></i><b>4.1</b> Measuring (Linear) Dependence</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="dependency.html"><a href="dependency.html#autocovariance-function"><i class="fa fa-check"></i><b>4.1.1</b> Autocovariance Function</a></li>
+<li class="chapter" data-level="4.1.2" data-path="dependency.html"><a href="dependency.html#autocorrelation-function-acf"><i class="fa fa-check"></i><b>4.1.2</b> Autocorrelation Function (ACF)</a></li>
+<li class="chapter" data-level="4.1.3" data-path="dependency.html"><a href="dependency.html#cross-dependency-functions"><i class="fa fa-check"></i><b>4.1.3</b> Cross dependency functions</a></li>
+<li class="chapter" data-level="4.1.4" data-path="dependency.html"><a href="dependency.html#sample-autocovariance-and-autocorrelation-functions"><i class="fa fa-check"></i><b>4.1.4</b> Sample Autocovariance and Autocorrelation Functions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="stationarity.html"><a href="stationarity.html"><i class="fa fa-check"></i><b>5</b> Stationarity</a><ul>
+<li class="chapter" data-level="5.1" data-path="stationarity.html"><a href="stationarity.html#weak-stationarity"><i class="fa fa-check"></i><b>5.1</b> Weak Stationarity</a></li>
+<li class="chapter" data-level="5.2" data-path="stationarity.html"><a href="stationarity.html#strong-stationarity"><i class="fa fa-check"></i><b>5.2</b> Strong Stationarity</a></li>
+<li class="chapter" data-level="5.3" data-path="stationarity.html"><a href="stationarity.html#is-it-weakly-stationary"><i class="fa fa-check"></i><b>5.3</b> Is it weakly stationary?</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="stationarity.html"><a href="stationarity.html#is-a-random-walk-weakly-stationary"><i class="fa fa-check"></i><b>5.3.1</b> Is a random walk weakly stationary?</a></li>
+<li class="chapter" data-level="5.3.2" data-path="stationarity.html"><a href="stationarity.html#is-an-ma1-stationary"><i class="fa fa-check"></i><b>5.3.2</b> Is an MA(1) Stationary?</a></li>
+<li class="chapter" data-level="5.3.3" data-path="stationarity.html"><a href="stationarity.html#is-an-ar1-stationary"><i class="fa fa-check"></i><b>5.3.3</b> Is an AR(1) Stationary?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="joint-stationarity.html"><a href="joint-stationarity.html"><i class="fa fa-check"></i><b>6</b> Joint Stationarity</a><ul>
+<li class="chapter" data-level="6.1" data-path="joint-stationarity.html"><a href="joint-stationarity.html#the-backshift-operator-and-differencing-operations"><i class="fa fa-check"></i><b>6.1</b> The Backshift Operator and Differencing Operations</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/coatless/timeseriesisgreat" target="blank">&copy; 2016 James Balamuta</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Time Series is Great!</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="dependency" class="section level1">
+<h1><span class="header-section-number">4</span> Dependency</h1>
+<p>Generally speaking, there is a dependence that within the sequence of random variables.</p>
+<p>Recall the difference between independent and dependent data:</p>
+<p><em>Definition:</em> <strong>Independence</strong></p>
+<p><span class="math inline">\(X_1, X_2, \ldots, X_T\)</span> are independent and identically distributed if and only if</p>
+<p><span class="math display">\[P\left(X_1 \le x_1, X_2 \le x_2,\ldots, X_{T} \le x_T \right) = P\left(X_1 \le x_1\right) P\left(X_2 \le x_2\right) \cdots P\left(X_{T} \le x_T \right)\]</span> for any <span class="math inline">\(T \ge 2\)</span> and <span class="math inline">\(x_1, \ldots, x_T \in \mathbb{R}\)</span>.</p>
+<p><em>Definition:</em> <strong>Dependence</strong></p>
+<p><span class="math inline">\(X_1, X_2, \ldots, X_T\)</span> are identically distributed but dependent, then</p>
+<p><span class="math display">\[\left| {P\left( {{X_1} &lt; {x_1},{X_2} &lt; {x_2}, \ldots ,{X_T} &lt; {x_T}} \right) - P\left( {{X_1} &lt; {x_1}} \right)P\left( {{X_2} &lt; {x_2}} \right) \cdots P\left( {{X_T} &lt; {x_T}} \right)} \right| \ne 0\]</span> for some <span class="math inline">\(x_1, \ldots, x_T \in \mathbb{R}\)</span>.</p>
+<div id="measuring-linear-dependence" class="section level2">
+<h2><span class="header-section-number">4.1</span> Measuring (Linear) Dependence</h2>
+<p>There are many forms of dependency…</p>
+<div class="figure">
+<img src="images/1280px-Correlation_examples2.png" alt="dependency" />
+<p class="caption">dependency</p>
+</div>
+<p>However, the methods, covariance and correlation, that we will be using are specific to measuring linear dependence. As a result, these tools are less helpful to measure monotonic dependence and they are much less helpful to measure nonlinearly dependence.</p>
+<div id="autocovariance-function" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> Autocovariance Function</h3>
+<p>Dependence between <span class="math inline">\(T\)</span> different RV is difficult to measure in one shot! So we consider just two random variables, <span class="math inline">\(X_t\)</span> and <span class="math inline">\(X_{t+h}\)</span>. Then one (linear) measure of dependence is the covariance between <span class="math inline">\(\left(X_t , X_{t+h}\right)\)</span>. Since <span class="math inline">\(X\)</span> is the same RV observed at two different time points, the covariance between <span class="math inline">\(X_t\)</span> and <span class="math inline">\(X_{t+h}\)</span> is defined as the Autocovariance.</p>
+<p><em>Definition:</em> <strong>Autocovariance Function</strong></p>
+<p>The <strong>Autocovariance Function</strong> is defined as the second moment product <span class="math display">\[{\gamma _x}\left( {t,t+h} \right) = \operatorname{cov} \left( {{x_t},{x_{t+h}}} \right) = E\left[ {\left( {{x_t} - {\mu _t}} \right)\left( {{x_{t+h}} - {\mu _{t+h}}} \right)} \right]\]</span> for all <span class="math inline">\(t\)</span> and <span class="math inline">\(t+h\)</span>.</p>
+<p>The notation used above corresponds to: <span class="math display">\[\begin{aligned}
+  \operatorname{cov} \left( {{X_t},{X_{t+h}}} \right) &amp;= E\left[ {{X_t}{X_{t+h}}} \right] - E\left[ {{X_t}} \right]E\left[ {{X_{t+h}}} \right] \\
+  E\left[ {{X_t}} \right] &amp;= \int\limits_{ - \infty }^\infty  {x \cdot {f_x}\left( x \right)dx}  \\
+  E\left[ {{X_t}{X_{t+h}}} \right] &amp;= \int\limits_{ - \infty }^\infty  {\int\limits_{ - \infty }^\infty  {{x_1}{x_2} \cdot f\left( {{x_1},{x_2}} \right)d{x_1}d{x_2}} }  \\ 
+\end{aligned} \]</span></p>
+<p>We normally drop the subscript referring to the time series if it is clear to the time series the autocovariance function is referencing. e.g. <span class="math inline">\({\gamma _x}\left( {t,t+h} \right) = {\gamma}\left( {t,t+h} \right)\)</span>.</p>
+<p>The more commonly used formulation for weakly stationary processes (more next section) is: <span class="math display">\[\gamma \left( {{X_t},{X_{t + h}}} \right) = \operatorname{cov} \left( {{X_t},{X_{t+h}}} \right) = \gamma \left( {h} \right)\]</span></p>
+<p>A few other notes:</p>
+<ol style="list-style-type: decimal">
+<li>The covariance function is symmetric. That is, <span class="math inline">\({\gamma}\left( {t,t+h} \right) = {\gamma}\left( {t+h,t} \right)\)</span></li>
+<li>Just as any covariance, the <span class="math inline">\({\gamma}\left( {t,t+h} \right)\)</span> is “scale dependent”, <span class="math inline">\({\gamma}\left( {t,t+h} \right) \in \mathbb{R}\)</span>, or <span class="math inline">\(-\infty \le {\gamma}\left( {t,t+h} \right) \le +\infty\)</span>
+<ol style="list-style-type: decimal">
+<li>If <span class="math inline">\(\left| {\gamma}\left( {t,t+h} \right) \right|\)</span> is “close” to 0, then they are “less dependent”</li>
+<li>If <span class="math inline">\(\left| {\gamma}\left( {t,t+h} \right) \right|\)</span> is “far” from 0, <span class="math inline">\(X_t\)</span> and <span class="math inline">\(X_{t+h}\)</span> are “more dependent”.</li>
+</ol></li>
+<li><span class="math inline">\({\gamma}\left( {t,t+h} \right)=0\)</span> does not imply <span class="math inline">\(X_t\)</span> and <span class="math inline">\(X_{t+h}\)</span> are independent.</li>
+<li>If <span class="math inline">\(X_t\)</span> and <span class="math inline">\(X_{t+h}\)</span> are joint normally distributed then <span class="math inline">\(X_t\)</span> and <span class="math inline">\(X_{t+h}\)</span> are independent.</li>
+</ol>
+</div>
+<div id="autocorrelation-function-acf" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> Autocorrelation Function (ACF)</h3>
+<p>A “simplified” <span class="math inline">\(\gamma \left(t, t+h\right)\)</span> is the Autocorrelation (AC) between <span class="math inline">\(X_t\)</span> and <span class="math inline">\(X_{t+h}\)</span>, which is scale free! It is simply defined as <span class="math display">\[\rho \left( {{X_t},{X_{t + h}}} \right) = Corr\left( {{X_t},{X_{t + h}}} \right) = \frac{{Cov\left( {{X_t},{X_{t + h}}} \right)}}{{{\sigma _{{X_t}}}{\sigma _{{X_{t + h}}}}}}\]</span></p>
+<p>The more commonly used formulation for weakly stationary processes (more next section) is: <span class="math display">\[\rho \left( {{X_t},{X_{t + h}}} \right) = \frac{{Cov\left( {{X_t},{X_{t + h}}} \right)}}{{{\sigma _{{X_t}}}{\sigma _{{X_{t + h}}}}}} = \frac{{\gamma \left( h \right)}}{{\gamma \left( 0 \right)}} = \rho \left( h \right)\]</span></p>
+<p>Therefore, the autocorrelation function is only a function of the lag <span class="math inline">\(h\)</span> between observations.</p>
+<p>Just as any correlation:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(\rho \left( {{X_t},{X_{t + h}}} \right)\)</span> is scale free</li>
+<li><span class="math inline">\(\rho \left( {{X_t},{X_{t + h}}} \right)\)</span> is closer to <span class="math inline">\(\pm 1 \Rightarrow \left({ X_t, X_{t+h} } \right)\)</span> “more dependent.”</li>
+</ol>
+<p>Remember… When using correlation….</p>
+<div class="figure">
+<img src="images/correlation-does-not-imply-causation.jpg" alt="correlation_sillies" />
+<p class="caption">correlation_sillies</p>
+</div>
+</div>
+<div id="cross-dependency-functions" class="section level3">
+<h3><span class="header-section-number">4.1.3</span> Cross dependency functions</h3>
+<p>Consider two time series: <span class="math inline">\(\left(X_t \right)\)</span> and <span class="math inline">\(\left(Y_t \right)\)</span>.</p>
+<p>Then the cross-covariance function between two series <span class="math inline">\(\left(X_t \right)\)</span> and <span class="math inline">\(\left(Y_t \right)\)</span> is:</p>
+<p><span class="math display">\[{\gamma _{XY}}\left( {t,t + h} \right) = \operatorname{cov} \left( {{X_t},{Y_{t + h}}} \right) = E\left[ {\left( {{X_t} - E\left[ {{X_t}} \right]} \right)\left( {{Y_{t + h}} - E\left[ {{Y_{t + h}}} \right]} \right)} \right]\]</span></p>
+<p>The cross-correlation function is given by <span class="math display">\[{\rho _{XY}}\left( {t,t + h} \right) = Corr\left( {{X_t},{Y_{t + h}}} \right) = \frac{{{\gamma _{XY}}\left( {t,t + h} \right)}}{{{\sigma _{{X_t}}}{\sigma _{{Y_{t + h}}}}}}\]</span></p>
+<p>These ideas can extended beyond the bivariate case to a general multivariate setting.</p>
+</div>
+<div id="sample-autocovariance-and-autocorrelation-functions" class="section level3">
+<h3><span class="header-section-number">4.1.4</span> Sample Autocovariance and Autocorrelation Functions</h3>
+<p><em>Definition:</em> <strong>Sample Autocovariance Function</strong></p>
+<p>The <strong>Sample Autocovariance Function</strong> is defined as:</p>
+<p><span class="math display">\[\hat \gamma \left( h \right) = \frac{1}{T}\sum\limits_{t = 1}^{T - h} {\left( {{X_t} - \bar X} \right)\left( {{X_{t + h}} - \bar X} \right)} \]</span></p>
+<p><em>Definition:</em> <strong>Sample Autocorrelation function</strong></p>
+<p>The <strong>Sample Autocorrelation function</strong> is defined as:</p>
+<p><span class="math display">\[\hat \rho \left( h \right) = \frac{{\hat \gamma \left( h \right)}}{{\hat \gamma \left( 0 \right)}}\]</span></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="basic-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="stationarity.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/coatless/timeseriesisgreat/edit/master/03-dependency.Rmd",
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

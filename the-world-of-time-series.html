@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Time Series is Great!</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="Time Series is Great!">
+  <meta name="generator" content="bookdown 0.0.71 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Time Series is Great!" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://coatless.github.io/timeseriesisgreat/" />
+  
+  
+  <meta name="github-repo" content="coatless/timeseriesisgreat" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Time Series is Great!" />
+  
+  
+  
+
+<meta name="author" content="James Balamuta">
+
+<meta name="date" content="2016-05-23">
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="index.html">
+<link rel="next" href="basic-models.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Time Series is Great!</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#a-foreword"><i class="fa fa-check"></i><b>1.1</b> A foreword</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#notation"><i class="fa fa-check"></i><b>1.2</b> Notation</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#r-code"><i class="fa fa-check"></i><b>1.3</b> R Code</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="the-world-of-time-series.html"><a href="the-world-of-time-series.html"><i class="fa fa-check"></i><b>2</b> The World of Time Series</a><ul>
+<li class="chapter" data-level="2.1" data-path="the-world-of-time-series.html"><a href="the-world-of-time-series.html#objective-of-time-series"><i class="fa fa-check"></i><b>2.1</b> Objective of Time Series</a></li>
+<li class="chapter" data-level="2.2" data-path="the-world-of-time-series.html"><a href="the-world-of-time-series.html#what-is-a-time-series-and-can-i-eat-it"><i class="fa fa-check"></i><b>2.2</b> What is a Time Series and can I eat it?</a></li>
+<li class="chapter" data-level="2.3" data-path="the-world-of-time-series.html"><a href="the-world-of-time-series.html#exploratory-data-analysis-eda-for-time-series"><i class="fa fa-check"></i><b>2.3</b> Exploratory Data Analysis (EDA) for Time Series</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="the-world-of-time-series.html"><a href="the-world-of-time-series.html#identifying-trends"><i class="fa fa-check"></i><b>2.3.1</b> Identifying Trends</a></li>
+<li class="chapter" data-level="2.3.2" data-path="the-world-of-time-series.html"><a href="the-world-of-time-series.html#noticing-changes-in-time-and-outliers"><i class="fa fa-check"></i><b>2.3.2</b> Noticing changes in time and outliers</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="basic-models.html"><a href="basic-models.html"><i class="fa fa-check"></i><b>3</b> Basic Models</a><ul>
+<li class="chapter" data-level="3.1" data-path="basic-models.html"><a href="basic-models.html#white-noise"><i class="fa fa-check"></i><b>3.1</b> White Noise</a></li>
+<li class="chapter" data-level="3.2" data-path="basic-models.html"><a href="basic-models.html#moving-average-process-of-order-q-1-a.k.a-ma1"><i class="fa fa-check"></i><b>3.2</b> Moving Average Process of Order q = 1 a.k.a MA(1)</a></li>
+<li class="chapter" data-level="3.3" data-path="basic-models.html"><a href="basic-models.html#drift"><i class="fa fa-check"></i><b>3.3</b> Drift</a></li>
+<li class="chapter" data-level="3.4" data-path="basic-models.html"><a href="basic-models.html#random-walk"><i class="fa fa-check"></i><b>3.4</b> Random Walk</a></li>
+<li class="chapter" data-level="3.5" data-path="basic-models.html"><a href="basic-models.html#random-walk-with-drift"><i class="fa fa-check"></i><b>3.5</b> Random Walk with Drift</a></li>
+<li class="chapter" data-level="3.6" data-path="basic-models.html"><a href="basic-models.html#autoregressive-process-of-order-p-1-a.k.a-ar1"><i class="fa fa-check"></i><b>3.6</b> Autoregressive Process of Order p = 1 a.k.a AR(1)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="dependency.html"><a href="dependency.html"><i class="fa fa-check"></i><b>4</b> Dependency</a><ul>
+<li class="chapter" data-level="4.1" data-path="dependency.html"><a href="dependency.html#measuring-linear-dependence"><i class="fa fa-check"></i><b>4.1</b> Measuring (Linear) Dependence</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="dependency.html"><a href="dependency.html#autocovariance-function"><i class="fa fa-check"></i><b>4.1.1</b> Autocovariance Function</a></li>
+<li class="chapter" data-level="4.1.2" data-path="dependency.html"><a href="dependency.html#autocorrelation-function-acf"><i class="fa fa-check"></i><b>4.1.2</b> Autocorrelation Function (ACF)</a></li>
+<li class="chapter" data-level="4.1.3" data-path="dependency.html"><a href="dependency.html#cross-dependency-functions"><i class="fa fa-check"></i><b>4.1.3</b> Cross dependency functions</a></li>
+<li class="chapter" data-level="4.1.4" data-path="dependency.html"><a href="dependency.html#sample-autocovariance-and-autocorrelation-functions"><i class="fa fa-check"></i><b>4.1.4</b> Sample Autocovariance and Autocorrelation Functions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="stationarity.html"><a href="stationarity.html"><i class="fa fa-check"></i><b>5</b> Stationarity</a><ul>
+<li class="chapter" data-level="5.1" data-path="stationarity.html"><a href="stationarity.html#weak-stationarity"><i class="fa fa-check"></i><b>5.1</b> Weak Stationarity</a></li>
+<li class="chapter" data-level="5.2" data-path="stationarity.html"><a href="stationarity.html#strong-stationarity"><i class="fa fa-check"></i><b>5.2</b> Strong Stationarity</a></li>
+<li class="chapter" data-level="5.3" data-path="stationarity.html"><a href="stationarity.html#is-it-weakly-stationary"><i class="fa fa-check"></i><b>5.3</b> Is it weakly stationary?</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="stationarity.html"><a href="stationarity.html#is-a-random-walk-weakly-stationary"><i class="fa fa-check"></i><b>5.3.1</b> Is a random walk weakly stationary?</a></li>
+<li class="chapter" data-level="5.3.2" data-path="stationarity.html"><a href="stationarity.html#is-an-ma1-stationary"><i class="fa fa-check"></i><b>5.3.2</b> Is an MA(1) Stationary?</a></li>
+<li class="chapter" data-level="5.3.3" data-path="stationarity.html"><a href="stationarity.html#is-an-ar1-stationary"><i class="fa fa-check"></i><b>5.3.3</b> Is an AR(1) Stationary?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="joint-stationarity.html"><a href="joint-stationarity.html"><i class="fa fa-check"></i><b>6</b> Joint Stationarity</a><ul>
+<li class="chapter" data-level="6.1" data-path="joint-stationarity.html"><a href="joint-stationarity.html#the-backshift-operator-and-differencing-operations"><i class="fa fa-check"></i><b>6.1</b> The Backshift Operator and Differencing Operations</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/coatless/timeseriesisgreat" target="blank">&copy; 2016 James Balamuta</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Time Series is Great!</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="the-world-of-time-series" class="section level1">
+<h1><span class="header-section-number">2</span> The World of Time Series</h1>
+<div id="objective-of-time-series" class="section level2">
+<h2><span class="header-section-number">2.1</span> Objective of Time Series</h2>
+<ol style="list-style-type: decimal">
+<li>View a set of observations made sequentially in “time.”
+<ul>
+<li>“One damned thing after another.” ~ R. A. Fisher</li>
+</ul></li>
+<li>Find a suitable model to describe an observed process
+<ul>
+<li>“All models are wrong, but some are useful” ~ George Box</li>
+</ul></li>
+<li>Forecast future observations
+<ul>
+<li>“Prediction is very difficult, especially if it’s about the future.” ~ Niels Bohr</li>
+</ul></li>
+</ol>
+<p>In essence, we seek to be able to predict, classify, and associate observed data with a theoretical backend. To do so, one must first create a model that provides an explanation of the data as a mixture of a pattern and noise (error). That is, we must be able to formulate the data in terms of:</p>
+<p>Model = Pattern + Noise</p>
+<p>In Time Series, the pattern represents the association between values observed over time (e.g. autocorrelation).</p>
+<p><strong><em>Since these patterns are correlated in time, methods that assume independence are unable to be used.</em></strong></p>
+</div>
+<div id="what-is-a-time-series-and-can-i-eat-it" class="section level2">
+<h2><span class="header-section-number">2.2</span> What is a Time Series and can I eat it?</h2>
+<p>The definition of <strong><em>Time Series (TS)</em></strong> is as follows:</p>
+<p>A <strong><em>Time Series</em></strong> is a stochastic process, a sequence of random variables (RV) defined on a common probability space denoted as <span class="math inline">\(\left(X_t\right)_{t=1, \ldots, T}\)</span> (i.e. <span class="math inline">\(X_1, X_2, \ldots, X_T\)</span>).</p>
+<p>Note: The time <span class="math inline">\(t\)</span> belongs to discrete index sets (<span class="math inline">\(\in \mathbb{Z}\)</span>) not continuous (<span class="math inline">\(\notin \mathbb{R}\)</span>). After all, TS data is always collected at discrete time points. Furthermore, by time belonging to <span class="math inline">\(\mathbb{Z}\)</span> it can take upon itself negative and positive integer values (e.g. <span class="math inline">\(-2, -1, 0, 1, 2\)</span>).</p>
+<p>In laypersons terms, a time series is a variable that gets measured sequentially at fixed intervals of time, which are oftenly spaced apart at equal distances (e.g. equispaced).</p>
+<p>Examples of Time Series:</p>
+<ol style="list-style-type: decimal">
+<li>Stock Data from Johnson and Johson’s Quarterly earnings…</li>
+</ol>
+<p><img src="_main_files/figure-html/example_jj-1.png" width="672" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Speech data from someone talking</li>
+</ol>
+<p><img src="_main_files/figure-html/example_speech-1.png" width="672" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li>Earthquake and explosion data</li>
+</ol>
+<p><img src="_main_files/figure-html/example_eq-1.png" width="672" /></p>
+</div>
+<div id="exploratory-data-analysis-eda-for-time-series" class="section level2">
+<h2><span class="header-section-number">2.3</span> Exploratory Data Analysis (EDA) for Time Series</h2>
+<p>A large part of time series involves looking at graphs of time series. The graphs provide us information as to what kind of trends and outliers the data maybe hiding.</p>
+<div id="identifying-trends" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Identifying Trends</h3>
+<p>A trend exists when there is a long term increase or decrease or combination of increases or decreases (polynomial) in the data. It could be linear or non-linear.</p>
+<p>Note: Long-term trend might change direction, indicating non-linear trends!</p>
+<p>Examples of non-linear trends:</p>
+<ol style="list-style-type: decimal">
+<li>Seasonal trends (periodic): These are the cyclical patterns which repeat after a fixed/regular time period.
+<ul>
+<li>Business cycles (bust/recession, recovery, boom)</li>
+<li>Seasons (summer, fall, winter, spring)</li>
+</ul></li>
+<li>Non-seasonal trends (periodic): These patterns cannot be associated to seasonal variation.
+<ul>
+<li>Impact of economic indicators on stock returns.</li>
+</ul></li>
+<li>“Other” trends: These trends have no regular patterns. They could be just local, short-term. They change statistical properties of a TS over a segment of time (“window”).
+<ul>
+<li>Earthquakes!</li>
+<li>El Nino</li>
+</ul></li>
+</ol>
+</div>
+<div id="noticing-changes-in-time-and-outliers" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> Noticing changes in time and outliers</h3>
+<p>Change in time and outliers yields interesting results. These results can be seen as:</p>
+<ol style="list-style-type: decimal">
+<li>Change in Means
+<ul>
+<li>Change in means of a TS can be related to long-term, cyclical, and short-term trends.</li>
+</ul></li>
+<li>Change in Variance
+<ul>
+<li>Change in variance can be related to change in the amplitude of the fluctuations of a TS.</li>
+</ul></li>
+<li>Change in State
+<ul>
+<li>An event which causes change in statistical properties of TS for short term and long term! Some events cause abrupt changes in statistical properties of TS. They are often associated with “explosive” nature of TS.</li>
+</ul></li>
+<li>Outliers
+<ul>
+<li>These are the “extreme” observations in the time series. May be related to data collection or change in state.</li>
+</ul></li>
+</ol>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="basic-models.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/coatless/timeseriesisgreat/edit/master/01-world.Rmd",
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
