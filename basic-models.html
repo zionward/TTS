@@ -94,7 +94,7 @@ code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* Com
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -171,7 +171,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="basic-models" class="section level1">
-<h1><span class="header-section-number">3</span> Basic Models</h1>
+<h1><span class="header-section-number">Chapter 3</span> Basic Models</h1>
 <div id="white-noise" class="section level2">
 <h2><span class="header-section-number">3.1</span> White Noise</h2>
 <p>The process name of white noise has meaning in the notion of colors of noise. Specifically, the white noise is a process that mirrors white light’s flat frequency spectrum. So, the process has equal frequencies in any interval of time.</p>
@@ -186,7 +186,7 @@ wn =<span class="st"> </span><span class="kw">ts</span>(<span class="kw">rnorm</
 <span class="kw">autoplot</span>(wn) +
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;White Noise Process&quot;</span>) +
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Displacement&quot;</span>) +<span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Time (seconds)&quot;</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/generate_white_noise-1.png" width="672" /></p>
+<p><img src="time_series_is_great_files/figure-html/generate_white_noise-1.png" width="672" /></p>
 </div>
 <div id="moving-average-process-of-order-q-1-a.k.a-ma1" class="section level2">
 <h2><span class="header-section-number">3.2</span> Moving Average Process of Order q = 1 a.k.a MA(1)</h2>
@@ -215,7 +215,7 @@ ma =<span class="st"> </span><span class="kw">ts</span>(ma[<span class="dv">2</s
 <span class="kw">autoplot</span>(ma) +
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Moving Average Order 1 Process&quot;</span>) +
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Displacement&quot;</span>) +<span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Time (seconds)&quot;</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/generate_ma1-1.png" width="672" /></p>
+<p><img src="time_series_is_great_files/figure-html/generate_ma1-1.png" width="672" /></p>
 </div>
 <div id="drift" class="section level2">
 <h2><span class="header-section-number">3.3</span> Drift</h2>
@@ -238,7 +238,7 @@ dr    =<span class="st"> </span><span class="kw">ts</span>(drift*(<span class="d
 <span class="kw">autoplot</span>(dr) +
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Drift Process&quot;</span>) +
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Displacement&quot;</span>) +<span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Time (seconds)&quot;</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/generate_drift-1.png" width="672" /></p>
+<p><img src="time_series_is_great_files/figure-html/generate_drift-1.png" width="672" /></p>
 </div>
 <div id="random-walk" class="section level2">
 <h2><span class="header-section-number">3.4</span> Random Walk</h2>
@@ -261,7 +261,7 @@ rw =<span class="st"> </span><span class="kw">ts</span>(<span class="kw">cumsum<
 <span class="kw">autoplot</span>(rw) +
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Random Walk&quot;</span>) +
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Displacement&quot;</span>) +<span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Time (seconds)&quot;</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/generate_rw-1.png" width="672" /></p>
+<p><img src="time_series_is_great_files/figure-html/generate_rw-1.png" width="672" /></p>
 </div>
 <div id="random-walk-with-drift" class="section level2">
 <h2><span class="header-section-number">3.5</span> Random Walk with Drift</h2>
@@ -285,7 +285,7 @@ rwd =<span class="st"> </span><span class="kw">ts</span>(<span class="kw">cumsum
 <span class="kw">autoplot</span>(rwd) +<span class="st"> </span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Random Walk with Drift&quot;</span>) +
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Displacement&quot;</span>) +<span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Time (seconds)&quot;</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/generate_rwd-1.png" width="672" /></p>
+<p><img src="time_series_is_great_files/figure-html/generate_rwd-1.png" width="672" /></p>
 <p>Notice the difference the drift makes upon the random walk:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add identifiers</span>
 drift.df =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Index =</span> <span class="dv">1</span>:n, <span class="dt">Data =</span> drift*(<span class="dv">1</span>:n), <span class="dt">Type =</span> <span class="st">&quot;Drift&quot;</span>)
@@ -300,7 +300,7 @@ combined.df =<span class="st"> </span><span class="kw">rbind</span>(drift.df, rw
 <span class="st">  </span><span class="kw">geom_line</span>() +
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Comparisons of Random Walk&quot;</span>) +
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Displacement&quot;</span>) +<span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Time (seconds)&quot;</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/compare_rw_and_rwd-1.png" width="672" /></p>
+<p><img src="time_series_is_great_files/figure-html/compare_rw_and_rwd-1.png" width="672" /></p>
 </div>
 <div id="autoregressive-process-of-order-p-1-a.k.a-ar1" class="section level2">
 <h2><span class="header-section-number">3.6</span> Autoregressive Process of Order p = 1 a.k.a AR(1)</h2>
@@ -333,7 +333,7 @@ ar =<span class="st"> </span><span class="kw">ts</span>(ar[<span class="dv">2</s
 <span class="kw">autoplot</span>(ar) +
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Autoregressive Order 1 Process&quot;</span>) +
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Displacement&quot;</span>) +<span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Time (seconds)&quot;</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/generate_ar1-1.png" width="672" /></p>
+<p><img src="time_series_is_great_files/figure-html/generate_ar1-1.png" width="672" /></p>
 
 </div>
 </div>
