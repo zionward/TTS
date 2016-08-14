@@ -54,6 +54,16 @@ MathJax.Hub.Config({
 
 
 
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { extensions: ["AMSmath.js"], 
+         equationNumbers: { autoNumber: "AMS" },
+         Macros: {
+          notimplies: "\\nRightarrow"
+    }
+  }
+});
+</script>
 
 
 <style type="text/css">
@@ -94,7 +104,7 @@ code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* Com
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
-<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="styling/style.css" type="text/css" />
 </head>
 
 <body>
