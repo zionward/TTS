@@ -5,27 +5,27 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Time Series is Great!</title>
+  <title>Introduction to Time Series</title>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-  <meta name="description" content="Time Series is Great!">
-  <meta name="generator" content="bookdown 0.0.75 and GitBook 2.6.7">
+  <meta name="description" content="Introduction to Time Series">
+  <meta name="generator" content="bookdown 0.1.4 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Time Series is Great!" />
+  <meta property="og:title" content="Introduction to Time Series" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="https://coatless.github.io/timeseriesisgreat/" />
+  <meta property="og:url" content="https://coatless.github.io/its/" />
   
   
-  <meta name="github-repo" content="coatless/timeseriesisgreat" />
+  <meta name="github-repo" content="coatless/its" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Time Series is Great!" />
+  <meta name="twitter:title" content="Introduction to Time Series" />
   
   
   
 
-<meta name="author" content="James Balamuta">
+<meta name="author" content="James Balamuta and Stephane Guerrier">
 
-<meta name="date" content="2016-07-07">
+<meta name="date" content="2016-08-14">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -106,13 +106,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">Time Series is Great!</a></li>
+<li><a href="./">Introduction to Time Series</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a><ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#a-foreword"><i class="fa fa-check"></i><b>1.1</b> A foreword</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#notation"><i class="fa fa-check"></i><b>1.2</b> Notation</a></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#r-code"><i class="fa fa-check"></i><b>1.3</b> R Code</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#rendering-mathematical-formulae"><i class="fa fa-check"></i><b>1.2</b> Rendering Mathematical Formulae</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#mathematical-notation"><i class="fa fa-check"></i><b>1.3</b> Mathematical Notation</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#r-code-conventions"><i class="fa fa-check"></i><b>1.4</b> R Code Conventions</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i><b>1.5</b> License</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="the-world-of-time-series.html"><a href="the-world-of-time-series.html"><i class="fa fa-check"></i><b>2</b> The World of Time Series</a><ul>
 <li class="chapter" data-level="2.1" data-path="the-world-of-time-series.html"><a href="the-world-of-time-series.html#objective-of-time-series"><i class="fa fa-check"></i><b>2.1</b> Objective of Time Series</a></li>
@@ -122,36 +124,38 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.3.2" data-path="the-world-of-time-series.html"><a href="the-world-of-time-series.html#noticing-changes-in-time-and-outliers"><i class="fa fa-check"></i><b>2.3.2</b> Noticing changes in time and outliers</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="basic-models.html"><a href="basic-models.html"><i class="fa fa-check"></i><b>3</b> Basic Models</a><ul>
-<li class="chapter" data-level="3.1" data-path="basic-models.html"><a href="basic-models.html#white-noise"><i class="fa fa-check"></i><b>3.1</b> White Noise</a></li>
-<li class="chapter" data-level="3.2" data-path="basic-models.html"><a href="basic-models.html#moving-average-process-of-order-q-1-a.k.a-ma1"><i class="fa fa-check"></i><b>3.2</b> Moving Average Process of Order q = 1 a.k.a MA(1)</a></li>
-<li class="chapter" data-level="3.3" data-path="basic-models.html"><a href="basic-models.html#drift"><i class="fa fa-check"></i><b>3.3</b> Drift</a></li>
-<li class="chapter" data-level="3.4" data-path="basic-models.html"><a href="basic-models.html#random-walk"><i class="fa fa-check"></i><b>3.4</b> Random Walk</a></li>
-<li class="chapter" data-level="3.5" data-path="basic-models.html"><a href="basic-models.html#random-walk-with-drift"><i class="fa fa-check"></i><b>3.5</b> Random Walk with Drift</a></li>
-<li class="chapter" data-level="3.6" data-path="basic-models.html"><a href="basic-models.html#autoregressive-process-of-order-p-1-a.k.a-ar1"><i class="fa fa-check"></i><b>3.6</b> Autoregressive Process of Order p = 1 a.k.a AR(1)</a></li>
+<li class="chapter" data-level="3" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html"><i class="fa fa-check"></i><b>3</b> Autocorrelation and Stationarity</a><ul>
+<li class="chapter" data-level="3.1" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#dependency"><i class="fa fa-check"></i><b>3.1</b> Dependency</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#measuring-linear-dependence"><i class="fa fa-check"></i><b>3.1.1</b> Measuring (Linear) Dependence</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="dependency.html"><a href="dependency.html"><i class="fa fa-check"></i><b>4</b> Dependency</a><ul>
-<li class="chapter" data-level="4.1" data-path="dependency.html"><a href="dependency.html#measuring-linear-dependence"><i class="fa fa-check"></i><b>4.1</b> Measuring (Linear) Dependence</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="dependency.html"><a href="dependency.html#autocovariance-function"><i class="fa fa-check"></i><b>4.1.1</b> Autocovariance Function</a></li>
-<li class="chapter" data-level="4.1.2" data-path="dependency.html"><a href="dependency.html#autocorrelation-function-acf"><i class="fa fa-check"></i><b>4.1.2</b> Autocorrelation Function (ACF)</a></li>
-<li class="chapter" data-level="4.1.3" data-path="dependency.html"><a href="dependency.html#cross-dependency-functions"><i class="fa fa-check"></i><b>4.1.3</b> Cross dependency functions</a></li>
-<li class="chapter" data-level="4.1.4" data-path="dependency.html"><a href="dependency.html#sample-autocovariance-and-autocorrelation-functions"><i class="fa fa-check"></i><b>4.1.4</b> Sample Autocovariance and Autocorrelation Functions</a></li>
+<li class="chapter" data-level="3.2" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#stationarity"><i class="fa fa-check"></i><b>3.2</b> Stationarity</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#weak-stationarity"><i class="fa fa-check"></i><b>3.2.1</b> Weak Stationarity</a></li>
+<li class="chapter" data-level="3.2.2" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#strong-stationarity"><i class="fa fa-check"></i><b>3.2.2</b> Strong Stationarity</a></li>
+<li class="chapter" data-level="3.2.3" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#is-it-weakly-stationary"><i class="fa fa-check"></i><b>3.2.3</b> Is it weakly stationary?</a></li>
+<li class="chapter" data-level="3.2.4" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#is-a-random-walk-weakly-stationary"><i class="fa fa-check"></i><b>3.2.4</b> Is a random walk weakly stationary?</a></li>
+<li class="chapter" data-level="3.2.5" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#is-an-ma1-stationary"><i class="fa fa-check"></i><b>3.2.5</b> Is an MA(1) Stationary?</a></li>
+<li class="chapter" data-level="3.2.6" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#is-an-ar1-stationary"><i class="fa fa-check"></i><b>3.2.6</b> Is an AR(1) Stationary?</a></li>
 </ul></li>
+<li class="chapter" data-level="3.3" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#joint-stationarity"><i class="fa fa-check"></i><b>3.3</b> Joint Stationarity</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="stationarity.html"><a href="stationarity.html"><i class="fa fa-check"></i><b>5</b> Stationarity</a><ul>
-<li class="chapter" data-level="5.1" data-path="stationarity.html"><a href="stationarity.html#weak-stationarity"><i class="fa fa-check"></i><b>5.1</b> Weak Stationarity</a></li>
-<li class="chapter" data-level="5.2" data-path="stationarity.html"><a href="stationarity.html#strong-stationarity"><i class="fa fa-check"></i><b>5.2</b> Strong Stationarity</a></li>
-<li class="chapter" data-level="5.3" data-path="stationarity.html"><a href="stationarity.html#is-it-weakly-stationary"><i class="fa fa-check"></i><b>5.3</b> Is it weakly stationary?</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="stationarity.html"><a href="stationarity.html#is-a-random-walk-weakly-stationary"><i class="fa fa-check"></i><b>5.3.1</b> Is a random walk weakly stationary?</a></li>
-<li class="chapter" data-level="5.3.2" data-path="stationarity.html"><a href="stationarity.html#is-an-ma1-stationary"><i class="fa fa-check"></i><b>5.3.2</b> Is an MA(1) Stationary?</a></li>
-<li class="chapter" data-level="5.3.3" data-path="stationarity.html"><a href="stationarity.html#is-an-ar1-stationary"><i class="fa fa-check"></i><b>5.3.3</b> Is an AR(1) Stationary?</a></li>
+<li class="chapter" data-level="4" data-path="basic-models.html"><a href="basic-models.html"><i class="fa fa-check"></i><b>4</b> Basic Models</a><ul>
+<li class="chapter" data-level="4.1" data-path="basic-models.html"><a href="basic-models.html#the-backshift-operator"><i class="fa fa-check"></i><b>4.1</b> The Backshift Operator</a></li>
+<li class="chapter" data-level="4.2" data-path="basic-models.html"><a href="basic-models.html#white-noise"><i class="fa fa-check"></i><b>4.2</b> White Noise</a></li>
+<li class="chapter" data-level="4.3" data-path="basic-models.html"><a href="basic-models.html#moving-average-process-of-order-q-1-a.k.a-ma1"><i class="fa fa-check"></i><b>4.3</b> Moving Average Process of Order q = 1 a.k.a MA(1)</a></li>
+<li class="chapter" data-level="4.4" data-path="basic-models.html"><a href="basic-models.html#drift"><i class="fa fa-check"></i><b>4.4</b> Drift</a></li>
+<li class="chapter" data-level="4.5" data-path="basic-models.html"><a href="basic-models.html#random-walk"><i class="fa fa-check"></i><b>4.5</b> Random Walk</a></li>
+<li class="chapter" data-level="4.6" data-path="basic-models.html"><a href="basic-models.html#random-walk-with-drift"><i class="fa fa-check"></i><b>4.6</b> Random Walk with Drift</a></li>
+<li class="chapter" data-level="4.7" data-path="basic-models.html"><a href="basic-models.html#autoregressive-process-of-order-p-1-a.k.a-ar1"><i class="fa fa-check"></i><b>4.7</b> Autoregressive Process of Order p = 1 a.k.a AR(1)</a></li>
 </ul></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="joint-stationarity.html"><a href="joint-stationarity.html"><i class="fa fa-check"></i><b>6</b> Joint Stationarity</a><ul>
-<li class="chapter" data-level="6.1" data-path="joint-stationarity.html"><a href="joint-stationarity.html#the-backshift-operator-and-differencing-operations"><i class="fa fa-check"></i><b>6.1</b> The Backshift Operator and Differencing Operations</a></li>
+<li class="chapter" data-level="5" data-path="arma.html"><a href="arma.html"><i class="fa fa-check"></i><b>5</b> ARMA</a><ul>
+<li class="chapter" data-level="5.1" data-path="arma.html"><a href="arma.html#definition"><i class="fa fa-check"></i><b>5.1</b> Definition</a></li>
+<li class="chapter" data-level="5.2" data-path="arma.html"><a href="arma.html#ma-ar-operators"><i class="fa fa-check"></i><b>5.2</b> MA / AR Operators</a></li>
+<li class="chapter" data-level="5.3" data-path="arma.html"><a href="arma.html#redundancy"><i class="fa fa-check"></i><b>5.3</b> Redundancy</a></li>
+<li class="chapter" data-level="5.4" data-path="arma.html"><a href="arma.html#causal-invertible"><i class="fa fa-check"></i><b>5.4</b> Causal + Invertible</a></li>
+<li class="chapter" data-level="5.5" data-path="arma.html"><a href="arma.html#prediction-forecast"><i class="fa fa-check"></i><b>5.5</b> Prediction (Forecast)</a></li>
 </ul></li>
 <li class="divider"></li>
-<li><a href="https://github.com/coatless/timeseriesisgreat" target="blank">&copy; 2016 James Balamuta</a></li>
+<li><a href="https://github.com/coatless/its" target="blank">&copy; 2016 James Balamuta</a></li>
 
 </ul>
 
@@ -162,7 +166,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Time Series is Great!</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Time Series</a>
           </h1>
         </div>
 
@@ -171,19 +175,37 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="header">
-<h1 class="title">Time Series is Great!</h1>
-<h4 class="author"><em>James Balamuta</em></h4>
-<h4 class="date"><em>2016-07-07</em></h4>
+<h1 class="title">Introduction to Time Series</h1>
+<h4 class="author"><em>James Balamuta and Stephane Guerrier</em></h4>
+<h4 class="date"><em>2016-08-14</em></h4>
 </div>
 <div id="preface" class="section level1">
 <h1><span class="header-section-number">Chapter 1</span> Preface</h1>
+<p>Welcome to Introduction to Time Series with <code>R</code>!</p>
 <div id="a-foreword" class="section level2">
 <h2><span class="header-section-number">1.1</span> A foreword</h2>
-<p>The book presented below is a compilation of material and extended explanations that I have sought during my studies of time series. The material is not necessarily traditional, however, the hope is that it is at least helpful and/or provides an alternative explanation for the concepts under observation.</p>
-<p>Any typos or other issues should be reported to <a href="mailto:balamut2@illinois.edu">James Balamuta</a> forthwith.</p>
+<p>This book was designed for use in STAT 429, Time Series Analysis, at the University of Illinois at Urbana-Champaign. When possible, it would be best to always access the text online to be sure you are using the latest version. The online version affords additional features over the traditional PDF copy such as a scaling text, variety of font faces, and themed backgrounds. However, if you are in need of a local copy, a <a href="http://its.thecoatlessprofessor.com/its.pdf"><strong>pdf version</strong> is also available</a>.</p>
+<p><strong>Disclaimer:</strong> This book is under active development. As a result, errors may occur that range in severity from typos to broken code. If any of these issues arise, there are two options:</p>
+<ol style="list-style-type: decimal">
+<li>If you are familiar with GitHub and know RMarkdown, <a href="https://github.com/coatless/its">make a pull request and fix the issue yourself!</a> (fastest resolution)
+<ul>
+<li>In the Online version, click the edit button in the top-left corner. <img src="images/support/edit_button.png" alt="" /></li>
+</ul></li>
+<li>Send an email to <code>balamut2 AT illinois DOT edu</code> and we will address issue.</li>
+</ol>
 </div>
-<div id="notation" class="section level2">
-<h2><span class="header-section-number">1.2</span> Notation</h2>
+<div id="rendering-mathematical-formulae" class="section level2">
+<h2><span class="header-section-number">1.2</span> Rendering Mathematical Formulae</h2>
+<p>Throughout the book, there will be mathematical symbols used to express the material. Depending on the version of the book, there are two different render engines.</p>
+<ul>
+<li>For the online version, the text uses <a href="https://www.mathjax.org/">MathJax</a> to render mathematical notation for the web. In the event the formulae does not load for a specific chapter, first try to refresh the page. 9 times out of 10 the issue is related to the software library not loading quickly.</li>
+<li>For the pdf version, the text is built using the recommended AMS LaTeX symbolic packages. As a result, there should be no issue displaying equations.</li>
+</ul>
+<p>An example of a mathematical rendering capabilities would be given as:</p>
+<p><span class="math display">\[ a^2 + b^2 = c^2 \]</span></p>
+</div>
+<div id="mathematical-notation" class="section level2">
+<h2><span class="header-section-number">1.3</span> Mathematical Notation</h2>
 <p>The following notation will be adopted throughout the book.</p>
 <ul>
 <li><span class="math inline">\(X\)</span> denotes a (continuous) RV.</li>
@@ -195,9 +217,23 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><span class="math inline">\(\left(X_t\right)_{t=1,\ldots,T} := \left(X_t\right) := (X_1, \ldots, X_T)\)</span>.</li>
 </ul>
 </div>
-<div id="r-code" class="section level2">
-<h2><span class="header-section-number">1.3</span> R Code</h2>
-<p>The code used throughout the book is R code. The R code should be able to used as-is. Alongside the PDF download of the book, you should find the R code used within each chapter.</p>
+<div id="r-code-conventions" class="section level2">
+<h2><span class="header-section-number">1.4</span> R Code Conventions</h2>
+<p>The code used throughout the book will predominately be <code>R</code> code.<br />
+To obtain a copy of <a href="https://cloud.r-project.org/"><code>R</code></a>, go to the <a href="https://cloud.r-project.org/">Comprehensive R Archive Network (CRAN)</a> and download the appropriate installer for your operating system.</p>
+<p>When <code>R</code> code is displayed it will be typeset using a <code>monospace</code> font with syntax highlighting enabled to ensure the differentiation of functions, variables, and so on. For example, the following adds 1 to 1</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a =<span class="st"> </span>1L +<span class="st"> </span>1L
+a</code></pre></div>
+<p>Each code segment may contain actual output from <code>R</code>. Such output will appear in grey font prefixed by <code>##</code>. For example, the output of the above code segment would look like so:</p>
+<pre><code>## [1] 2</code></pre>
+<p>Alongside the PDF download of the book, you should find the R code used within each chapter.</p>
+</div>
+<div id="license" class="section level2">
+<h2><span class="header-section-number">1.5</span> License</h2>
+<div class="figure">
+<img src="images/license/cc.png" alt="This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License." />
+<p class="caption">This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
+</div>
 
 </div>
 </div>
@@ -234,7 +270,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/coatless/timeseriesisgreat/edit/master/index.Rmd",
+"link": "https://github.com/coatless/its/edit/master/index.Rmd",
 "text": null
 },
 "download": null,
