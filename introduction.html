@@ -38,8 +38,8 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="ar1-with-mean-mu.html">
-<link rel="next" href="mle-for-sigma-2-on-ar1-with-mean-mu.html">
+<link rel="prev" href="index.html">
+<link rel="next" href="autocorrelation-and-stationarity.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -207,36 +207,169 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="conditioning-time-x_t-x_t-1" class="section level1">
-<h1><span class="header-section-number">Chapter 7</span> Conditioning time <span class="math inline">\(x_t | x_{t-1}\)</span></h1>
-<p>Now, consider <span class="math inline">\(x_t | x_{t-1}\)</span> for <span class="math inline">\(t &gt; 1\)</span>.</p>
-<p>The mean is given by:</p>
-<p><span class="math display">\[\begin{aligned}
-  E\left[ {{x_t}|{x_{t - 1}}} \right] &amp;= E\left[ {\mu  + \phi \left( {{x_{t - 1}} - \mu } \right) + {w_t}|{x_{t - 1}}} \right] \nonumber \\
-   &amp;= \mu  + \phi \left( {{x_{t - 1}} - \mu } \right)
-\end{aligned} \]</span></p>
-<p>This is the case since <span class="math inline">\(E\left[ {{x_{t - 1}}|{x_{t - 1}}} \right] = {x_{t - 1}}\)</span> and <span class="math inline">\(E\left[ {{w_t}|{x_{t - 1}}} \right] = 0\)</span></p>
-<p>Now, the variance is:</p>
-<p><span class="math display">\[\begin{aligned}
-  Var\left( {{x_t}|{x_{t - 1}}} \right) &amp;= Var\left( {\mu  + \phi \left( {{x_{t - 1}} - \mu } \right) + {w_t}|{x_{t - 1}}} \right) \hfill \\
-   &amp;= \underbrace {Var\left( {\mu  + \phi \left( {{x_{t - 1}} - \mu } \right)|{x_{t - 1}}} \right)}_{ = 0} + Var\left( {{w_t}|{x_{t - 1}}} \right) \hfill \\
-   &amp;= Var\left( {{w_t}} \right) \hfill \\
-   &amp;= {\sigma ^2} \hfill \\ 
-\end{aligned} \]</span></p>
-<p>Thus, we have: <span class="math inline">\({x_t}\sim N\left( {\mu + \phi \left( {{x_{t - 1}} - \mu } \right),{\sigma ^2}} \right)\)</span>.</p>
-<p>Again, note that the distribution of <span class="math inline">\(x_t\)</span> is normal and, thus, the density function of <span class="math inline">\(x_t\)</span> is given by: <span class="math display">\[\begin{aligned}
-  f\left( {{x_t}} \right) &amp;= \sqrt {\frac{1}{{2\pi {\sigma ^2}}}} \exp \left( { - \frac{1}{{2{\sigma ^2}}} \cdot {{\left[ {\left( {{x_t} - \mu } \right) - \phi \left( {{x_{t - 1}} - \mu } \right)} \right]}^2}} \right) \hfill \\
-   &amp;= {\left( {2\pi } \right)^{ - \frac{1}{2}}}{\left( {{\sigma ^2}} \right)^{ - \frac{1}{2}}}\exp \left( { - \frac{1}{{2{\sigma ^2}}} \cdot {{\left[ {\left( {{x_t} - \mu } \right) - \phi \left( {{x_{t - 1}} - \mu } \right)} \right]}^2}} \right) \textrm{           [2]} \\ 
-\end{aligned} \]</span></p>
-<p>And for this equation we’ll call it [2].</p>
+<div id="introduction" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Introduction</h1>
+<!--
+> "One damned thing after another." ~ R. A. Fisher
+>
+-->
+<blockquote>
+<p><em>Prévoir consiste à projeter dans l’avenir ce qu’on a perçu dans le passé.</em> Henri Bergson</p>
+</blockquote>
+<!--
+>
+> *Hâtons-nous; le temps fuit, et nous entraîne avec soi : le moment où je parle est déjà loin de moi*. Nicolas Boileau
+>
+-->
+<p>Generally speaking a <em>time series</em> (or stochastic process) corresponds to set of “repeated” observations of the same variable such as price of a financial asset or temperature in a given location. In terms of notation a time series is often writen as</p>
+<p><span class="math display">\[\left(X_1, X_2, ..., X_T \right) \;\;\; \text{ or } \;\;\; \left(X_t\right)_{t = 1,...,T}.\]</span></p>
+<p>The time index <span class="math inline">\(t\)</span> generally the set <span class="math inline">\(\mathbb{N}\)</span> (or sometimes <span class="math inline">\(\mathbb{Z}\)</span>). When <span class="math inline">\(t \in \mathbb{R}\)</span>, a time series becomes a <em>continuous-time</em> stochastic process such a Brownian motion. In this class we limit our selves to <em>discrete-time</em> processes where a variable is measured sequentially at fixed and equally spaced intervals in time. This implies that we will assume <span class="math inline">\(t\)</span> is not random (the time at which each observation is measure is know) and the time between two consequtive observation is constant.</p>
+<p>Moreover, the term “time series” can, as we discussed, denote a sample or a set of observations but also a probability model for that sample. For example, on of the simplest probability model used in time series analysis is called a <em>white noise</em> process and is defined as <span class="math display">\[W_t \mathop \sim \limits^{iid} N(0, \sigma^2).\]</span> This statement simply means that <span class="math inline">\((X_t)\)</span> is normally distribtued and independent over time. This model is quite unintersting but as we will very usefull to construct other (more interesting) models. Unlike white noise process, time series are typically <em>not</em> independent over time. Suppose that the temperature in Champaign is unusually low, then it is reasonable to assume that tomorrow’s temperature will also be low. Such behaviour suggest a dependent over time. The time series methods we will discuss in this class consists parametric models used to characterize (or at least approximate) the joint distribution of <span class="math inline">\((X_t)\)</span>. Often, time series models can be decomposed in what we called a <em>signal</em>, say <span class="math inline">\((Y_t)\)</span> and a <em>noise</em>, say <span class="math inline">\((W_t)\)</span>, leading to the model <span class="math display">\[X_t = Y_t + W_t.\]</span> Typically, we have <span class="math inline">\(E[Y_t] \neq 0\)</span> while <span class="math inline">\(E[W_t] = 0\)</span> (although we may have <span class="math inline">\(E[W_t | W_{t-1}, ..., W_1] \neq 0\)</span>). Such models impose some parametric structure which represent a convenient and flexible way of studying time series and evalute to which extent <em>future</em> value of the series can be forecasted. As we will see, predicting future values is one of the main aspects of time series analysis. However, making predictions is often a daunting taks or as famously stated by Nils Bohr:</p>
+<blockquote>
+<p>“<em>Prediction is very difficult, especially about the future.</em>”</p>
+</blockquote>
+<p>There are plenty of examples predictions which releved to be completely erroneous. For example, Irving Fisher, Professor of Economics at Yale University, famously predicted three days before the 1929 crash:</p>
+<blockquote>
+<p>“<em>Stock prices have reached what looks like a permanently high plateau</em>”.</p>
+</blockquote>
+<p>Another example is Thomas Watson, president of IBM, who said in 1943:</p>
+<blockquote>
+<p>“<em>I think there is a world market for maybe five computers.</em>”</p>
+</blockquote>
+<!-- Model = Pattern + Noise
+
+In Time Series, the pattern represents the association between values observed over time (e.g. autocorrelation). 
+
+***Since these patterns are correlated in time, methods that assume independence are unable to be used.***
+
+
+
+
+
+In essence, we seek to be able to predict, classify, and associate observed data with a theoretical backend.
+
+ ## Objective of Time Series
+
+1. View a set of observations made sequentially in "time."
+    * "One damned thing after another." ~ R. A. Fisher
+2. Find a suitable model to describe an observed process 
+    * "All models are wrong, but some are useful" ~ George Box
+3. Forecast future observations 
+    * "Prediction is very difficult, especially if it's about the future." ~ Niels Bohr 
+
+
+## What is a Time Series and can I eat it?
+
+The definition of ***Time Series (TS)*** is as follows: 
+
+A ***Time Series*** is a stochastic process, a sequence of random variables (RV) defined on a common probability space denoted as $\left(X_t\right)_{t=1, \ldots, T}$ (i.e. $X_1, X_2, \ldots, X_T$).
+
+-->
+<p>Examples of Time Series:</p>
+<pre><code>## Loading required package: xts</code></pre>
+<p><img src="its_files/figure-html/example_highfreq-1.png" width="672" /></p>
+<ol style="list-style-type: decimal">
+<li><p>Stock Data from Johnson and Johson’s Quarterly earnings…</p></li>
+<li><p>Earthquake and explosion data</p></li>
+</ol>
+<p><img src="its_files/figure-html/example_eq-1.png" width="672" /></p>
+<div id="exploratory-data-analysis-eda-for-time-series" class="section level2">
+<h2><span class="header-section-number">2.1</span> Exploratory Data Analysis (EDA) for Time Series</h2>
+<p>When dealing with relatively small time series (e.g. a few thousands), it is often useful to look at a graph of the original data. Such graphs can be informative to “detect” some features of a time series such as trends and the presence of outliers.</p>
+<p>Indeed, a trend is typically deamed present in a time series when the data exhibit some form of long term increase or decrease or combination of increases or decreases. Such trends could be linear or non-linear and represent a important part of the “signal” of a model. Here are few examples of non-linear trends:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Seasonal trends</strong> (periodic): These are the cyclical patterns which repeat after a fixed/regular time period. This could be due to business cycles (e.g. bust/recession, recovery).</p></li>
+<li><p><strong>Non-seasonal trends</strong> (periodic): These patterns cannot be associated to seasonal variation and can for example to external variable. For example, impact of economic indicators on stock returns. Such trends are often hard to detect based on a graphical anaylsis of the data.</p></li>
+<li><p><strong>“Other” trends</strong>: These trends have typically no regular patterns and change statistical properties of a time series over a segment of time (“window”). A typicall example of such trends corresponds to vibrations observed before, during and after an earthquake.</p></li>
+</ol>
+<p><strong>Example:</strong> An example of a time series is, for example, the quarterly earnings of the company Johnson and Johson. In the figure below we present these earnings between 1960 and 1980:</p>
+<p><strong>JAMES: can we “gmwm” this graph? Thanks!</strong></p>
+<p><img src="its_files/figure-html/example_jj-1.png" width="672" /></p>
+<p>It can clearly be observed that the data present a non-linear increasing trend as well as a yearly seasonal component. In addition, on can note that the <em>variability</em> of the data seems to increase with time. As we will such observations provide some valuable guilines to select a suitable models for such data.</p>
+<p><strong>Example:</strong> In the figure below we present TO COMPLETE</p>
+<p><strong>JAMES: can we “gmwm” this graph? Thanks!</strong></p>
+<p><img src="its_files/figure-html/example_eq-1.png" width="672" /></p>
+<p><strong>ADD VISUAL DESCRIPTION</strong></p>
+<p>Change in time and outliers yields interesting results. These results can be seen as:</p>
+<ol style="list-style-type: decimal">
+<li>Change in Means
+<ul>
+<li>Change in means of a TS can be related to long-term, cyclical, and short-term trends.</li>
+</ul></li>
+<li>Change in Variance
+<ul>
+<li>Change in variance can be related to change in the amplitude of the fluctuations of a TS.</li>
+</ul></li>
+<li>Change in State
+<ul>
+<li>An event which causes change in statistical properties of TS for short term and long term! Some events cause abrupt changes in statistical properties of TS. They are often associated with “explosive” nature of TS.</li>
+</ul></li>
+<li>Outliers
+<ul>
+<li>These are the “extreme” observations in the time series. May be related to data collection or change in state.</li>
+</ul></li>
+</ol>
+</div>
+<div id="basic-time-series-models" class="section level2">
+<h2><span class="header-section-number">2.2</span> Basic Time Series Models</h2>
+<p>In this section, we introduce some simple time series models. Before doing so we define all the information avaiable up to time <span class="math inline">\(t-1\)</span> has <span class="math inline">\(\Omega_t\)</span>, i.e.</p>
+<p><span class="math display">\[\Omega_t = \left(X_{t-1}, X_{t-2}, ..., X_0 \right).\]</span></p>
+<p>As we will this compact notation is quite useful.</p>
+<div id="white-noise-processes" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> White noise processes</h3>
+<p>The building block for most time series models is the Gaussian white noise process, which can be defined as</p>
+<p><span class="math display">\[{W_t}\mathop \sim \limits^{iid} N\left( {0,\sigma _w^2} \right).\]</span></p>
+<p>This definition implies that:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(E[W_t | \Omega_t] = 0\)</span> for all <span class="math inline">\(t\)</span>,</li>
+<li><span class="math inline">\(\operatorname{cov}\left(W_t, W_{t-h} \right) = \boldsymbol{1}_{h = 0} \; \sigma^2\)</span> for all <span class="math inline">\(t, h\)</span>.</li>
+</ol>
+<p>Therefore, this process present an absence of temporal (or serial) dependence and has a constant variance. This definition can be generalized in two sorts of processes, the <em>weak</em> and <em>strong</em> white noise. The process <span class="math inline">\((W_t)\)</span> is a weak white noise if</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(E[W_t] = 0\)</span> for all <span class="math inline">\(t\)</span>,</li>
+<li><span class="math inline">\(\operatorname{var}\left(W_t\right) = \sigma^2\)</span> for all <span class="math inline">\(t\)</span>,</li>
+<li><span class="math inline">\(\operatorname{cov} \left(W_t, W_{t-h}\right) = 0\)</span>, for all <span class="math inline">\(t\)</span>, and for all <span class="math inline">\(h \neq 0\)</span>.</li>
+</ol>
+<p>Note that this definition does not imply that <span class="math inline">\(W_t\)</span> and <span class="math inline">\(W_{t-h}\)</span> are independent (for <span class="math inline">\(h \neq 0\)</span>) but simply uncorrelated. However, the notion of indepence is used to define a <em>strong</em> white noise as</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(E[W_t] = 0\)</span> and <span class="math inline">\(\operatorname{var}(W_t) = \sigma^2 &lt; \infty\)</span>, for all <span class="math inline">\(t\)</span>,</li>
+<li><span class="math inline">\(F(W_t) = F(W_{t-h})\)</span>, for all <span class="math inline">\(t,h\)</span> (where <span class="math inline">\(F(W_t)\)</span> denotes the distribution of <span class="math inline">\(W_t\)</span>),</li>
+<li><span class="math inline">\(W_t\)</span> and <span class="math inline">\(W_{t-h}\)</span> are independent for all <span class="math inline">\(t\)</span> and for all <span class="math inline">\(h \neq 0\)</span>.</li>
+</ol>
+<p>It is clear from these definition that if a process is a strong white noise it is also a weak white noise. However, the converse is not true a shown in the following example:</p>
+<p><strong>Example</strong>: Let <span class="math inline">\(X_t \mathop \sim \limits^{iid} F_t\)</span>, where <span class="math inline">\(F_t\)</span> denote a Student distribution with <span class="math inline">\(t\)</span> degrees of freedom. Such process is a weak but not a strong white noise.</p>
+<p>The code below presents an example of how to simulate a Gaussian white noise process</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This code simulate a gaussian white noise process</span>
+n =<span class="st"> </span><span class="dv">100</span>                               <span class="co"># process length</span>
+sigma2 =<span class="st"> </span><span class="dv">1</span>                            <span class="co"># process variance</span>
+Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">WN</span>(<span class="dt">sigma2 =</span> <span class="dv">1</span>), <span class="dt">n =</span> n)
+<span class="kw">plot</span>(Xt)</code></pre></div>
+<p><img src="its_files/figure-html/example_WN-1.png" width="672" /></p>
+<!--
+white noise can actually be generalize
+
+The process name of white noise has meaning in the notion of colors of noise. Specifically, the white noise is a process that mirrors white light's flat frequency spectrum. So, the process has equal frequencies in any interval of time.
+
+*Definition:* **White Noise**
+
+$w_t$ or $\varepsilon _t$ is a **white noise process** if $w_t$ are uncorrelated identically distributed random variables with
+$E\left[w_t\right] = 0$ and $Var\left[w_t\right] = \sigma ^2$, for all $t$. We can represent this algebraically as:
+$$y_t = w_t,$$
+where ${w_t}\mathop \sim \limits^{id} WN\left( {0,\sigma _w^2} \right)$
+
+Now, if the $w_t$ are **Normally (Gaussian) distributed**, then the process is known as a **Gaussian White Noise** e.g. ${w_t}\mathop \sim \limits^{iid} N\left( {0,{\sigma ^2}} \right)$ -->
+<p>We 1.</p>
+
+</div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="ar1-with-mean-mu.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="mle-for-sigma-2-on-ar1-with-mean-mu.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="autocorrelation-and-stationarity.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -263,7 +396,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/coatless/its/edit/master/04-arma.Rmd",
+"link": "https://github.com/coatless/its/edit/master/01-intro.Rmd",
 "text": null
 },
 "download": null,
