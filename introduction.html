@@ -5,12 +5,12 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Introduction to Time Series</title>
+  <title>A Tour of Time Series Analysis with R</title>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-  <meta name="description" content="Introduction to Time Series">
+  <meta name="description" content="A Tour of Time Series Analysis with R">
   <meta name="generator" content="bookdown 0.1.4 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Introduction to Time Series" />
+  <meta property="og:title" content="A Tour of Time Series Analysis with R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://coatless.github.io/its/" />
   
@@ -18,7 +18,7 @@
   <meta name="github-repo" content="coatless/its" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Introduction to Time Series" />
+  <meta name="twitter:title" content="A Tour of Time Series Analysis with R" />
   
   
   
@@ -202,7 +202,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Time Series</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Tour of Time Series Analysis with R</a>
           </h1>
         </div>
 
@@ -296,8 +296,9 @@ A ***Time Series*** is a stochastic process, a sequence of random variables (RV)
 <p>Finally, we consider an example about high-frequency finance to illustate to limitation our current framework.</p>
 <p><strong>Example:</strong> The figure below present the returns (i.e. informally speaking the changes in price) for Starbuck’s stock on the first of July 2011 during about 150 seconds (left panel) and about 400 minutes (right panel).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load packages</span>
-<span class="kw">library</span>(highfrequency)
-<span class="kw">library</span>(timeDate)
+<span class="kw">library</span>(highfrequency)</code></pre></div>
+<pre><code>## Loading required package: xts</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(timeDate)
 
 <span class="co"># Load &quot;high-frequency&quot; Starbucks returns for Jul 01 2011</span>
 <span class="kw">data</span>(sbux.xts)
