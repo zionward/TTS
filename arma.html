@@ -39,7 +39,7 @@ MathJax.Hub.Config({
   
   
 <link rel="prev" href="basic-models.html">
-<link rel="next" href="ar1-with-mean-mu.html">
+
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -174,18 +174,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.2" data-path="arma.html"><a href="arma.html#ma-ar-operators"><i class="fa fa-check"></i><b>5.2</b> MA / AR Operators</a></li>
 <li class="chapter" data-level="5.3" data-path="arma.html"><a href="arma.html#redundancy"><i class="fa fa-check"></i><b>5.3</b> Redundancy</a></li>
 <li class="chapter" data-level="5.4" data-path="arma.html"><a href="arma.html#causal-invertible"><i class="fa fa-check"></i><b>5.4</b> Causal + Invertible</a></li>
-<li class="chapter" data-level="5.5" data-path="arma.html"><a href="arma.html#estimation-of-parameters"><i class="fa fa-check"></i><b>5.5</b> Estimation of Parameters</a></li>
+<li class="chapter" data-level="5.5" data-path="arma.html"><a href="arma.html#estimation-of-parameters"><i class="fa fa-check"></i><b>5.5</b> Estimation of Parameters</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="arma.html"><a href="arma.html#maximum-likelihood-estimation"><i class="fa fa-check"></i><b>5.5.1</b> Maximum Likelihood Estimation</a></li>
+<li class="chapter" data-level="5.5.2" data-path="arma.html"><a href="arma.html#mle-for-sigma-2-on-ar1-with-mean-mu"><i class="fa fa-check"></i><b>5.5.2</b> MLE for <span class="math inline">\(\sigma ^2\)</span> on <span class="math inline">\(AR(1)\)</span> with mean <span class="math inline">\(\mu\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="ar1-with-mean-mu.html"><a href="ar1-with-mean-mu.html"><i class="fa fa-check"></i><b>6</b> <span class="math inline">\(AR(1)\)</span> with mean <span class="math inline">\(\mu\)</span></a></li>
-<li class="chapter" data-level="7" data-path="conditioning-time-x-t-x-t-1.html"><a href="conditioning-time-x-t-x-t-1.html"><i class="fa fa-check"></i><b>7</b> Conditioning time <span class="math inline">\(x_t | x_{t-1}\)</span></a></li>
-<li class="chapter" data-level="8" data-path="mle-for-sigma-2-on-ar1-with-mean-mu.html"><a href="mle-for-sigma-2-on-ar1-with-mean-mu.html"><i class="fa fa-check"></i><b>8</b> MLE for <span class="math inline">\(\sigma ^2\)</span> on <span class="math inline">\(AR(1)\)</span> with mean <span class="math inline">\(\mu\)</span></a></li>
-<li class="chapter" data-level="9" data-path="conditional-mle-on-ar1-with-mean-mu.html"><a href="conditional-mle-on-ar1-with-mean-mu.html"><i class="fa fa-check"></i><b>9</b> Conditional MLE on <span class="math inline">\(AR(1)\)</span> with mean <span class="math inline">\(\mu\)</span></a><ul>
-<li class="chapter" data-level="9.1" data-path="conditional-mle-on-ar1-with-mean-mu.html"><a href="conditional-mle-on-ar1-with-mean-mu.html#method-of-moments"><i class="fa fa-check"></i><b>9.1</b> Method of Moments</a><ul>
-<li class="chapter" data-level="9.1.1" data-path="conditional-mle-on-ar1-with-mean-mu.html"><a href="conditional-mle-on-ar1-with-mean-mu.html#method-of-moments---arp"><i class="fa fa-check"></i><b>9.1.1</b> Method of Moments - AR(p)</a></li>
-<li class="chapter" data-level="9.1.2" data-path="conditional-mle-on-ar1-with-mean-mu.html"><a href="conditional-mle-on-ar1-with-mean-mu.html#yule-walker"><i class="fa fa-check"></i><b>9.1.2</b> Yule-Walker</a></li>
-<li class="chapter" data-level="9.1.3" data-path="conditional-mle-on-ar1-with-mean-mu.html"><a href="conditional-mle-on-ar1-with-mean-mu.html#estimates"><i class="fa fa-check"></i><b>9.1.3</b> Estimates</a></li>
+<li class="chapter" data-level="5.6" data-path="arma.html"><a href="arma.html#method-of-moments"><i class="fa fa-check"></i><b>5.6</b> Method of Moments</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="arma.html"><a href="arma.html#method-of-moments---arp"><i class="fa fa-check"></i><b>5.6.1</b> Method of Moments - AR(p)</a></li>
+<li class="chapter" data-level="5.6.2" data-path="arma.html"><a href="arma.html#yule-walker"><i class="fa fa-check"></i><b>5.6.2</b> Yule-Walker</a></li>
+<li class="chapter" data-level="5.6.3" data-path="arma.html"><a href="arma.html#estimates"><i class="fa fa-check"></i><b>5.6.3</b> Estimates</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="conditional-mle-on-ar1-with-mean-mu.html"><a href="conditional-mle-on-ar1-with-mean-mu.html#prediction-forecast"><i class="fa fa-check"></i><b>9.2</b> Prediction (Forecast)</a></li>
+<li class="chapter" data-level="5.7" data-path="arma.html"><a href="arma.html#prediction-forecast"><i class="fa fa-check"></i><b>5.7</b> Prediction (Forecast)</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/coatless/its" target="blank">&copy; 2016 James Balamuta, Stephane Guerrier</a></li>
@@ -223,7 +221,31 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="estimation-of-parameters" class="section level2">
 <h2><span class="header-section-number">5.5</span> Estimation of Parameters</h2>
-<p>There are two primary methods for estimating parameters: Maximum Likelihood Estimation and Method of Moments.</p>
+<p>Consider a time series given by <span class="math inline">\(x_t \sim ARMA(p,q)\)</span>. This gives us with a paramter space <span class="math inline">\(\Omega\)</span> that looks like so:</p>
+<p><span class="math display">\[\vec \varphi  = \left[ {\begin{array}{*{20}{c}}
+  {{\phi _1}} \\ 
+   \vdots  \\ 
+  {{\phi _p}} \\ 
+  {{\theta _1}} \\ 
+   \vdots  \\ 
+  {{\theta _q}} \\ 
+  {{\sigma ^2}} 
+\end{array}} \right]\]</span></p>
+<p>In order to estimate this parameter space, we must assume the following three conditions:</p>
+<ol style="list-style-type: decimal">
+<li>The process is casual</li>
+<li>The process is invertible</li>
+<li>The process has Gaussian innovations.</li>
+</ol>
+<p><strong>Innovations</strong> are a time series equivalent to residuals. That is, an innovation is given by <span class="math inline">\({x_t} - \hat x_t^{t - 1}\)</span>, where <span class="math inline">\(\hat x_t^{t - 1}\)</span> is the prediction at time <span class="math inline">\(t\)</span> given <span class="math inline">\(t-1\)</span> observations and <span class="math inline">\({x_t}\)</span> is the true value observed at time <span class="math inline">\(t\)</span>.</p>
+<p>There are two main ways of performing such an estimation of the parameter space.</p>
+<ol style="list-style-type: decimal">
+<li>Maximum Likelihood / Least Squares Estimation [MLE / LSE]</li>
+<li>Method of Moments (MoM)</li>
+</ol>
+<p>To begin, we’ll explore using the MLE to perform the estimation.</p>
+<div id="maximum-likelihood-estimation" class="section level3">
+<h3><span class="header-section-number">5.5.1</span> Maximum Likelihood Estimation</h3>
 <p><strong>Definition</strong> Consider <span class="math inline">\(X_n = (X_1, X_2, \ldots, X_n)\)</span> with the joint density <span class="math inline">\(f(X_1, X_2, \ldots, X_n ; \theta)\)</span> where <span class="math inline">\(\theta \in \Theta\)</span>. Given <span class="math inline">\(X_1 = x_1, X_2 = x_2, \ldots, X_n = x_n\)</span> is observed, we have the likelihood function of <span class="math inline">\(\theta\)</span> as</p>
 <p><span class="math display">\[L(\theta) = L(\theta|x_1,x_2, \ldots, x_n) = f(x_1,x_2, \ldots, x_n | \theta)\]</span></p>
 <p>If the <span class="math inline">\(X_i\)</span> are iid, then the likelihood simplifies to:</p>
@@ -232,6 +254,279 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p><span class="math display">\[l\left( \theta  \right) = \log \left( {L\left( \theta  \right)} \right) = \sum\limits_{i = 1}^n {\log \left( {f\left( {{x_i}|\theta } \right)} \right)} \]</span></p>
 <p>From maximizes the likelihood function <span class="math inline">\(L(\theta)\)</span>, we get the <strong>maximum likelihood estimate (MLE)</strong> of <span class="math inline">\(\theta\)</span>. So, we end up with a value that makes the observed data the “most probable.”</p>
 <p>Note: The likelihood function is <strong>not</strong> a probability density function.</p>
+<div id="ar1-with-mean-mu" class="section level4">
+<h4><span class="header-section-number">5.5.1.1</span> <span class="math inline">\(AR(1)\)</span> with mean <span class="math inline">\(\mu\)</span></h4>
+<p>Consider an <span class="math inline">\(AR(1)\)</span> process given as <span class="math inline">\(y_t = \phi y_{t-1} + w_t\)</span>, <span class="math inline">\({w_t}\mathop \sim \limits^{iid} N\left( {0,{\sigma ^2}} \right)\)</span>, with <span class="math inline">\(E\left[ {{y_t}} \right] = 0\)</span>, <span class="math inline">\(\left| \phi \right| &lt; 1\)</span>.</p>
+<p>Let <span class="math inline">\(x_t = y_t + \mu\)</span>, so that <span class="math inline">\(E\left[ {{x_t}} \right] = \mu\)</span>.</p>
+<p>Then, <span class="math inline">\({x_t} - \mu = {y_t}\)</span>. Substituting in for <span class="math inline">\(y_t\)</span>, we get:</p>
+<p><span class="math display">\[\begin{aligned}
+y_t &amp;= \phi y_{t-1} + w_t \\
+\underbrace {\left( {{x_t} - \mu } \right)}_{ = {y_t}} &amp;= \phi \underbrace {\left( {{x_{t - 1}} - \mu } \right)}_{ = {y_t}} + {w_t} \\
+{x_t} &amp;= \mu  + \phi \left( {{x_{t - 1}} - \mu } \right) + {w_t}
+\end{aligned}\]</span></p>
+<p>In this case, <span class="math inline">\(x_t\)</span> is an <span class="math inline">\(AR(1)\)</span> process with mean <span class="math inline">\(\mu\)</span>.</p>
+<p>This means that we have:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(E\left[ {{x_t}} \right] = \mu\)</span></li>
+<li><span class="math display">\[\begin{aligned}
+  Var\left( {{x_t}} \right) &amp;= Var\left( {{x_t} - \mu } \right) \hfill \\
+   &amp;= Var\left( {{y_t}} \right) \hfill \\
+   &amp;= Var\left( {\sum\limits_{j = 0}^\infty  {{\phi ^j}{w_{t - j}}} } \right) \hfill \\
+   &amp;= \sum\limits_{j = 0}^\infty  {{\phi ^{2j}}Var\left( {{w_{t - j}}} \right)}  \hfill \\
+   &amp;= {\sigma ^2}\sum\limits_{j = 0}^\infty  {{\phi ^{2j}}}  \hfill \\
+   &amp;= \frac{{{\sigma ^2}}}{{1 - {\phi ^2}}},{\text{  since }}\left| \phi  \right| &lt; 1{\text{ and }}\sum\limits_{k = 0}^n {a{r^k}}  = \frac{a}{{1 - r}} \hfill \\ 
+\end{aligned} \]</span></li>
+</ol>
+<p>So, <span class="math inline">\(x_t \sim N\left({ \mu, \frac{{{\sigma ^2}}}{{1 - {\phi ^2}}} }\right)\)</span>.</p>
+<p>Note that the distribution of <span class="math inline">\(x_t\)</span> is normal and, thus, the density function of <span class="math inline">\(x_t\)</span> is given by: <span class="math display">\[\begin{aligned}
+  f\left( {{x_t}} \right) &amp;= \sqrt {\frac{{1 - {\phi ^2}}}{{2\pi {\sigma ^2}}}} \exp \left( { - \frac{1}{2} \cdot \frac{{1 - {\phi ^2}}}{{{\sigma ^2}}} \cdot {{\left( {{x_t} - \mu } \right)}^2}} \right) \hfill \\
+   &amp;= {\left( {2\pi } \right)^{ - \frac{1}{2}}}{\left( {{\sigma ^2}} \right)^{ - \frac{1}{2}}}{\left( {1 - {\phi ^2}} \right)^{\frac{1}{2}}}\exp \left( { - \frac{1}{2} \cdot \frac{{1 - {\phi ^2}}}{{{\sigma ^2}}} \cdot {{\left( {{x_t} - \mu } \right)}^2}} \right) \textrm{           [1]}  \\ 
+\end{aligned} \]</span></p>
+<p>We’ll call the last equation [1].</p>
+</div>
+<div id="conditioning-time-x_t-x_t-1" class="section level4">
+<h4><span class="header-section-number">5.5.1.2</span> Conditioning time <span class="math inline">\(x_t | x_{t-1}\)</span></h4>
+<p>Now, consider <span class="math inline">\(x_t | x_{t-1}\)</span> for <span class="math inline">\(t &gt; 1\)</span>.</p>
+<p>The mean is given by:</p>
+<p><span class="math display">\[\begin{aligned}
+  E\left[ {{x_t}|{x_{t - 1}}} \right] &amp;= E\left[ {\mu  + \phi \left( {{x_{t - 1}} - \mu } \right) + {w_t}|{x_{t - 1}}} \right] \nonumber \\
+   &amp;= \mu  + \phi \left( {{x_{t - 1}} - \mu } \right)
+\end{aligned} \]</span></p>
+<p>This is the case since <span class="math inline">\(E\left[ {{x_{t - 1}}|{x_{t - 1}}} \right] = {x_{t - 1}}\)</span> and <span class="math inline">\(E\left[ {{w_t}|{x_{t - 1}}} \right] = 0\)</span></p>
+<p>Now, the variance is:</p>
+<p><span class="math display">\[\begin{aligned}
+  Var\left( {{x_t}|{x_{t - 1}}} \right) &amp;= Var\left( {\mu  + \phi \left( {{x_{t - 1}} - \mu } \right) + {w_t}|{x_{t - 1}}} \right) \hfill \\
+   &amp;= \underbrace {Var\left( {\mu  + \phi \left( {{x_{t - 1}} - \mu } \right)|{x_{t - 1}}} \right)}_{ = 0} + Var\left( {{w_t}|{x_{t - 1}}} \right) \hfill \\
+   &amp;= Var\left( {{w_t}} \right) \hfill \\
+   &amp;= {\sigma ^2} \hfill \\ 
+\end{aligned} \]</span></p>
+<p>Thus, we have: <span class="math inline">\({x_t}\sim N\left( {\mu + \phi \left( {{x_{t - 1}} - \mu } \right),{\sigma ^2}} \right)\)</span>.</p>
+<p>Again, note that the distribution of <span class="math inline">\(x_t\)</span> is normal and, thus, the density function of <span class="math inline">\(x_t\)</span> is given by: <span class="math display">\[\begin{aligned}
+  f\left( {{x_t}} \right) &amp;= \sqrt {\frac{1}{{2\pi {\sigma ^2}}}} \exp \left( { - \frac{1}{{2{\sigma ^2}}} \cdot {{\left[ {\left( {{x_t} - \mu } \right) - \phi \left( {{x_{t - 1}} - \mu } \right)} \right]}^2}} \right) \hfill \\
+   &amp;= {\left( {2\pi } \right)^{ - \frac{1}{2}}}{\left( {{\sigma ^2}} \right)^{ - \frac{1}{2}}}\exp \left( { - \frac{1}{{2{\sigma ^2}}} \cdot {{\left[ {\left( {{x_t} - \mu } \right) - \phi \left( {{x_{t - 1}} - \mu } \right)} \right]}^2}} \right) \textrm{           [2]} \\ 
+\end{aligned} \]</span></p>
+<p>And for this equation we’ll call it [2].</p>
+</div>
+</div>
+<div id="mle-for-sigma-2-on-ar1-with-mean-mu" class="section level3">
+<h3><span class="header-section-number">5.5.2</span> MLE for <span class="math inline">\(\sigma ^2\)</span> on <span class="math inline">\(AR(1)\)</span> with mean <span class="math inline">\(\mu\)</span></h3>
+<p><em>Whew</em>, with all of the above said, we’re now ready to obtain an MLE estimate on an <span class="math inline">\(AR(1)\)</span>.</p>
+<p>Let <span class="math inline">\(\vec{\theta} = \left[ {\begin{array}{*{20}{c}}  \mu \\  \phi \\  {{\sigma ^2}} \end{array}} \right]\)</span>, then the likelihood of <span class="math inline">\(\vec{\theta}\)</span> is given by <span class="math inline">\(x_1, \ldots , x_T\)</span> is:</p>
+<p><span class="math display">\[\begin{aligned}
+  L\left( {\vec \theta |{x_1}, \ldots ,{x_T}} \right) &amp;= f\left( {{x_1}, \ldots ,{x_T}|\vec \theta } \right) \hfill \\
+   &amp;= f\left( {{x_1}} \right) \cdot \prod\limits_{t = 2}^T {f\left( {{x_t}|{x_{t - 1}}} \right)}
+\end{aligned} \]</span></p>
+<p>The last equality is the result of us using a lag 1 of “memory.” Also, note that <span class="math inline">\(x_t | x_{t-1}\)</span> must have <span class="math inline">\(t &gt; 1 \in \mathbb{N}\)</span>. Furthermore, we have dropped the parameters in the densities, e.g. <span class="math inline">\(\vec{\theta}\)</span> in <span class="math inline">\(f(\cdot)\)</span>, to ease notation.</p>
+<p>Using equations [1] and [2], we have:</p>
+<p><span class="math display">\[L\left( {\vec \theta |{x_1}, \ldots ,{x_T}} \right) = {\left( {2\pi } \right)^{ - \frac{T}{2}}}{\left( {{\sigma ^2}} \right)^{ - \frac{T}{2}}}{\left( {1 - {\phi ^2}} \right)^{\frac{1}{2}}}\exp \left( { - \frac{1}{{2{\sigma ^2}}}\left[ {\left( {1 - {\phi ^2}} \right){{\left( {{x_t} - \mu } \right)}^2} + \sum\limits_{t = 2}^T {{{\left[ {\left( {{x_t} - \mu } \right) - \phi \left( {{x_{t - 1}} - \mu } \right)} \right]}^2}} } \right]} \right)\]</span></p>
+<p>For convenience, we’ll define:</p>
+<p><span class="math display">\[S\left( {\mu ,\phi } \right) = \left( {1 - {\phi ^2}} \right){\left( {{x_t} - \mu } \right)^2} + \sum\limits_{t = 2}^T {{{\left[ {\left( {{x_t} - \mu } \right) - \phi \left( {{x_{t - 1}} - \mu } \right)} \right]}^2}} \]</span></p>
+<p>Fun fact, this is called the “<strong>unconditional</strong> sum of squares.”</p>
+<p>Thus, we will operate on:</p>
+<p><span class="math display">\[L\left( {\vec \theta |{x_1}, \ldots ,{x_T}} \right) = {\left( {2\pi } \right)^{ - \frac{T}{2}}}{\left( {{\sigma ^2}} \right)^{ - \frac{T}{2}}}{\left( {1 - {\phi ^2}} \right)^{\frac{1}{2}}}\exp \left( { - \frac{1}{{2{\sigma ^2}}}S\left( {\mu ,\phi } \right)} \right)\]</span></p>
+<p>Taking the log of this yields:</p>
+<p><span class="math display">\[\begin{aligned}
+  l\left( {\vec \theta |{x_1}, \ldots ,{x_T}} \right) &amp;= \log \left( {L\left( {\vec \theta |{x_1}, \ldots ,{x_T}} \right)} \right) \hfill \\
+   &amp;=  - \frac{T}{2}\log \left( {2\pi } \right) - \frac{T}{2}\log \left( {{\sigma ^2}} \right) + \frac{1}{2}\left( {1 - {\phi ^2}} \right) - \frac{1}{{2{\sigma ^2}}}S\left( {\mu ,\phi } \right) \hfill \\ 
+\end{aligned} \]</span></p>
+<p>Now, taking the derivative and solving for the maximized point gives:</p>
+<p><span class="math display">\[\begin{aligned}
+  \frac{\partial }{{\partial {\sigma ^2}}}l\left( {\vec \theta |{x_1}, \ldots ,{x_T}} \right) &amp;=  - \frac{T}{{2{\sigma ^2}}} + \frac{1}{{2{\sigma ^4}}}S\left( {\mu ,\phi } \right) \hfill \\
+  0 &amp;=  - \frac{T}{{2{\sigma ^2}}} + \frac{1}{{2{\sigma ^4}}}S\left( {\mu ,\phi } \right) \hfill \\
+  \frac{T}{{2{\sigma ^2}}} &amp;= \frac{1}{{2{\sigma ^4}}}S\left( {\mu ,\phi } \right) \hfill \\
+  {{ \sigma }^2} &amp;= \frac{1}{T}S\left( {\mu ,\phi } \right) \hfill \\ 
+\end{aligned} \]</span></p>
+<p>Thus, the MLE for <span class="math inline">\({\hat \sigma }^2 = \frac{1}{T}S\left( {\hat \mu ,\hat \phi } \right)\)</span>, where <span class="math inline">\(\hat \mu\)</span> and <span class="math inline">\(\hat \phi\)</span> are the MLEs for <span class="math inline">\(\mu , \phi\)</span> that are obtained numerically via either <em>Newton Raphson</em> or a <em>Scoring Algorithm</em>. (More details in a numerical recipe book.)</p>
+<div id="conditional-mle-on-ar1-with-mean-mu" class="section level4">
+<h4><span class="header-section-number">5.5.2.1</span> Conditional MLE on <span class="math inline">\(AR(1)\)</span> with mean <span class="math inline">\(\mu\)</span></h4>
+<p>A common strategy to reduce the dependency on numerical recipes is to simplify <span class="math inline">\(l\left( {\vec \theta |{x_1}, \ldots ,{x_T}} \right)\)</span> by using <span class="math inline">\({l^*}\left( {\vec \theta |{x_1}, \ldots ,{x_T}} \right)\)</span>:</p>
+<p><span class="math display">\[\begin{aligned}
+  {l^*}\left( {\vec \theta |{x_1}, \ldots ,{x_T}} \right) &amp;= \prod\limits_{t = 2}^T {\log \left( {f\left( {{x_t}|{x_{t - 1}}} \right)} \right)}  \hfill \\
+   &amp;= \prod\limits_{t = 2}^T {\log \left( {{{\left( {2\pi } \right)}^{ - \frac{1}{2}}}{{\left( {{\sigma ^2}} \right)}^{ - \frac{1}{2}}}\exp \left( { - \frac{1}{{2{\sigma ^2}}} \cdot {{\left[ {\left( {{x_t} - \mu } \right) - \phi \left( {{x_{t - 1}} - \mu } \right)} \right]}^2}} \right)} \right)}  \hfill \\
+   &amp;=  - \frac{{\left( {T - 1} \right)}}{2}\log \left( {2\pi } \right) - \frac{{\left( {T - 1} \right)}}{2}\log \left( {{\sigma ^2}} \right) - \frac{1}{{2{\sigma ^2}}}\sum\limits_{t = 2}^T {{{\left[ {\left( {{x_t} - \mu } \right) - \phi \left( {{x_{t - 1}} - \mu } \right)} \right]}^2}}  \hfill \\ 
+\end{aligned} \]</span></p>
+<p>Again, for convenience, we’ll define:</p>
+<p><span class="math display">\[{S_c}\left( {\mu ,\phi } \right) = \sum\limits_{t = 2}^T {{{\left[ {\left( {{x_t} - \mu } \right) - \phi \left( {{x_{t - 1}} - \mu } \right)} \right]}^2}} \]</span></p>
+<p>Fun fact, this is called the “<strong>conditional</strong> sum of squares.”</p>
+<p>So, we will use:</p>
+<p><span class="math display">\[{l^*}\left( {\vec \theta |{x_1}, \ldots ,{x_T}} \right) =  - \frac{{\left( {T - 1} \right)}}{2}\log \left( {2\pi } \right) - \frac{{\left( {T - 1} \right)}}{2}\log \left( {{\sigma ^2}} \right) - \frac{1}{{2{\sigma ^2}}}{S_c}\left( {\mu ,\phi } \right)\]</span></p>
+<p>Taking the derivative with respect to <span class="math inline">\(\mu\)</span> gives:</p>
+<p><span class="math display">\[\begin{aligned}
+  \frac{\partial }{{\partial \mu }}{l^*}\left( {\vec \theta |{x_1}, \ldots ,{x_T}} \right) &amp;=  - \frac{1}{{2{\sigma ^2}}}\sum\limits_{t = 2}^T {2\left[ {\left( {{x_t} - \mu } \right) - \phi \left( {{x_{t - 1}} - \mu } \right)} \right]\left( {\phi  - 1} \right)}  \hfill \\
+   &amp;= \frac{{1 - \phi }}{{{\sigma ^2}}}\sum\limits_{t = 2}^T {\left[ {\left( {{x_t} - \mu } \right) - \phi \left( {{x_{t - 1}} - \mu } \right)} \right]}  \hfill \\
+   &amp;= \frac{{1 - \phi }}{{{\sigma ^2}}}\sum\limits_{t = 2}^T {\left( {{x_t} - \phi {x_{t - 1}} - \mu \left( {1 - \phi } \right)} \right)}  \hfill \\
+   &amp;= -\frac{{{{\left( {1 - \phi } \right)}^2}}}{{{\sigma ^2}}}\mu \left( {T - 1} \right) + \frac{{\left( {1 - \phi } \right)}}{{{\sigma ^2}}}\sum\limits_{t = 2}^T {\left( {{x_t} - \phi {x_{t - 1}}} \right)}  \hfill \\ 
+\end{aligned} \]</span></p>
+<p>Solving for <span class="math inline">\(\mu^{*}\)</span> gives:</p>
+<p><span class="math display">\[\begin{aligned}
+  0 &amp;= \frac{\partial }{{\partial \mu }}{l^*}\left( {\vec \theta |{x_1}, \ldots ,{x_t}} \right) \hfill \\
+  0 &amp;=  - \frac{{{{\left( {1 - \phi } \right)}^2}}}{{{\sigma ^2}}}{\mu ^*}\left( {T - 1} \right) + \frac{{\left( {1 - {\phi ^*}} \right)}}{{\sigma _*^2}}\sum\limits_{t = 2}^T {\left( {{x_t} - {\phi ^*}{x_{t - 1}}} \right)}  \hfill \\
+  \frac{{{{\left( {1 - {\phi ^*}} \right)}^2}}}{{\sigma _*^2}}{\mu ^*}\left( {T - 1} \right) &amp;= \frac{{\left( {1 - {\phi ^*}} \right)}}{{\sigma _*^2}}\sum\limits_{t = 2}^T {\left( {{x_t} - {\phi ^*}{x_{t - 1}}} \right)}  \hfill \\
+  {\mu ^*}\left( {1 - {\phi ^*}} \right)\left( {T - 1} \right) &amp;= \sum\limits_{t = 2}^T {\left( {{x_t} - {\phi ^*}{x_{t - 1}}} \right)}  \hfill \\
+  {\mu ^*} &amp;= \frac{1}{{\left( {1 - {\phi ^*}} \right)\left( {T - 1} \right)}}\sum\limits_{t = 2}^T {\left( {{x_t} - {\phi ^*}{x_{t - 1}}} \right)}  \hfill \\
+  {\mu ^*} &amp;= \frac{1}{{1 - {\phi ^*}}}\left[ {\underbrace {\frac{1}{{T - 1}}\sum\limits_{t = 2}^T {{x_t}} }_{ = {{\bar x}_{\left( 2 \right)}}} - \underbrace {\frac{{{\phi ^*}}}{{T - 1}}\sum\limits_{t = 2}^T {{x_{t - 1}}} }_{ = {{\bar x}_{\left( 1 \right)}}}} \right] \hfill \\
+  {{\hat \mu }^*} &amp;= \frac{1}{{1 - {\phi ^*}}}\left( {{{\bar x}_{\left( 2 \right)}} - \phi {{\bar x}_{\left( 1 \right)}}} \right) \hfill \\ 
+\end{aligned} \]</span></p>
+<p>When <span class="math inline">\(T\)</span> is large, we have the following:</p>
+<p><span class="math display">\[\begin{aligned}
+  {{\bar x}_{\left( 1 \right)}} \approx \bar x &amp;,{{\bar x}_{\left( 2 \right)}} \approx \bar x \hfill \\
+   \hfill \\
+  {{\hat \mu }^*} &amp;= \frac{1}{{1 - {\phi ^*}}}\left( {\bar x - {\phi ^*}\bar x} \right) \hfill \\
+   &amp;= \frac{{\bar x}}{{1 - {\phi ^*}}}\left( {1 - {\phi ^*}} \right) \hfill \\
+   &amp;= \bar x \hfill \\ 
+\end{aligned} \]</span></p>
+<p>Taking the derivative with respect to <span class="math inline">\(\sigma^2\)</span> and solving for <span class="math inline">\(\sigma^2\)</span> gives: <span class="math display">\[\begin{aligned}
+  \frac{\partial }{{\partial {\sigma ^2}}}{l^*}\left( {\vec \theta |{x_1}, \ldots ,{x_T}} \right) &amp;=  - \frac{{\left( {T - 1} \right)}}{{2\sigma _*^2}} + \frac{1}{{2\sigma _*^4}}{S_c}\left( {\mu ,\phi } \right) \hfill \\
+  0 &amp;=  - \frac{{\left( {T - 1} \right)}}{{2\sigma _*^2}} + \frac{1}{{2\sigma _*^4}}{S_c}\left( {\mu ,\phi } \right) \hfill \\
+  \frac{{\left( {T - 1} \right)}}{{2\sigma _*^2}} &amp;= \frac{1}{{2\sigma _*^4}}{S_c}\left( {\mu ,\phi } \right) \hfill \\
+  \hat \sigma _*^2 &amp;= \frac{1}{{T - 1}}{S_c}\left( {{{\hat \mu }^*},{{\hat \phi }^*}} \right) \hfill \\ 
+\end{aligned} \]</span></p>
+<p>Taking the derivative with respect to <span class="math inline">\(\phi\)</span> gives: <span class="math display">\[\begin{aligned}
+  \frac{\partial }{{\partial \phi }}{l^*}\left( {\vec \theta |{x_1}, \ldots ,{x_T}} \right) &amp;=  - \frac{1}{{2{\sigma ^2}}}\sum\limits_{t = 2}^T { - 2\left[ {\left( {{x_t} - \mu } \right) - \phi \left( {{x_{t - 1}} - \mu } \right)} \right]\left( {{x_{t - 1}} - \mu } \right)}  \hfill \\
+   &amp;= \frac{1}{{{\sigma ^2}}}\sum\limits_{t = 2}^T {\left[ {{x_t} - \phi {x_{t - 1}} - \mu \left( {1 - \phi } \right)} \right]\left( {{x_{t - 1}} - \mu } \right)}  \hfill \\
+   &amp;= \frac{1}{{{\sigma ^2}}}\sum\limits_{t = 2}^T {\left[ {{x_t}{x_{t - 1}} - \phi x_{t - 1}^2 - \mu \left( {1 - \phi } \right){x_{t - 1}} - \mu {x_t} + \mu \phi {x_{t - 1}} + {\mu ^2}\left( {1 - \phi } \right)} \right]}  \hfill \\
+   &amp;= \frac{1}{{{\sigma ^2}}}\left[ \begin{gathered}
+  \sum\limits_{t = 2}^T {{x_t}{x_{t - 1}}}  - \phi \sum\limits_{t = 2}^T {x_{t - 1}^2}  - \mu \left( {1 - \phi } \right)\left( {T - 1} \right){{\bar x}_{\left( 1 \right)}} \hfill \\
+   - \mu \left( {T - 1} \right){{\bar x}_{\left( 2 \right)}} + \phi \mu \left( {T - 1} \right){{\bar x}_{\left( 1 \right)}} + {\mu ^2}\left( {1 - \phi } \right)\left( {T - 1} \right) \hfill \\ 
+\end{gathered}  \right] 
+\end{aligned}\]</span></p>
+<p>Solving for <span class="math inline">\(\phi\)</span> gives: <span class="math display">\[\begin{aligned}
+  0 &amp;= \frac{\partial }{{\partial \phi }}{l^*}\left( {\vec \theta |{x_1}, \ldots ,{x_T}} \right) \hfill \\
+  0 &amp;= \sum\limits_{t = 2}^T {{x_t}{x_{t - 1}}}  - {{\hat \phi }^*}\sum\limits_{t = 2}^T {x_{t - 1}^2}  - \left( {{{\bar x}_{\left( 2 \right)}} - {{\hat \phi }^*}{{\bar x}_{\left( 1 \right)}}} \right)\left( {T - 1} \right){{\bar x}_{\left( 1 \right)}} - \frac{{{{\bar x}_{\left( 2 \right)}} - {{\hat \phi }^*}{{\bar x}_{\left( 1 \right)}}}}{{1 - {{\hat \phi }^*}}}\left( {T - 1} \right){{\bar x}_{\left( 2 \right)}} \\
+  &amp;+ {{\hat \phi }^*}\frac{{{{\bar x}_{\left( 2 \right)}} - {{\hat \phi }^*}{{\bar x}_{\left( 1 \right)}}}}{{1 - {{\hat \phi }^*}}}\left( {T - 1} \right){{\bar x}_{\left( 1 \right)}} + {\left( {\frac{{{{\bar x}_{\left( 2 \right)}} - {{\hat \phi }^*}{{\bar x}_{\left( 1 \right)}}}}{{1 - {{\hat \phi }^*}}}} \right)^2}\left( {1 - {{\hat \phi }^*}} \right)\left( {T - 1} \right)  \hfill \\
+   &amp;\vdots  \hfill \\
+  &amp;{\text{Magic}} \hfill \\
+   &amp;\vdots  \hfill \\
+  {{\hat \phi }^*} &amp;= \frac{{\sum\limits_{t = 2}^T {\left( {{x_t} - {{\bar x}_{\left( 2 \right)}}} \right)\left( {{x_{t-1}} - {{\bar x}_{\left( 1 \right)}}} \right)} }}{{\sum\limits_{t = 2}^T {{{\left( {{x_{t - 1}} - {{\bar x}_{\left( 1 \right)}}} \right)}^2}} }} \hfill \\ 
+\end{aligned} \]</span></p>
+<p>When <span class="math inline">\(T\)</span> is large, we have:</p>
+<p><span class="math display">\[\begin{aligned}
+  \sum\limits_{t = 2}^T {\left( {{x_t} - {{\bar x}_{\left( 2 \right)}}} \right)\left( {{x_t} - {{\bar x}_{\left( 1 \right)}}} \right)}  &amp;\approx \sum\limits_{t = 2}^T {\left( {{x_t} - \bar x} \right)\left( {{x_{t - 1}} - \bar x} \right)}  \hfill \\
+  \sum\limits_{t = 2}^T {{{\left( {{x_{t - 1}} - {{\bar x}_{\left( 1 \right)}}} \right)}^2}}  &amp;\approx \sum\limits_{t = 1}^T {{{\left( {{x_t} - \bar x} \right)}^2}}  \hfill \\
+   \hfill \\
+  {{\hat \phi }^*} &amp;= \frac{{\sum\limits_{t = 2}^T {\left( {{x_t} - {{\bar x}_{\left( 2 \right)}}} \right)\left( {{x_t} - {{\bar x}_{\left( 1 \right)}}} \right)} }}{{\sum\limits_{t = 2}^T {{{\left( {{x_{t - 1}} - {{\bar x}_{\left( 1 \right)}}} \right)}^2}} }} \approx \frac{{\sum\limits_{t = 2}^T {\left( {{x_t} - \bar x} \right)\left( {{x_{t - 1}} - \bar x} \right)} }}{{\sum\limits_{t = 1}^T {{{\left( {{x_t} - \bar x} \right)}^2}} }} = \hat \rho \left( 1 \right) \hfill \\ 
+\end{aligned} \]</span></p>
+</div>
+</div>
+</div>
+<div id="method-of-moments" class="section level2">
+<h2><span class="header-section-number">5.6</span> Method of Moments</h2>
+<p>The goal behind the estimation with Method of Moments is to match the theoretical moment (e.g. <span class="math inline">\(E\left[ {x_t^k} \right]\)</span>) with the sample moment (e.g <span class="math inline">\(\frac{1}{n}\sum\limits_{i = 1}^n {x_i^k}\)</span>), where <span class="math inline">\(k\)</span> denotes the moment.</p>
+<p>This method often leads to suboptimal estimates for general ARMA models. However, it is quite optimal for <span class="math inline">\(AR(p)\)</span>.</p>
+<div id="method-of-moments---arp" class="section level3">
+<h3><span class="header-section-number">5.6.1</span> Method of Moments - AR(p)</h3>
+<p>Consider an <span class="math inline">\(AR(p)\)</span> process represented by: <span class="math display">\[{x_t} = {\phi _1}{x_{t - 1}} +  \cdots  + {\phi _p}{x_{t - p}} + {w_t}\]</span> where <span class="math inline">\(w_t \sim N(0,\sigma^2)\)</span></p>
+<p>To begin, we find the Covariance of the process when <span class="math inline">\(h &gt; 0\)</span>: <span class="math display">\[\begin{aligned}
+  Cov\left( {{x_{t + h}},{x_t}} \right) &amp;\mathop = \limits^{\left( {h &gt; 0} \right)} Cov\left( {{\phi _1}{x_{t + h - 1}} +  \cdots  + {\phi _p}{x_{t + h - p}} + {w_{t + h}},{x_t}} \right) \hfill \\
+   &amp;= {\phi _1}Cov\left( {{x_{t + h - 1}},{x_t}} \right) +  \cdots  + {\phi _p}Cov\left( {{x_{t + h - p}},{x_t}} \right) + Cov\left( {{w_{t + h}},{x_t}} \right) \hfill \\
+   &amp;= {\phi _1}\gamma \left( {h - 1} \right) +  \cdots  + {\phi _p}\gamma \left( {h - p} \right) \hfill \\ 
+\end{aligned} \]</span></p>
+<p>Now, we turn our attention to the variance of the process:</p>
+<p><span class="math display">\[\begin{aligned}
+  Var\left( {{w_t}} \right) &amp;= Cov\left( {{w_t},{w_t}} \right) \hfill \\
+   &amp;= Cov\left( {{w_t},{w_t}} \right) + \underbrace {Cov\left( {{\phi _1}{x_{t - 1}},{w_t}} \right)}_{ = 0} +  \cdots  + \underbrace {Cov\left( {{\phi _p}{x_{t - p}},{w_t}} \right)}_{ = 0} \hfill \\
+   &amp;= Cov\left( {\underbrace {{\phi _1}{x_{t - 1}} +  \cdots  + {\phi _p}{x_p} + {w_t}}_{ = {x_t}},{w_t}} \right) \hfill \\
+   &amp;= Cov\left( {{x_t},{w_t}} \right) \hfill \\
+   &amp;= Cov\left( {{x_t},{x_t} - {\phi _1}{x_{t - 1}} -  \cdots  - {\phi _p}{x_p}} \right) \hfill \\
+   &amp;= Cov\left( {{x_t},{x_t}} \right) - {\phi _1}Cov\left( {{x_t},{x_{t - 1}}} \right) -  \cdots  - {\phi _p}Cov\left( {{x_t},{x_{t - p}}} \right) \hfill \\
+   &amp;= \gamma \left( 0 \right) - {\phi _1}\gamma \left( 1 \right) -  \cdots  - {\phi _p}\gamma \left( p \right) \hfill \\ 
+\end{aligned} \]</span></p>
+<p>Together, these equations are known as the <strong>Yule-Walker</strong> equations.</p>
+</div>
+<div id="yule-walker" class="section level3">
+<h3><span class="header-section-number">5.6.2</span> Yule-Walker</h3>
+<p><strong>Definition</strong></p>
+<p>Equation form:</p>
+<p><span class="math display">\[\begin{aligned}
+  \gamma \left( h \right) &amp;= {\phi _1}\gamma \left( {h - 1} \right) -  \cdots  - {\phi _p}\gamma \left( {h - p} \right) \hfill \\
+  {\sigma ^2} &amp;= \gamma \left( 0 \right) - {\phi _1}\gamma \left( 1 \right) -  \cdots  - {\phi _p}\gamma \left( p \right) \hfill \\ 
+  h &amp; = 1, \ldots, p
+\end{aligned} \]</span></p>
+<p>Matrix form: <span class="math display">\[\begin{aligned}
+  \Gamma \vec \phi  &amp;= \vec \gamma  \hfill \\
+  {\sigma ^2} &amp;= \gamma \left( 0 \right) - {{\vec \phi }^T}\vec \gamma  \hfill \\
+   \hfill \\
+  \vec \phi  &amp;= \left[ {\begin{array}{*{20}{c}}
+  {{\phi _1}} \\ 
+   \vdots  \\ 
+  {{\phi _p}} 
+\end{array}} \right]_{p \times 1},\vec \gamma = \left[ {\begin{array}{*{20}{c}}
+  {\gamma \left( 1 \right)} \\ 
+   \vdots  \\ 
+  {\gamma \left( p \right)} 
+\end{array}} \right]_{p \times 1},\Gamma  = \left\{ {\gamma \left( {k - j} \right)} \right\}_{j,k = 1}^p  \\ 
+\end{aligned} \]</span></p>
+<p>More aptly, the structure of <span class="math inline">\(\Gamma\)</span> looks like the following: <span class="math display">\[\Gamma = {\left[ {\begin{array}{*{20}{c}}
+  {\gamma \left( 0 \right)}&amp;{\gamma \left( { - 1} \right)}&amp;{\gamma \left( { - 2} \right)}&amp; \cdots &amp;{\gamma \left( {1 - p} \right)} \\ 
+  {\gamma \left( 1 \right)}&amp;{\gamma \left( 0 \right)}&amp;{\gamma \left( { - 1} \right)}&amp; \cdots &amp;{\gamma \left( {2 - p} \right)} \\ 
+  {\gamma \left( 2 \right)}&amp;{\gamma \left( 1 \right)}&amp;{\gamma \left( 0 \right)}&amp; \cdots &amp;{\gamma \left( {3 - p} \right)} \\ 
+   \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots  \\ 
+  {\gamma \left( {p - 1} \right)}&amp;{\gamma \left( {p - 2} \right)}&amp;{\gamma \left( {p - 3} \right)}&amp; \cdots &amp;{\gamma \left( 0 \right)} 
+\end{array}} \right]_{p \times p}}\]</span></p>
+<p>Note, that we are able to use the above equations to effectively estimate <span class="math inline">\(\vec \phi\)</span> and <span class="math inline">\(\sigma ^2\)</span>.</p>
+<p><span class="math display">\[\left[ \begin{aligned}
+  \hat{\vec{\phi}}  &amp;= {{\hat \Gamma }^{ - 1}}\hat{\vec{\gamma}}  \hfill \\
+  {{\hat \sigma }^2} &amp;= \hat \gamma \left( 0 \right) - {{\hat{\vec{\gamma}}}^T}{{\hat \Gamma }^{ - 1}}\hat{\vec{\gamma}} \hfill \\ 
+\end{aligned}  \right. \to {\text{Yule - Walker Estimates}}\]</span></p>
+<p>For the second equation, we are effectively substituting in the first equation for <span class="math inline">\(\hat{\vec{\phi}}\)</span>, hence the quadratic form <span class="math inline">\({{\hat{\vec{\gamma}}}^T}{{\hat \Gamma }^{ - 1}}\hat{\vec{\gamma}}\)</span>.</p>
+<p>With this being said, there are a few nice asymptotic properties that we obtain for an <span class="math inline">\(AR(p)\)</span>.</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(\sqrt T \left( {\hat{\vec{\phi}} - \vec \phi } \right)\mathop \to \limits_{t \to \infty }^L N\left( {\vec 0,{\sigma ^2}{\Gamma ^{ - 1}}} \right)\)</span></li>
+<li><span class="math inline">\({\hat \sigma ^2}\mathop \to \limits^p {\sigma ^2}\)</span></li>
+</ol>
+<p>Yule-Walker estimates are optimal in the sense that they have the smallest asymptotic variance i.e. <span class="math display">\[Var\left( {\sqrt{T} \hat{\vec{\phi}} } \right) = {\sigma ^2}{\Gamma ^{ - 1}}\]</span> <strong>However, they are not necessarily optimal with small sample sizes.</strong></p>
+<p>Conceptually, the reason for this optimality result is a consequence from the linear dependence between moments and variables.</p>
+<p>This is not true for MA or ARMA, which are both nonlinear and suboptimal.</p>
+</div>
+<div id="estimates" class="section level3">
+<h3><span class="header-section-number">5.6.3</span> Estimates</h3>
+<p>Consider <span class="math inline">\(x_t\)</span> as an <span class="math inline">\(MA(1)\)</span> process: <span class="math inline">\({x_t} = \theta {w_{t - 1}} + {w_t},{w_t}\mathop \sim \limits^{i.i.d} N\left( {0,{\sigma ^2}} \right)\)</span></p>
+<p>Finding the covariance when <span class="math inline">\(h = 1\)</span> gives: <span class="math display">\[\begin{aligned}
+  Cov\left( {{x_t},{x_{t - 1}}} \right) &amp;= Cov\left( {\theta {w_{t - 1}} + {w_t},\theta {w_{t - 2}} + {w_{t - 1}}} \right) \hfill \\
+   &amp;= Cov\left( {\theta {w_{t - 1}},{w_{t - 1}}} \right) \hfill \\
+   &amp;= \theta {\sigma ^2} \hfill \\
+\end{aligned} \]</span></p>
+<p>Finding the variance (e.g. <span class="math inline">\(h=0\)</span>) gives: <span class="math display">\[\begin{aligned}
+  Cov\left( {{x_t},{x_t}} \right) &amp;= Cov\left( {\theta {w_{t - 1}} + {w_t},\theta {w_{t - 1}} + {w_t}} \right) \hfill \\
+   &amp;= {\theta ^2}Cov\left( {{w_{t - 1}},{w_{t - 1}}} \right) + \underbrace {2\theta Cov\left( {{w_{t - 1}},{w_t}} \right)}_{ = 0} + Cov\left( {{w_t},{w_t}} \right) \hfill \\
+   &amp;= {\theta ^2}{\sigma ^2} + {\sigma ^2} \hfill \\
+   &amp;= {\sigma ^2}\left( {1 + {\theta ^2}} \right) \hfill \\ 
+\end{aligned} \]</span></p>
+<p>This gives us the MA(1) ACF of: <span class="math display">\[\rho \left( h \right) = \left\{ {\begin{array}{*{20}{c}}
+  1&amp;{h = 0} \\ 
+  {\frac{\theta }{{{\theta ^2} + 1}}}&amp;{h =  \pm 1} 
+\end{array}} \right.\]</span></p>
+<p>With this in mind, let’s solve for possible <span class="math inline">\(\theta\)</span> values: <span class="math display">\[\begin{aligned}
+  \rho \left( 1 \right) &amp;= \frac{\theta }{{{\theta ^2} + 1}} \hfill \\
+   \Rightarrow \theta  &amp;= \left( {{\theta ^2} + 1} \right)\rho \left( 1 \right) \hfill \\
+  \theta  &amp;= \rho \left( 1 \right){\theta ^2} + \rho \left( 1 \right) \hfill \\
+  0 &amp;= \rho \left( 1 \right){\theta ^2} - \theta  + \rho \left( 1 \right) \hfill \\ 
+\end{aligned} \]</span></p>
+<p>Yuck, that looks nasty. Let’s dig out an ol’ friend from middle school known as the quadratic formula:</p>
+<p><span class="math display">\[\theta  = \frac{{ - b \pm \sqrt {{b^2} - 4ac} }}{{2a}}\]</span></p>
+<p>Applying the quadratic formula leads to:</p>
+<p><span class="math display">\[\begin{aligned}
+  a &amp;= \rho \left( h \right), b = -1, c = \rho \left( h \right) \\
+  \theta  &amp;= \frac{{1 \pm \sqrt {{1^2} - 4\rho \left( h \right)\rho \left( h \right)} }}{{2\rho \left( h \right)}} \hfill \\
+  \theta  &amp;= \frac{{1 \pm \sqrt {1 - 4{{\left[ {\rho \left( h \right)} \right]}^2}} }}{{2\rho \left( h \right)}} \hfill \\
+\end{aligned} \]</span></p>
+<p>Thus, we have two possibilities: <span class="math display">\[\begin{aligned}
+  {\theta _1} &amp;= \frac{{1 + \sqrt {1 - 4{{\left[ {\rho \left( h \right)} \right]}^2}} }}{{2\rho \left( h \right)}} \hfill \\
+  {\theta _2} &amp;= \frac{{1 - \sqrt {1 - 4{{\left[ {\rho \left( h \right)} \right]}^2}} }}{{2\rho \left( h \right)}} \hfill \\ 
+  \end{aligned}\]</span></p>
+<p>To ensure invertibility, we mandate that <span class="math inline">\(\left| {\rho \left( 1 \right)} \right| &lt; \frac{1}{2}\)</span>. Thus, we opt for <span class="math inline">\({\theta _2}\)</span>.</p>
+<p>So, our estimator is: <span class="math display">\[\hat \theta  = \frac{{1 - \sqrt {1 - 4{{\left[ {\hat \rho \left( 1 \right)} \right]}^2}} }}{{2\hat \rho \left( 1 \right)}}\]</span></p>
+<p>Furthermore, it can be shown that:</p>
+<p><span class="math display">\[\sqrt T \left( {\hat \theta  - \theta } \right)\mathop  \to \limits_{T \to \infty }^L N\left( {0 ,\frac{{1 + {\theta ^2} + 4{\theta ^4} + {\theta ^6} + {\theta ^8}}}{{{{\left( {1 - {\theta ^2}} \right)}^2}}}} \right)\]</span></p>
+<p>So, this is not a really optimal estimator…</p>
+</div>
+</div>
+<div id="prediction-forecast" class="section level2">
+<h2><span class="header-section-number">5.7</span> Prediction (Forecast)</h2>
+
+<div id="refs" class="references">
+
+</div>
 </div>
 </div>
             </section>
@@ -239,8 +534,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="basic-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="ar1-with-mean-mu.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="basic-models.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
