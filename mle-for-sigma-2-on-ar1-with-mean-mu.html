@@ -38,8 +38,8 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
-<link rel="next" href="autocorrelation-and-stationarity.html">
+<link rel="prev" href="conditioning-time-x-t-x-t-1.html">
+<link rel="next" href="conditional-mle-on-ar1-with-mean-mu.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -209,106 +209,43 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="the-world-of-time-series" class="section level1">
-<h1><span class="header-section-number">Chapter 2</span> The World of Time Series</h1>
-<div id="objective-of-time-series" class="section level2">
-<h2><span class="header-section-number">2.1</span> Objective of Time Series</h2>
-<ol style="list-style-type: decimal">
-<li>View a set of observations made sequentially in “time.”
-<ul>
-<li>“One damned thing after another.” ~ R. A. Fisher</li>
-</ul></li>
-<li>Find a suitable model to describe an observed process
-<ul>
-<li>“All models are wrong, but some are useful” ~ George Box</li>
-</ul></li>
-<li>Forecast future observations
-<ul>
-<li>“Prediction is very difficult, especially if it’s about the future.” ~ Niels Bohr</li>
-</ul></li>
-</ol>
-<p>In essence, we seek to be able to predict, classify, and associate observed data with a theoretical backend. To do so, one must first create a model that provides an explanation of the data as a mixture of a pattern and noise (error). That is, we must be able to formulate the data in terms of:</p>
-<p>Model = Pattern + Noise</p>
-<p>In Time Series, the pattern represents the association between values observed over time (e.g. autocorrelation).</p>
-<p><strong><em>Since these patterns are correlated in time, methods that assume independence are unable to be used.</em></strong></p>
-</div>
-<div id="what-is-a-time-series-and-can-i-eat-it" class="section level2">
-<h2><span class="header-section-number">2.2</span> What is a Time Series and can I eat it?</h2>
-<p>The definition of <strong><em>Time Series (TS)</em></strong> is as follows:</p>
-<p>A <strong><em>Time Series</em></strong> is a stochastic process, a sequence of random variables (RV) defined on a common probability space denoted as <span class="math inline">\(\left(X_t\right)_{t=1, \ldots, T}\)</span> (i.e. <span class="math inline">\(X_1, X_2, \ldots, X_T\)</span>).</p>
-<p>Note: The time <span class="math inline">\(t\)</span> belongs to discrete index sets (<span class="math inline">\(\in \mathbb{Z}\)</span>) not continuous (<span class="math inline">\(\notin \mathbb{R}\)</span>). After all, TS data is always collected at discrete time points. Furthermore, by time belonging to <span class="math inline">\(\mathbb{Z}\)</span> it can take upon itself negative and positive integer values (e.g. <span class="math inline">\(-2, -1, 0, 1, 2\)</span>).</p>
-<p>In laypersons terms, a time series is a variable that gets measured sequentially at fixed intervals of time, which are oftenly spaced apart at equal distances (e.g. equispaced).</p>
-<p>Examples of Time Series:</p>
-<ol style="list-style-type: decimal">
-<li>Stock Data from Johnson and Johson’s Quarterly earnings…</li>
-</ol>
-<p><img src="its_files/figure-html/example_jj-1.png" width="672" /></p>
-<ol start="2" style="list-style-type: decimal">
-<li>Speech data from someone talking</li>
-</ol>
-<p><img src="its_files/figure-html/example_speech-1.png" width="672" /></p>
-<ol start="3" style="list-style-type: decimal">
-<li>Earthquake and explosion data</li>
-</ol>
-<p><img src="its_files/figure-html/example_eq-1.png" width="672" /></p>
-</div>
-<div id="exploratory-data-analysis-eda-for-time-series" class="section level2">
-<h2><span class="header-section-number">2.3</span> Exploratory Data Analysis (EDA) for Time Series</h2>
-<p>A large part of time series involves looking at graphs of time series. The graphs provide us information as to what kind of trends and outliers the data maybe hiding.</p>
-<div id="identifying-trends" class="section level3">
-<h3><span class="header-section-number">2.3.1</span> Identifying Trends</h3>
-<p>A trend exists when there is a long term increase or decrease or combination of increases or decreases (polynomial) in the data. It could be linear or non-linear.</p>
-<p>Note: Long-term trend might change direction, indicating non-linear trends!</p>
-<p>Examples of non-linear trends:</p>
-<ol style="list-style-type: decimal">
-<li>Seasonal trends (periodic): These are the cyclical patterns which repeat after a fixed/regular time period.
-<ul>
-<li>Business cycles (bust/recession, recovery, boom)</li>
-<li>Seasons (summer, fall, winter, spring)</li>
-</ul></li>
-<li>Non-seasonal trends (periodic): These patterns cannot be associated to seasonal variation.
-<ul>
-<li>Impact of economic indicators on stock returns.</li>
-</ul></li>
-<li>“Other” trends: These trends have no regular patterns. They could be just local, short-term. They change statistical properties of a TS over a segment of time (“window”).
-<ul>
-<li>Earthquakes!</li>
-<li>El Nino</li>
-</ul></li>
-</ol>
-</div>
-<div id="noticing-changes-in-time-and-outliers" class="section level3">
-<h3><span class="header-section-number">2.3.2</span> Noticing changes in time and outliers</h3>
-<p>Change in time and outliers yields interesting results. These results can be seen as:</p>
-<ol style="list-style-type: decimal">
-<li>Change in Means
-<ul>
-<li>Change in means of a TS can be related to long-term, cyclical, and short-term trends.</li>
-</ul></li>
-<li>Change in Variance
-<ul>
-<li>Change in variance can be related to change in the amplitude of the fluctuations of a TS.</li>
-</ul></li>
-<li>Change in State
-<ul>
-<li>An event which causes change in statistical properties of TS for short term and long term! Some events cause abrupt changes in statistical properties of TS. They are often associated with “explosive” nature of TS.</li>
-</ul></li>
-<li>Outliers
-<ul>
-<li>These are the “extreme” observations in the time series. May be related to data collection or change in state.</li>
-</ul></li>
-</ol>
-
-</div>
-</div>
+<div id="mle-for-sigma-2-on-ar1-with-mean-mu" class="section level1">
+<h1><span class="header-section-number">Chapter 8</span> MLE for <span class="math inline">\(\sigma ^2\)</span> on <span class="math inline">\(AR(1)\)</span> with mean <span class="math inline">\(\mu\)</span></h1>
+<p><em>Whew</em>, with all of the above said, we’re now ready to obtain an MLE estimate on an <span class="math inline">\(AR(1)\)</span>.</p>
+<p>Let <span class="math inline">\(\vec{\theta} = \left[ {\begin{array}{*{20}{c}}  \mu \\  \phi \\  {{\sigma ^2}} \end{array}} \right]\)</span>, then the likelihood of <span class="math inline">\(\vec{\theta}\)</span> is given by <span class="math inline">\(x_1, \ldots , x_T\)</span> is:</p>
+<p><span class="math display">\[\begin{aligned}
+  L\left( {\vec \theta |{x_1}, \ldots ,{x_T}} \right) &amp;= f\left( {{x_1}, \ldots ,{x_T}|\vec \theta } \right) \hfill \\
+   &amp;= f\left( {{x_1}} \right) \cdot \prod\limits_{t = 2}^T {f\left( {{x_t}|{x_{t - 1}}} \right)}
+\end{aligned} \]</span></p>
+<p>The last equality is the result of us using a lag 1 of “memory.” Also, note that <span class="math inline">\(x_t | x_{t-1}\)</span> must have <span class="math inline">\(t &gt; 1 \in \mathbb{N}\)</span>. Furthermore, we have dropped the parameters in the densities, e.g. <span class="math inline">\(\vec{\theta}\)</span> in <span class="math inline">\(f(\cdot)\)</span>, to ease notation.</p>
+<p>Using equations [1] and [2], we have:</p>
+<p><span class="math display">\[L\left( {\vec \theta |{x_1}, \ldots ,{x_T}} \right) = {\left( {2\pi } \right)^{ - \frac{T}{2}}}{\left( {{\sigma ^2}} \right)^{ - \frac{T}{2}}}{\left( {1 - {\phi ^2}} \right)^{\frac{1}{2}}}\exp \left( { - \frac{1}{{2{\sigma ^2}}}\left[ {\left( {1 - {\phi ^2}} \right){{\left( {{x_t} - \mu } \right)}^2} + \sum\limits_{t = 2}^T {{{\left[ {\left( {{x_t} - \mu } \right) - \phi \left( {{x_{t - 1}} - \mu } \right)} \right]}^2}} } \right]} \right)\]</span></p>
+<p>For convenience, we’ll define:</p>
+<p><span class="math display">\[S\left( {\mu ,\phi } \right) = \left( {1 - {\phi ^2}} \right){\left( {{x_t} - \mu } \right)^2} + \sum\limits_{t = 2}^T {{{\left[ {\left( {{x_t} - \mu } \right) - \phi \left( {{x_{t - 1}} - \mu } \right)} \right]}^2}} \]</span></p>
+<p>Fun fact, this is called the “<strong>unconditional</strong> sum of squares.”</p>
+<p>Thus, we will operate on:</p>
+<p><span class="math display">\[L\left( {\vec \theta |{x_1}, \ldots ,{x_T}} \right) = {\left( {2\pi } \right)^{ - \frac{T}{2}}}{\left( {{\sigma ^2}} \right)^{ - \frac{T}{2}}}{\left( {1 - {\phi ^2}} \right)^{\frac{1}{2}}}\exp \left( { - \frac{1}{{2{\sigma ^2}}}S\left( {\mu ,\phi } \right)} \right)\]</span></p>
+<p>Taking the log of this yields:</p>
+<p><span class="math display">\[\begin{aligned}
+  l\left( {\vec \theta |{x_1}, \ldots ,{x_T}} \right) &amp;= \log \left( {L\left( {\vec \theta |{x_1}, \ldots ,{x_T}} \right)} \right) \hfill \\
+   &amp;=  - \frac{T}{2}\log \left( {2\pi } \right) - \frac{T}{2}\log \left( {{\sigma ^2}} \right) + \frac{1}{2}\left( {1 - {\phi ^2}} \right) - \frac{1}{{2{\sigma ^2}}}S\left( {\mu ,\phi } \right) \hfill \\ 
+\end{aligned} \]</span></p>
+<p>Now, taking the derivative and solving for the maximized point gives:</p>
+<p><span class="math display">\[\begin{aligned}
+  \frac{\partial }{{\partial {\sigma ^2}}}l\left( {\vec \theta |{x_1}, \ldots ,{x_T}} \right) &amp;=  - \frac{T}{{2{\sigma ^2}}} + \frac{1}{{2{\sigma ^4}}}S\left( {\mu ,\phi } \right) \hfill \\
+  0 &amp;=  - \frac{T}{{2{\sigma ^2}}} + \frac{1}{{2{\sigma ^4}}}S\left( {\mu ,\phi } \right) \hfill \\
+  \frac{T}{{2{\sigma ^2}}} &amp;= \frac{1}{{2{\sigma ^4}}}S\left( {\mu ,\phi } \right) \hfill \\
+  {{ \sigma }^2} &amp;= \frac{1}{T}S\left( {\mu ,\phi } \right) \hfill \\ 
+\end{aligned} \]</span></p>
+<p>Thus, the MLE for <span class="math inline">\({\hat \sigma }^2 = \frac{1}{T}S\left( {\hat \mu ,\hat \phi } \right)\)</span>, where <span class="math inline">\(\hat \mu\)</span> and <span class="math inline">\(\hat \phi\)</span> are the MLEs for <span class="math inline">\(\mu , \phi\)</span> that are obtained numerically via either <em>Newton Raphson</em> or a <em>Scoring Algorithm</em>. (More details in a numerical recipe book.)</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="autocorrelation-and-stationarity.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="conditioning-time-x-t-x-t-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="conditional-mle-on-ar1-with-mean-mu.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -335,7 +272,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/coatless/its/edit/master/01-intro.Rmd",
+"link": "https://github.com/coatless/its/edit/master/04-arma.Rmd",
 "text": null
 },
 "download": null,
