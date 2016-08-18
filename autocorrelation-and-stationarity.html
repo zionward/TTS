@@ -161,10 +161,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.2" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#stationarity"><i class="fa fa-check"></i><b>2.2</b> Stationarity</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#definitions-1"><i class="fa fa-check"></i><b>2.2.1</b> Definitions</a></li>
 <li class="chapter" data-level="2.2.2" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#assessing-weak-stationarity-of-time-series-models"><i class="fa fa-check"></i><b>2.2.2</b> Assessing Weak Stationarity of Time Series Models</a></li>
-<li class="chapter" data-level="2.2.3" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#esimtation-of-the-mean-function"><i class="fa fa-check"></i><b>2.2.3</b> Esimtation of the Mean Function</a></li>
-<li class="chapter" data-level="2.2.4" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#sample-autocovariance-and-autocorrelation-functions"><i class="fa fa-check"></i><b>2.2.4</b> Sample Autocovariance and Autocorrelation Functions</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#joint-stationarity"><i class="fa fa-check"></i><b>2.3</b> Joint Stationarity</a></li>
+<li class="chapter" data-level="2.3" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#estimation-of-the-mean-function"><i class="fa fa-check"></i><b>2.3</b> Estimation of the Mean Function</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#sample-autocovariance-and-autocorrelation-functions"><i class="fa fa-check"></i><b>2.3.1</b> Sample Autocovariance and Autocorrelation Functions</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="basic-models.html"><a href="basic-models.html"><i class="fa fa-check"></i><b>3</b> Basic Models</a><ul>
 <li class="chapter" data-level="3.1" data-path="basic-models.html"><a href="basic-models.html#the-backshift-operator"><i class="fa fa-check"></i><b>3.1</b> The Backshift Operator</a></li>
@@ -641,8 +641,9 @@ for (i in <span class="dv">1</span>:B){
   Var\left( {{y_t}} \right) &amp;= \frac{{\sigma _w^2}}{{1 - \phi _1^2}} \\ 
 \end{aligned} \]</span></p>
 </div>
-<div id="esimtation-of-the-mean-function" class="section level3">
-<h3><span class="header-section-number">2.2.3</span> Esimtation of the Mean Function</h3>
+</div>
+<div id="estimation-of-the-mean-function" class="section level2">
+<h2><span class="header-section-number">2.3</span> Estimation of the Mean Function</h2>
 <p>If a time series is stationary, the mean function is constant and a possible estimator of this quantity is given by</p>
 <p><span class="math display">\[\bar{X} = {\frac{1}{n}\sum\limits_{t = 1}^n {{X_t}} }.\]</span></p>
 <p>This estimator is clearly unbiased and has the following variance:</p>
@@ -726,32 +727,34 @@ var.approx =<span class="st"> </span><span class="dv">1</span>/(n*(<span class="
        <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;deepskyblue4&quot;</span>,<span class="st">&quot;firebrick3&quot;</span>,<span class="st">&quot;springgreen4&quot;</span>), <span class="dt">lty =</span> <span class="dv">1</span>,
        <span class="dt">bty =</span> <span class="st">&quot;n&quot;</span>,<span class="dt">bg =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">box.col =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">cex =</span> <span class="fl">1.2</span>)</code></pre></div>
 <p><img src="tts_files/figure-html/estimXbar-1.png" width="672" /></p>
-</div>
+<!-- TO DO: comment grpah a little -->
 <div id="sample-autocovariance-and-autocorrelation-functions" class="section level3">
-<h3><span class="header-section-number">2.2.4</span> Sample Autocovariance and Autocorrelation Functions</h3>
+<h3><span class="header-section-number">2.3.1</span> Sample Autocovariance and Autocorrelation Functions</h3>
 <p>A natural estimator of the <strong>autocovariance function</strong> is given as:</p>
 <p><span class="math display">\[\hat \gamma \left( h \right) = \frac{1}{T}\sum\limits_{t = 1}^{T - h} {\left( {{X_t} - \bar X} \right)\left( {{X_{t + h}} - \bar X} \right)} \]</span></p>
 <p>leading the following “plug-in” estimator of the <strong>autocorrelation function</strong></p>
 <p><span class="math display">\[\hat \rho \left( h \right) = \frac{{\hat \gamma \left( h \right)}}{{\hat \gamma \left( 0 \right)}}.\]</span></p>
 <p>A graphical representation of the autocorrelation function is often the first step of any time series analysis (assuming the process to be stationary). Consider the following simulated example:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simulate iid gaussian RV (i.e. white noise)</span>
-Xt =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load package</span>
+<span class="kw">library</span>(gmwm)
+
+<span class="co"># Simulate 100 observation from a Gaussian white noise</span>
+Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">WN</span>(<span class="dt">sigma2 =</span> <span class="dv">1</span>), <span class="dt">N =</span> <span class="dv">100</span>)
 
 <span class="co"># Compute autocorrelation</span>
-acf_Xt =<span class="st"> </span><span class="kw">acf</span>(Xt)
+acf_Xt =<span class="st"> </span><span class="kw">ACF</span>(Xt)
 
 <span class="co"># Plot autocorrelation</span>
-<span class="kw">plot</span>(acf_Xt)</code></pre></div>
+<span class="kw">plot</span>(acf_Xt, <span class="dt">show.ci =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <p><img src="tts_files/figure-html/basicACF-1.png" width="672" /></p>
-<p>In this example, the true autocorrelation at lag <span class="math inline">\(h\)</span> (<span class="math inline">\(|h|\)</span> &gt; 0 ) is equal 0 but obviously the estimated autocorrelations are random variables and are not equal to their true value. It would therefore be usefull to have have some knowledge about the variability of the sample autocorrelations (under some conditions) to assess whether the data comes from a completely random series or presents some significant correlation at some lags. The following result provide an asymptotic solution to this problem:</p>
-<blockquote>
-<p>If <span class="math inline">\(X_t\)</span> is white noise with finite fourth moment, then <span class="math inline">\(\hat{\rho}(h)\)</span> is approximately normally distributed with mean <span class="math inline">\(0\)</span> and variance <span class="math inline">\(T^{-1}\)</span> for all fixed <span class="math inline">\(h\)</span>.</p>
-</blockquote>
-<p>Using on this result, we now have an approximate method to assess whether peaks in sample autocorrelation are significant by determining whether the observed peak lies outside the interval <span class="math inline">\(+/- 2/\sqrt{T}\)</span> (i.e. an approximate 95% confidence interval). Returning to our previous example:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot autocorrelation with confidence bands</span>
+<p>In this example, the true autocorrelation is equal to zero at any lag <span class="math inline">\(h \neq 0\)</span> but obviously the estimated autocorrelations are random variables and are not equal to their true values. It would therefore be usefull to have some knowledge about the variability of the sample autocorrelations (under some conditions) to assess whether the data comes from a completely random series or presents some significant correlation at some lags. The following result provide an asymptotic solution to this problem:</p>
+<p><strong>Theorem:</strong> If <span class="math inline">\(X_t\)</span> is white noise with finite fourth moment, then <span class="math inline">\(\hat{\rho}(h)\)</span> is approximately normally distributed with mean <span class="math inline">\(0\)</span> and variance <span class="math inline">\(n^{-1}\)</span> for all fixed <span class="math inline">\(h\)</span>.</p>
+<!-- ADD PROOF -->
+<p>Using on this result, we now have an approximate method to assess whether peaks in sample autocorrelation are significant by determining whether the observed peak lies outside the interval <span class="math inline">\(\pm 2/\sqrt{T}\)</span> (i.e. an approximate 95% confidence interval). Returning to our previous example:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot autocorrelation with confidence bands </span>
 <span class="kw">plot</span>(acf_Xt)</code></pre></div>
 <p><img src="tts_files/figure-html/basicACF2-1.png" width="672" /></p>
-<p>It can now be observed that most peaks lies within the interval <span class="math inline">\(+/- 2/\sqrt{T}\)</span> suggesting that the true data generating process is completely random (in the linear sense).</p>
+<p>It can now be observed that most peaks lies within the interval <span class="math inline">\(\pm 2/\sqrt{T}\)</span> suggesting that the true data generating process is completely random (in the linear sense).</p>
 <p>Unfortunately, this method is asymptotic (it relies on the central limit theorem) and there no “exact” tools that can be used in this case. In the simulation study below consider the “quality” of this result for <span class="math inline">\(h = 3\)</span> considering different sample sizes:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Number of Monte Carlo replications</span>
 B =<span class="st"> </span><span class="dv">10000</span>
@@ -792,16 +795,24 @@ for (i in <span class="dv">1</span>:<span class="kw">length</span>(T)){
 }</code></pre></div>
 <p><img src="tts_files/figure-html/simulationACF-1.png" width="672" /></p>
 <p>It can clearly be observed that asymptotic approximation is quite poor when <span class="math inline">\(T = 5\)</span> but as the sample size increases the approximation becomes more appropriate and is nearly perfect with <span class="math inline">\(T = 300\)</span>.</p>
-</div>
-</div>
-<div id="joint-stationarity" class="section level2">
-<h2><span class="header-section-number">2.3</span> Joint Stationarity</h2>
-<p>Two time series, say <span class="math inline">\(\left(X_t \right)\)</span> and <span class="math inline">\(\left(Y_t\right)\)</span>, are said to be jointly stationary if they are each stationary, and the cross-covariance function</p>
-<p><span class="math display">\[{\gamma _{XY}}\left( {t,t + h} \right) = Cov\left( {{X_t},{Y_{t + h}}} \right) = {\gamma _{XY}}\left( h \right)\]</span></p>
-<p>is a function only of lag <span class="math inline">\(h\)</span>.</p>
-<p>The cross-correlation function for jointly stationary times can be expressed as:</p>
-<p><span class="math display">\[{\rho _{XY}}\left( {t,t + h} \right) = \frac{{{\gamma _{XY}}\left( {t,t + h} \right)}}{{{\sigma _{{X_t}}}{\sigma _{{Y_{t + h}}}}}} = \frac{{{\gamma _{XY}}\left( h \right)}}{{{\sigma _{{X_t}}}{\sigma _{{Y_{t + h}}}}}} = {\rho _{XY}}\left( h \right)\]</span></p>
+<!-- TO DO: ADD MORE DETAILS ON THE SIMULATION -->
+<!-- TO DO: Joint stationarity is mising at the moment -->
+<!--
+## Joint Stationarity
 
+Two time series, say $\left(X_t \right)$ and $\left(Y_t\right)$, are said to be jointly stationary if they are each stationary, and the cross-covariance function
+
+\[{\gamma _{XY}}\left( {t,t + h} \right) = Cov\left( {{X_t},{Y_{t + h}}} \right) = {\gamma _{XY}}\left( h \right)\]
+
+is a function only of lag $h$.
+
+The cross-correlation function for jointly stationary times can be expressed as:
+
+\[{\rho _{XY}}\left( {t,t + h} \right) = \frac{{{\gamma _{XY}}\left( {t,t + h} \right)}}{{{\sigma _{{X_t}}}{\sigma _{{Y_{t + h}}}}}} = \frac{{{\gamma _{XY}}\left( h \right)}}{{{\sigma _{{X_t}}}{\sigma _{{Y_{t + h}}}}}} = {\rho _{XY}}\left( h \right)\]
+
+-->
+
+</div>
 </div>
 </div>
             </section>
