@@ -341,7 +341,7 @@ Figure 1.2: Discrete-time can be thought of as viewing a number line with equall
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This code simulate a gaussian white noise process</span>
 n =<span class="st"> </span><span class="dv">100</span>                               <span class="co"># process length</span>
 sigma2 =<span class="st"> </span><span class="dv">1</span>                            <span class="co"># process variance</span>
-Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">WN</span>(<span class="dt">sigma2 =</span> sigma2), <span class="dt">n =</span> n)
+Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">WN</span>(<span class="dt">sigma2 =</span> sigma2), <span class="dt">N =</span> n)
 <span class="kw">plot</span>(Xt)</code></pre></div>
 <p><img src="tts_files/figure-html/example_WN-1.png" width="672" /></p>
 </div>
@@ -440,7 +440,7 @@ RW2dimension =<span class="st"> </span>function(<span class="dt">steps =</span> 
 n =<span class="st"> </span><span class="dv">100</span>                               <span class="co"># process length</span>
 phi =<span class="st"> </span><span class="fl">0.5</span>                             <span class="co"># phi parameter</span>
 sigma2 =<span class="st"> </span><span class="dv">1</span>                            <span class="co"># innovation variance</span>
-Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">AR1</span>(<span class="dt">phi =</span> phi, <span class="dt">sigma2 =</span> sigma2), <span class="dt">n =</span> n)
+Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">AR1</span>(<span class="dt">phi =</span> phi, <span class="dt">sigma2 =</span> sigma2), <span class="dt">N =</span> n)
 <span class="kw">plot</span>(Xt)</code></pre></div>
 <p><img src="tts_files/figure-html/example_AR1-1.png" width="672" /></p>
 </div>
@@ -456,7 +456,7 @@ Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">AR
 n =<span class="st"> </span><span class="dv">100</span>                               <span class="co"># process length</span>
 sigma2 =<span class="st"> </span><span class="dv">1</span>                            <span class="co"># innovation variance</span>
 theta =<span class="st"> </span><span class="fl">0.5</span>                           <span class="co"># theta parameter</span>
-Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">MA1</span>(<span class="dt">theta =</span> theta, <span class="dt">sigma2 =</span> sigma2), <span class="dt">n =</span> n)
+Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">MA1</span>(<span class="dt">theta =</span> theta, <span class="dt">sigma2 =</span> sigma2), <span class="dt">N =</span> n)
 <span class="kw">plot</span>(Xt)</code></pre></div>
 <p><img src="tts_files/figure-html/example_MA1-1.png" width="672" /></p>
 </div>
@@ -474,7 +474,7 @@ Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">MA
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This code simulate a linear drift with 0 intercept</span>
 n =<span class="st"> </span><span class="dv">100</span>                               <span class="co"># process length</span>
 omega =<span class="st"> </span><span class="fl">0.5</span>                           <span class="co"># slope parameter</span>
-Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">DR</span>(<span class="dt">omega =</span> omega), <span class="dt">n =</span> n)
+Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">DR</span>(<span class="dt">omega =</span> omega), <span class="dt">N =</span> n)
 <span class="kw">plot</span>(Xt)</code></pre></div>
 <p><img src="tts_files/figure-html/example_DR-1.png" width="672" /></p>
 </div>
@@ -497,7 +497,7 @@ delta =<span class="st"> </span><span class="fl">0.005</span>                   
 sigma2 =<span class="st"> </span><span class="dv">10</span>                             <span class="co"># variance parameter (white noise)</span>
 gamma2 =<span class="st"> </span><span class="fl">0.1</span>                            <span class="co"># innovation variance (random walk)</span>
 model =<span class="st"> </span><span class="kw">WN</span>(<span class="dt">sigma2 =</span> sigma2) +<span class="st"> </span><span class="kw">RW</span>(<span class="dt">gamma2 =</span> gamma2) +<span class="st"> </span><span class="kw">DR</span>(<span class="dt">omega =</span> delta)
-Xt =<span class="st"> </span><span class="kw">gen.lts</span>(model, <span class="dt">n =</span> n)
+Xt =<span class="st"> </span><span class="kw">gen.lts</span>(model, <span class="dt">N =</span> n)
 <span class="kw">plot</span>(Xt)</code></pre></div>
 <p><img src="tts_files/figure-html/example_ecolo-1.png" width="672" /></p>
 <p>In the above graph, the three latent (unobserved) processes are first depicted (i.e. white noise, random walk and drift) and then the sum of the three is present (i.e. <span class="math inline">\((X_t)\)</span>).</p>
