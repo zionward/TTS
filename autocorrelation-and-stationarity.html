@@ -777,7 +777,86 @@ acf_Xt =<span class="st"> </span><span class="kw">ACF</span>(Xt)
 <p><img src="tts_files/figure-html/basicACF-1.png" width="672" /></p>
 <p>In this example, the true autocorrelation is equal to zero at any lag <span class="math inline">\(h \neq 0\)</span> but obviously the estimated autocorrelations are random variables and are not equal to their true values. It would therefore be usefull to have some knowledge about the variability of the sample autocorrelations (under some conditions) to assess whether the data comes from a completely random series or presents some significant correlation at some lags. The following result provide an asymptotic solution to this problem:</p>
 <p><strong>Theorem:</strong> If <span class="math inline">\(X_t\)</span> is white noise with finite fourth moment, then <span class="math inline">\(\hat{\rho}(h)\)</span> is approximately normally distributed with mean <span class="math inline">\(0\)</span> and variance <span class="math inline">\(n^{-1}\)</span> for all fixed <span class="math inline">\(h\)</span>.</p>
-<!-- ADD PROOF -->
+<p><strong>Proof:</strong></p>
+<p>Let <span class="math inline">\(\{X_t\}_1^T\)</span> be white noise process with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span> and finite fourth moment.</p>
+And the sample autocovariance function is defined as
+\begin{equation*}
+    \hat \gamma \left( h \right) = \frac{1}{T}\sum\limits_{t = 1}^{T - h} {\left( {{X_t} - \bar X} \right)\left( {{X_{t + h}} - \bar X} \right)}.
+\end{equation*}
+Since it is difficult to obtain the asymptotic distribution of <span class="math inline">\(\hat \gamma \left( h \right)\)</span>, we define a new statistic
+\begin{equation*}
+    \tilde{\gamma} \left( h \right) = \frac{1}{T}\sum\limits_{t = 1}^{T} {\left( {{X_t} - \mu} \right)\left( {{X_{t + h}} - \mu} \right)}.
+\end{equation*}
+According to Problem 1.30 on TS text book, we have
+\begin{equation*}
+    T^{\frac{1}{2}}[\tilde{\gamma} \left( h \right) - \hat \gamma \left( h \right)] = o_p(1).
+\end{equation*}
+<p>Therefore <span class="math inline">\(\tilde{\gamma} \left( h \right)\)</span> and <span class="math inline">\(\hat \gamma \left( h \right)\)</span> have the same asymptotic distribution, it is suffice to show the asymptotic distribution of <span class="math inline">\(\tilde{\gamma} \left( h \right)\)</span>.</p>
+The expectation of <span class="math inline">\(\tilde{\gamma} \left( h \right)\)</span>
+\begin{equation*}
+    \mathbb{E}[\tilde{\gamma} \left( h \right)] = \frac{1}{T}\mathbb{E}\left[\sum\limits_{t = 1}^{T} {\left( {{X_t} - \mu} \right)\left( {{X_{t + h}} - \mu} \right)}\right].
+\end{equation*}
+By Cauchy–Schwarz inequality and <span class="math inline">\(\var(X_t) = \sigma^2\)</span>, we have
+\begin{equation*}
+    \sum\limits_{t = 1}^{T} {\left( {{X_t} - \mu} \right)\left( {{X_{t + h}} - \mu} \right)} \leq \sum\limits_{t = 1}^{T} {\left( {{X_t} - \mu} \right)^2} \sum\limits_{t = 1}^{T} {\left( {{X_{t + h}} - \mu} \right)^2} &lt; \infty.
+\end{equation*}
+<p>Then by bounded convergence theorem and <span class="math inline">\(\{X_t\}_1^T\)</span> are independent, we have</p>
+\begin{equation*}
+    \mathbb{E}[\tilde{\gamma} \left( h \right)] = \frac{1}{T}\left[\sum\limits_{t = 1}^{T} { \mathbb{E}\left( {{X_t} - \mu} \right)\mathbb{E}\left( {{X_{t + h}} - \mu} \right)}\right] =
+    \begin{cases}
+        \sigma^2, &amp; \text{for } h = 0\\
+        0, &amp; \text{for } h \neq 0
+    \end{cases}.
+\end{equation*}
+<p>The variance of <span class="math inline">\(\tilde{\gamma} \left( h \right)\)</span>,</p>
+when <span class="math inline">\(h \neq 0\)</span>,
+\begin{equation*}
+    \begin{aligned}
+        \var[\tilde{\gamma} \left( h \right)] &amp;= \frac{1}{T^2}\mathbb{E}\left\{\left[\sum\limits_{t = 1}^{T} {\left( {{X_t} - \mu} \right)\left( {{X_{t + h}} - \mu} \right)}\right]^2\right\}\\
+        &amp;= \frac{1}{T^2}\mathbb{E}\left\{\left[\sum\limits_{i = 1}^{T} {\left( {{X_i} - \mu} \right)\left( {{X_{i + h}} - \mu} \right)}\right] \left[\sum\limits_{j = 1}^{T} {\left( {{X_j} - \mu} \right)\left( {{X_{j + h}} - \mu} \right)}\right]\right\}\\
+        &amp;= \frac{1}{T^2}\mathbb{E}\left[\sum\limits_{i = 1}^{T}\sum\limits_{j = 1}^{T} {\left( {{X_i} - \mu} \right)\left( {{X_{i + h}} - \mu} \right)}{\left( {{X_j} - \mu} \right)\left( {{X_{j + h}} - \mu} \right)}\right].
+    \end{aligned}
+\end{equation*}
+<p>Also by Cauchy–Schwarz inequality and the finite fourth moment assumption, we can use the bounded convergence theorem. And since <span class="math inline">\(\{X_t\}_1^T\)</span> is white noise process, we have</p>
+\begin{equation*}
+    \mathbb{E}\left[{\left( {{X_i} - \mu} \right)\left( {{X_{i + h}} - \mu} \right)}{\left( {{X_j} - \mu} \right)\left( {{X_{j + h}} - \mu} \right)}\right] \neq 0
+\end{equation*}
+<p>only when <span class="math inline">\(i = j\)</span>.</p>
+Therefore,
+\begin{equation*}
+    \begin{aligned}
+        \var[\tilde{\gamma} \left( h \right)] &amp;= \frac{1}{T^2}\sum\limits_{i = 1}^{T} \mathbb{E}\left[ {\left( {{X_i} - \mu} \right)^2\left( {{X_{i + h}} - \mu} \right)^2}\right]\\
+        &amp;= \frac{1}{T^2}\sum\limits_{i = 1}^{T} \mathbb{E}{\left( {{X_i} - \mu} \right)^2\mathbb{E}\left( {{X_{i + h}} - \mu} \right)^2}\\
+        &amp;= \frac{1}{T}\sigma^4, \text{for } (h \neq 0).
+    \end{aligned}
+\end{equation*}
+<p>Similarly, when <span class="math inline">\(h = 0\)</span>, we have</p>
+\begin{equation*}
+    \begin{aligned}
+        \var[\tilde{\gamma} \left( 0 \right)] &amp;= \frac{1}{T^2}\mathbb{E}\left\{\left[\sum\limits_{t = 1}^{T} {\left( {{X_t} - \mu} \right)^2}\right]^2\right\} - \frac{1}{T^2}\left[\mathbb{E}\sum\limits_{t = 1}^{T} {\left( {{X_t} - \mu} \right)^2}\right]^2\\
+        &amp;= \frac{2}{T}\sigma^4, \text{for } (h = 0).
+    \end{aligned}
+\end{equation*}
+Next, since <span class="math inline">\(\{\left( {{X_t} - \mu} \right)\left( {{X_{t + h}} - \mu} \right)\}_1^T\)</span> are iid, we can apply CLT to it, and have
+\begin{equation*}
+    \sqrt{T}\tilde{\gamma} \left( h \right) = \frac{1}{\sqrt{T}}\sum\limits_{t = 1}^{T} {\left( {{X_t} - \mu} \right)\left( {{X_{t + h}} - \mu} \right)} \overset{\mathcal{D}}{\to} 
+    \begin{cases}
+        N(\sigma^2, 2\sigma^4), &amp; \text{for } h = 0\\
+        N(0, \sigma^4), &amp; \text{for } h \neq 0
+    \end{cases}.
+\end{equation*}
+Therefore, we also have
+\begin{equation*}
+    \sqrt{T}\hat \gamma \left( h \right) \overset{\mathcal{D}}{\to} 
+    \begin{cases}
+        N(\sigma^2, 2\sigma^4), &amp; \text{for } h = 0\\
+        N(0, \sigma^4), &amp; \text{for } h \neq 0
+    \end{cases}.
+\end{equation*}
+Since we can show that <span class="math inline">\(\hat \gamma \left( 0 \right) \overset{p}{\to} \sigma^2\)</span>, by Slutsky Theorem, for <span class="math inline">\(h \neq 0\)</span>
+\begin{equation*}
+    \hat \rho \left( h \right) = \frac{ \hat \gamma \left( h \right)}{\hat \gamma \left( 0 \right)} \overset{\mathcal{D}}{\to} N(0, \frac{1}{T}).
+\end{equation*}
 <p>Using on this result, we now have an approximate method to assess whether peaks in sample autocorrelation are significant by determining whether the observed peak lies outside the interval <span class="math inline">\(\pm 2/\sqrt{T}\)</span> (i.e. an approximate 95% confidence interval). Returning to our previous example:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot autocorrelation with confidence bands </span>
 <span class="kw">plot</span>(acf_Xt)</code></pre></div>
