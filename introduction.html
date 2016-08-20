@@ -428,15 +428,19 @@ RW2dimension =<span class="st"> </span>function(<span class="dt">steps =</span> 
       <span class="dt">y =</span> <span class="st">&quot;Y-position&quot;</span>,
       <span class="dt">title =</span> <span class="kw">paste</span>(<span class="st">&quot;2D random walk with&quot;</span>, steps, <span class="st">&quot;steps&quot;</span>),
       <span class="dt">color =</span> <span class="st">&quot;&quot;</span>
-    ) +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.55</span>))
+    ) +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="kw">c</span>(<span class="fl">0.15</span>, <span class="fl">0.55</span>))
 }
 
 <span class="co"># Plot 2D random walk with 10^2 and 10^5 steps</span>
 <span class="kw">set.seed</span>(<span class="dv">2</span>)
 
-<span class="kw">RW2dimension</span>(<span class="dt">steps =</span> <span class="dv">10</span>^<span class="dv">2</span>)
-<span class="kw">RW2dimension</span>(<span class="dt">steps =</span> <span class="dv">10</span>^<span class="dv">5</span>) </code></pre></div>
-<p><img src="tts_files/figure-html/RW2d-1.png" width="672" /><img src="tts_files/figure-html/RW2d-2.png" width="672" /></p>
+a =<span class="st"> </span><span class="kw">RW2dimension</span>(<span class="dt">steps =</span> <span class="dv">10</span>^<span class="dv">2</span>)
+b =<span class="st"> </span><span class="kw">RW2dimension</span>(<span class="dt">steps =</span> <span class="dv">10</span>^<span class="dv">5</span>) 
+
+<span class="kw">library</span>(<span class="st">&quot;gridExtra&quot;</span>)
+
+<span class="kw">grid.arrange</span>(a, b, <span class="dt">nrow =</span> <span class="dv">1</span>)</code></pre></div>
+<p><img src="tts_files/figure-html/RW2d-1.png" width="672" /></p>
 <p>Such processes inspired Karl Pearson’s famous quote that</p>
 <blockquote>
 <p>“<em>the most likely place to find a drunken walker is somewhere near his starting point.</em>”</p>
