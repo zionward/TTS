@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>A Tour of Time Series Analysis with R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="A Tour of Time Series Analysis with R">
+  <meta name="generator" content="bookdown 0.1.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="A Tour of Time Series Analysis with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://tts.smac-group.com/" />
+  
+  
+  <meta name="github-repo" content="SMAC-Group/TTS" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Tour of Time Series Analysis with R" />
+  
+  
+  
+
+<meta name="author" content="James Balamuta, Stéphane Guerrier and Roberto Molinari">
+
+<meta name="date" content="2016-08-20">
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="arma.html">
+<link rel="next" href="state-space-models.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { extensions: ["AMSmath.js"], 
+         equationNumbers: { autoNumber: "AMS" },
+         Macros: {
+          notimplies: "\\nRightarrow",
+          real: "\\mathbb{R}",
+          integers: "\\mathbb{Z}",
+          natural: "\\mathbb{N}",
+          rational: "\\mathbb{Q}",
+          irrational: "\\mathbb{P}",
+          0: "\\boldsymbol{0}",
+          I: "\\boldsymbol{\\mathbf{I}}",
+          S: "\\boldsymbol{S}",
+          y: "\\boldsymbol{y}",
+          X: "\\boldsymbol{X}",
+          C: "\\text{C}",
+          btheta: "\\boldsymbol{\\theta}",
+          epsilon: "\\varepsilon",
+          bbeta: "\\boldsymbol{\\beta}", 
+          bepsilon: "\\boldsymbol{\\varepsilon}", 
+          norm: "\\mathcal{N}",
+          KL: "\\text{KL}",
+          AIC: "\\text{AIC}", 
+          BIC: "\\text{BIC}", 
+          mean: ["\\operatorname{mean}"],
+          var: ["\\operatorname{var}"],
+          tr: ["\\operatorname{tr}"],
+          cov: ["\\operatorname{cov}"],
+          corr: ["\\operatorname{corr}"],
+          argmax: ["\\operatorname{argmax}"],
+          argmin: ["\\operatorname{argmin}"],
+          card: ["\\operatorname{card}"],
+          diag: ["\\operatorname{diag}"],
+          rank: ["\\operatorname{rank}"],
+          length: ["\\operatorname{length}"]
+    }
+  }
+});
+</script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="styling/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Tour of Time Series Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#bibliographic-note"><i class="fa fa-check"></i>Bibliographic Note</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#rendering-mathematical-formulae"><i class="fa fa-check"></i>Rendering Mathematical Formulae</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-code-conventions"><i class="fa fa-check"></i>R Code Conventions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#time-series"><i class="fa fa-check"></i><b>1.1</b> Time Series</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#exploratory-data-analysis-for-time-series"><i class="fa fa-check"></i><b>1.2</b> Exploratory Data Analysis for Time Series</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#basic-time-series-models"><i class="fa fa-check"></i><b>1.3</b> Basic Time Series Models</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#white-noise-processes"><i class="fa fa-check"></i><b>1.3.1</b> White noise processes</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduction.html"><a href="introduction.html#random-walk-processes"><i class="fa fa-check"></i><b>1.3.2</b> Random Walk Processes</a></li>
+<li class="chapter" data-level="1.3.3" data-path="introduction.html"><a href="introduction.html#autoregressive-process-of-order-1"><i class="fa fa-check"></i><b>1.3.3</b> Autoregressive Process of Order 1</a></li>
+<li class="chapter" data-level="1.3.4" data-path="introduction.html"><a href="introduction.html#moving-average-process-of-order-1"><i class="fa fa-check"></i><b>1.3.4</b> Moving Average Process of Order 1</a></li>
+<li class="chapter" data-level="1.3.5" data-path="introduction.html"><a href="introduction.html#linear-drift"><i class="fa fa-check"></i><b>1.3.5</b> Linear Drift</a></li>
+<li class="chapter" data-level="1.3.6" data-path="introduction.html"><a href="introduction.html#composite-stochastic-processes"><i class="fa fa-check"></i><b>1.3.6</b> Composite Stochastic Processes</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html"><i class="fa fa-check"></i><b>2</b> Autocorrelation and Stationarity</a><ul>
+<li class="chapter" data-level="2.1" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#the-autocorrelation-and-autocovariance-functions"><i class="fa fa-check"></i><b>2.1</b> The Autocorrelation and Autocovariance Functions</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#definitions"><i class="fa fa-check"></i><b>2.1.1</b> Definitions</a></li>
+<li class="chapter" data-level="2.1.2" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#a-fundamental-representation"><i class="fa fa-check"></i><b>2.1.2</b> A Fundamental Representation</a></li>
+<li class="chapter" data-level="2.1.3" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#admissible-autocorrelation-functions"><i class="fa fa-check"></i><b>2.1.3</b> Admissible autocorrelation functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#stationarity"><i class="fa fa-check"></i><b>2.2</b> Stationarity</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#definitions-1"><i class="fa fa-check"></i><b>2.2.1</b> Definitions</a></li>
+<li class="chapter" data-level="2.2.2" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#assessing-weak-stationarity-of-time-series-models"><i class="fa fa-check"></i><b>2.2.2</b> Assessing Weak Stationarity of Time Series Models</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#estimation-of-the-mean-function"><i class="fa fa-check"></i><b>2.3</b> Estimation of the Mean Function</a></li>
+<li class="chapter" data-level="2.4" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#sample-autocovariance-and-autocorrelation-functions"><i class="fa fa-check"></i><b>2.4</b> Sample Autocovariance and Autocorrelation Functions</a></li>
+<li class="chapter" data-level="2.5" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#robustness-issues"><i class="fa fa-check"></i><b>2.5</b> Robustness Issues</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="basic-models.html"><a href="basic-models.html"><i class="fa fa-check"></i><b>3</b> Basic Models</a><ul>
+<li class="chapter" data-level="3.1" data-path="basic-models.html"><a href="basic-models.html#the-backshift-operator"><i class="fa fa-check"></i><b>3.1</b> The Backshift Operator</a></li>
+<li class="chapter" data-level="3.2" data-path="basic-models.html"><a href="basic-models.html#white-noise"><i class="fa fa-check"></i><b>3.2</b> White Noise</a></li>
+<li class="chapter" data-level="3.3" data-path="basic-models.html"><a href="basic-models.html#moving-average-process-of-order-q-1-a.k.a-ma1"><i class="fa fa-check"></i><b>3.3</b> Moving Average Process of Order q = 1 a.k.a MA(1)</a></li>
+<li class="chapter" data-level="3.4" data-path="basic-models.html"><a href="basic-models.html#drift"><i class="fa fa-check"></i><b>3.4</b> Drift</a></li>
+<li class="chapter" data-level="3.5" data-path="basic-models.html"><a href="basic-models.html#random-walk"><i class="fa fa-check"></i><b>3.5</b> Random Walk</a></li>
+<li class="chapter" data-level="3.6" data-path="basic-models.html"><a href="basic-models.html#random-walk-with-drift"><i class="fa fa-check"></i><b>3.6</b> Random Walk with Drift</a></li>
+<li class="chapter" data-level="3.7" data-path="basic-models.html"><a href="basic-models.html#autoregressive-process-of-order-p-1-a.k.a-ar1"><i class="fa fa-check"></i><b>3.7</b> Autoregressive Process of Order p = 1 a.k.a AR(1)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="arma.html"><a href="arma.html"><i class="fa fa-check"></i><b>4</b> ARMA</a><ul>
+<li class="chapter" data-level="4.1" data-path="arma.html"><a href="arma.html#definition"><i class="fa fa-check"></i><b>4.1</b> Definition</a></li>
+<li class="chapter" data-level="4.2" data-path="arma.html"><a href="arma.html#ma-ar-operators"><i class="fa fa-check"></i><b>4.2</b> MA / AR Operators</a></li>
+<li class="chapter" data-level="4.3" data-path="arma.html"><a href="arma.html#redundancy"><i class="fa fa-check"></i><b>4.3</b> Redundancy</a></li>
+<li class="chapter" data-level="4.4" data-path="arma.html"><a href="arma.html#causal-invertible"><i class="fa fa-check"></i><b>4.4</b> Causal + Invertible</a></li>
+<li class="chapter" data-level="4.5" data-path="arma.html"><a href="arma.html#estimation-of-parameters"><i class="fa fa-check"></i><b>4.5</b> Estimation of Parameters</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="arma.html"><a href="arma.html#maximum-likelihood-estimation"><i class="fa fa-check"></i><b>4.5.1</b> Maximum Likelihood Estimation</a></li>
+<li class="chapter" data-level="4.5.2" data-path="arma.html"><a href="arma.html#mle-for-sigma-2-on-ar1-with-mean-mu"><i class="fa fa-check"></i><b>4.5.2</b> MLE for <span class="math inline">\(\sigma ^2\)</span> on <span class="math inline">\(AR(1)\)</span> with mean <span class="math inline">\(\mu\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="arma.html"><a href="arma.html#method-of-moments"><i class="fa fa-check"></i><b>4.6</b> Method of Moments</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="arma.html"><a href="arma.html#method-of-moments---arp"><i class="fa fa-check"></i><b>4.6.1</b> Method of Moments - AR(p)</a></li>
+<li class="chapter" data-level="4.6.2" data-path="arma.html"><a href="arma.html#yule-walker"><i class="fa fa-check"></i><b>4.6.2</b> Yule-Walker</a></li>
+<li class="chapter" data-level="4.6.3" data-path="arma.html"><a href="arma.html#estimates"><i class="fa fa-check"></i><b>4.6.3</b> Estimates</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="arma.html"><a href="arma.html#prediction-forecast"><i class="fa fa-check"></i><b>4.7</b> Prediction (Forecast)</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="linear-regression.html"><a href="linear-regression.html"><i class="fa fa-check"></i><b>5</b> Linear Regression</a><ul>
+<li class="chapter" data-level="5.1" data-path="linear-regression.html"><a href="linear-regression.html#review-on-linear-regression"><i class="fa fa-check"></i><b>5.1</b> Review on Linear Regression</a></li>
+<li class="chapter" data-level="5.2" data-path="linear-regression.html"><a href="linear-regression.html#linear-regression-with-autocorrelated-errors"><i class="fa fa-check"></i><b>5.2</b> Linear Regression with Autocorrelated Errors</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="state-space-models.html"><a href="state-space-models.html"><i class="fa fa-check"></i><b>6</b> State-Space Models</a></li>
+<li class="chapter" data-level="7" data-path="time-series-models-of-heteroskedasticity.html"><a href="time-series-models-of-heteroskedasticity.html"><i class="fa fa-check"></i><b>7</b> Time Series Models of Heteroskedasticity</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="appendix-a.html"><a href="appendix-a.html"><i class="fa fa-check"></i><b>A</b> Appendix A</a><ul>
+<li class="chapter" data-level="A.1" data-path="appendix-a.html"><a href="appendix-a.html#subject"><i class="fa fa-check"></i><b>A.1</b> Subject</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="appendix-b.html"><a href="appendix-b.html"><i class="fa fa-check"></i><b>B</b> Appendix B</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/SMAC-Group/TTS" target="blank">&copy; 2016 Balamuta, Guerrier, Molinari</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Tour of Time Series Analysis with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="linear-regression" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Linear Regression</h1>
+<div id="review-on-linear-regression" class="section level2">
+<h2><span class="header-section-number">5.1</span> Review on Linear Regression</h2>
+<p>In this chapter we discuss how the classical linear regression setting can be extended to accomodate for autocorrelated error. Before considering this more general setting, we start by discussing the usual linear regression model with Gaussian errors, i.e.</p>
+\begin{equation*}
+ \y = \X \bbeta + \bepsilon, \;\;\; \bepsilon \sim \mathcal{N}\left( \0,\sigma_{\epsilon}^2 \I \right) ,
+\end{equation*}
+<p>where <span class="math inline">\(\X\)</span> is a known <span class="math inline">\(n \times p\)</span> design matrix of rank <span class="math inline">\(p\)</span> and <span class="math inline">\(\bbeta\)</span> is a <span class="math inline">\(p \times 1\)</span> vector of unknown parameters. Under this setting, the MLE and LSE are equivalent (due to normality of <span class="math inline">\(\bepsilon\)</span>) and corresponds to the ordinary LS parameter estimates of <span class="math inline">\(\bbeta\)</span>, i.e.</p>
+\begin{equation}
+    \hat{\bbeta} = \left(\X^T \X \right)^{-1} \X^T \y ,
+    \label{eq:betaLSE}
+\end{equation}
+<p>leading to the (linear) prediction</p>
+\begin{equation*}
+    \hat{\y} = \X \hat{\bbeta} = \S \y
+\end{equation*}
+<p>where <span class="math inline">\(\S = \X\left(\X^T \X \right)^{-1} \X^T\)</span> denotes the “<em>hat</em>” matrix. The unbiased and maximum likelihood estimates of <span class="math inline">\(\sigma^2_{\epsilon}\)</span> are, respectively, given by</p>
+\begin{equation}
+        \tilde{\sigma}^2_{\epsilon} = \frac{||\y - \hat{\y} ||_2^2}{n - p} \;\;\, \text{and} \;\;\,
+        \hat{\sigma}^2_{\epsilon} = \frac{||\y - \hat{\y} ||_2^2}{n}\,,
+    \label{eq:LM:sig2:hat}
+\end{equation}
+<p>where <span class="math inline">\(|| \cdot ||_2\)</span> denotes the <span class="math inline">\(L_2\)</span> norm. Throughout this chapter we assume that <span class="math inline">\(0 &lt; \sigma_{\epsilon}^2 &lt; \infty\)</span>. Under this setting (i.e. Gaussian iid errors) <span class="math inline">\(\tilde{\sigma}^2_{\epsilon}\)</span> is distributed proportiinally to <span class="math inline">\(\chi^2\)</span> random vcaraible with <span class="math inline">\(n-p\)</span> degrees of freedom independent of <span class="math inline">\(\hat{\bbeta}\)</span> (a proof of this result can for example be found in ?????). Consequently, it follow that</p>
+\begin{equation}
+    \frac{\hat{\beta}_i - \beta_i}{\left(\boldsymbol{C}\right)_{i}} \sim t_{n-p},
+    \label{eq:beta_t_dist}
+\end{equation}
+<p>where <span class="math inline">\(\left(\boldsymbol{C}\right)_{i}\)</span> denotes the <span class="math inline">\(i\)</span>-th diagonal element of the following matrix</p>
+\begin{equation}
+        \boldsymbol{C} = \cov \left(\hat{\bbeta} \right) = \sigma_{\epsilon}^2 \left(\X^T \X\right)^{-1},
+    \label{eq:covbeta}
+\end{equation}
+<p>and where <span class="math inline">\(\hat{\beta}_i\)</span> denotes the <span class="math inline">\(i\)</span>-th element of <span class="math inline">\(\hat{\bbeta}\)</span>. Thus, this allows for a natural approach for testing coefficients and selecting models. Moreover, a common quantity used ton evaluate the “quality” of a model is the <span class="math inline">\(R^2\)</span>, which corresponds to the proportion of variation explained by the model, i.e.</p>
+<p><span class="math display">\[R^2 = \frac{\sum_{i=1}^n \left(y_i - \hat{\y}_i\right)^2 - \sum_{i=1}^n \left(y_i - \bar{y}\right)^2}{\sum_{i=1}^n \left(y_i - \bar{y}\right)^2},\]</span></p>
+<p>where <span class="math inline">\(y_i\)</span> and <span class="math inline">\(\hat{y}_i\)</span> denote, respectively, the <span class="math inline">\(i\)</span>-th element of <span class="math inline">\(\y\)</span> and <span class="math inline">\(\hat{\y}\)</span>, and <span class="math inline">\(\bar{y}\)</span> represent the mean value of the vector <span class="math inline">\(\y\)</span>. This goodness-of-fit is widely used in practice but its limits are often misunderstood as illustrated in the example below.</p>
+<p><strong>Example:</strong> Suppose that we have two <em>nested</em> models, say <span class="math inline">\(\mathcal{M}_1\)</span> and <span class="math inline">\(\mathcal{M}_2\)</span>, i.e.</p>
+<p><span class="math display">\[\begin{aligned}
+\mathcal{M}_1: \;\;\;\;\; \y &amp;= \X_1 \bbeta_1 + \bepsilon,\\
+\mathcal{M}_2: \;\;\;\;\; \y &amp;= \X_1 \bbeta_1 + \X_2 \bbeta_2 + \bepsilon,\\
+\end{aligned}\]</span></p>
+<p>and assume that <span class="math inline">\(\bbeta_2 = \0\)</span>. In this case, it is interesting to compare the <span class="math inline">\(R^2\)</span> of both models, say <span class="math inline">\(R_1^2\)</span> and <span class="math inline">\(R^2_2\)</span>. Using <span class="math inline">\(\hat{\y}_i\)</span> to denote the predictions made from model <span class="math inline">\(\mathcal{M}_i\)</span>, we have that</p>
+<p><span class="math display">\[||\y - \hat{\y}_1 ||_2^2 \geq ||\y - \hat{\y}_2 ||_2^2.\]</span></p>
+<p>By letting <span class="math inline">\(||\y - \hat{\y}_1 ||_2^2 = ||\y - \hat{\y}_2 ||_2^2 + c\)</span> where <span class="math inline">\(c\)</span> is a non-negartive constant we obtain:</p>
+<p><span class="math display">\[R_1^2 = 1 - \frac{ ||\y - \hat{\y}_1 ||_2^2 }{ \sum_{i=1}^n \left(y_i - \bar{y}\right)^2}  = 1 - \frac{||\y - \hat{\y}_2  ||_2^2 
++ c}{\sum_{i=1}^n \left(y_i - \bar{y}\right)^2} = R_2^2 + \frac{c}{\sum_{i=1}^n \left(y_i - \bar{y}\right)^2}.\]</span></p>
+<p>This implies that <span class="math inline">\(R_1^2 \leq R_2^2\)</span>, regardelss of the value of <span class="math inline">\(\bbeta_2\)</span> and therefore the <span class="math inline">\(R^2\)</span> is essentially useless in terms of model selection. This results is well known and is further discuss in ??????REF <em>REGRESSION and TIME SERIES MODEL SELECTION&lt; TSAI&lt; CHAP 2</em>.</p>
+<!--Rob: could you expand a little the intro to linear model, maybe an example,.. no rush... thanks mate! -->
+<p>A more approriate measure of the goodness-of-fit of a particular model is for example Mallow’s <span class="math inline">\(C_p\)</span> introduced in <strong>REF see STEF PHD</strong>. This metric balances the error of fit against its complexity and can be defined as</p>
+\begin{equation}
+C_p = || \y - \X\hat{\bbeta}||_2^2 +  2 \hat{\sigma}_{\ast}^2 p,
+\label{eq:MallowCp}
+\end{equation}
+<p>where <span class="math inline">\(\hat{\sigma}_{\ast}^2\)</span> is an unbiased estimates of <span class="math inline">\({\sigma}_{\epsilon}^2\)</span>, generally <span class="math inline">\(\tilde{\sigma}^2_{\epsilon}\)</span> computed on a “low-bias” model (i.e. a sufficiently “large” model).</p>
+<p>To understand how this result is derived, we let <span class="math inline">\(\y_0\)</span> denote an independent “copy” of <span class="math inline">\(\y\)</span> issued from the same data-generating process and let <span class="math inline">\(E_0[\cdot]\)</span> denotes the expectation under the distribution of <span class="math inline">\(\y_0\)</span> (conditionally on <span class="math inline">\(\X\)</span>). Then, it can be argued that the following quantity is approriate at measuring the adequacy of model as it compares how <span class="math inline">\(\y\)</span> can be used to predict <span class="math inline">\(\y_0\)</span>,</p>
+<p><span class="math display">\[E \left[ E_0 \left[ || \y_0 - \X\hat{\bbeta}||_2^2 \right] \right].\]</span></p>
+<p>As we will see Mallow’s <span class="math inline">\(C_p\)</span> is an unbiased estimator of this quantity. There are several ways of showing it, one of them is presented here using the following “<em>optimism</em>” theorem. Note that this result is based on Theorem 2.1 of <strong>REF MISSING, TWO HERE PHD STEF</strong> and on the Optimism Theorem of ** REF MISSING EFRON COVARIACNE PAPER 2004 JASA**.</p>
+<p><strong>Theorem:</strong> Let <span class="math inline">\(\y_0\)</span> denote an independent “copy” of <span class="math inline">\(\y\)</span> issued from the same data-generating process and let <span class="math inline">\(E_0[\cdot]\)</span> denotes the expectation under the distribution of <span class="math inline">\(\y_0\)</span> (conditionally on <span class="math inline">\(\X\)</span>). Then we have that,</p>
+<p><span class="math display">\[E \left[ E_0 \left[ || \y_0 - \X\hat{\bbeta}||_2^2 \right] \right] = E \left[ || \y - \X\hat{\bbeta}||_2^2 \right] + 2 \tr \left( \cov \left(\y, \X \hat{\bbeta} \right)\right).\]</span></p>
+<p><em>Proof:</em> We first expend <span class="math inline">\(|| \y - \X{\bbeta}||_2^2\)</span> as follows:</p>
+<p><span class="math display">\[|| \y - \X{\bbeta}||_2^2 = \y^T \y + \bbeta^T \X^T \X \bbeta - 2 \y^T \X \bbeta = \y^T \y - \bbeta^T \X^T \X \bbeta - 2 \left(\y - \X\bbeta\right)^T \X \bbeta. \]</span></p>
+<p>Then, we define C and C<span class="math inline">\(^\ast\)</span> and used the above expension</p>
+<p><span class="math display">\[\begin{aligned}
+\text{C} &amp;= E \left[ E_0 \left[ || \y_0 - \X\hat{\bbeta}||_2^2 \right] \right] =  E_0 \left[ \y_0^T \y_0 \right] - E \left[ \hat{\bbeta}^T \X^T \X \hat{\bbeta}\right] - 2 E \left[\left(E_0 \left[ \y_0\right] - \X\hat{\bbeta}\right)^T \X \hat{\bbeta}\right],\\
+\text{C}^\ast &amp;= E \left[ || \y - \X\hat{\bbeta}||_2^2 \right] =  E \left[ \y^T \y \right] - E \left[ \hat{\bbeta}^T \X^T \X \hat{\bbeta}\right] - 2 E \left[\left( \y - \X\hat{\bbeta}\right)^T \X \hat{\bbeta}\right].
+\end{aligned}\]</span></p>
+<p>Next, we consider the difference between C and C<span class="math inline">\(^\ast\)</span>, i.e.</p>
+<p><span class="math display">\[\begin{aligned} 
+\text{C} - \text{C}^\ast &amp;= 2 E \left[\left( \y - E_0 \left[ \y_0\right]\right)^T \X \hat{\bbeta}\right] = 2 \tr \left( \cov \left(\y - E_0 [\y_0], \X \hat{\bbeta} \right)\right) + 2 \tr \left(E \left[\y - E_0 [\y_0] \right] E^T [\X \hat{\bbeta}]\right) \\
+&amp;= 2 \tr \left( \cov \left(\y - E_0 [\y_0], \X \hat{\bbeta} \right)\right) = 2 \tr \left( \cov \left(\y, \X \hat{\bbeta} \right)\right),
+\end{aligned}
+\]</span> which concludes our proof. Note that in the above equation we used the following equality, which is based on two vector valued random variation of approriate dimensions:</p>
+<p><span class="math display">\[E \left[\X^T \boldsymbol{Z}\right]  = E \left[\tr \left(\X^T \boldsymbol{Z}\right)\right] = E \left[\tr \left( \boldsymbol{Z} \X^T \right)\right] = \tr \left(\cov \left(\X, \boldsymbol{Z}\right)\right) + \tr \left(E[\X] E^T[\boldsymbol{Z}]\right). \]</span></p>
+<p>In the linear regression case with iid Gaussian errors we have:</p>
+<p><span class="math display">\[\tr \left( \cov \left(\y, \X \hat{\bbeta} \right)\right) = \tr \left( \cov \left(\y, \S \y \right)\right) = \sigma_{\epsilon}^2 \tr\left(\S\right) = \sigma_{\epsilon}^2 p.\]</span></p>
+<p>Therefore,</p>
+<p><span class="math display">\[\text{C} = E \left[ E_0 \left[ || \y_0 - \X\hat{\bbeta}||_2^2 \right] \right] = E \left[ || \y - \X\hat{\bbeta}||_2^2 \right] + 2 \sigma_{\epsilon}^2 p, \]</span></p>
+<p>yielding to the unbiased estimate</p>
+<p><span class="math display">\[\widehat{\text{C}} = C_p = || \y - \X\hat{\bbeta}||_2^2 +  2 \hat{\sigma}_{\ast}^2 p.\]</span></p>
+<p>An alternative famous goodness-of-fit criterion was proposed by Akaike (1969, 1973, 1974) <strong>REF MISSING</strong> and is given by</p>
+\begin{equation}\text{AIC} = \log \left(\hat{\sigma}^2_{\epsilon} \right) + \frac{n + 2p}{n}.
+\label{eq:defAIC}
+\end{equation}
+<p>where <span class="math inline">\(\hat{\sigma}^2_{\epsilon}\)</span> denotes the MLE for <span class="math inline">\(\sigma_{\epsilon}^2\)</span> defined in \ref{eq:LM:sig2:hat}.</p>
+<p>The AIC is based on a <em>divergence</em> (i.e. a generalization of the notion of distance) that informally speaking measures “how far” is the density of the estimated model compared to the “true” density. This divergence is called the Kullback-Leibler information which in this context can be defined for two densities of the same family as</p>
+<p><span class="math display">\[\KL  =  \frac{1}{n} E \left[ E_0 \left[\log \left(  
+\frac{f (\y_0| \btheta_0)}
+{f (\y_0| \hat{\btheta})}
+\right)\right] \right],\]</span></p>
+<p>where we assume <span class="math inline">\(\btheta_0\)</span> and <span class="math inline">\(\hat{\btheta}\)</span> to denote, respectively, the true parameter vector of interest and an estimator <span class="math inline">\(\btheta_0\)</span> based on a postulated model. Similarly to the setting used to derive Mallow’s <span class="math inline">\(C_p\)</span>, the expectations <span class="math inline">\(E \left[\cdot\right]\)</span> and <span class="math inline">\(E_0 \left[\cdot\right]\)</span> denote the expectation with respect to the densities of <span class="math inline">\(\y\)</span> and <span class="math inline">\(\y_0\)</span> (conditionally on <span class="math inline">\(\X\)</span>). Note that <span class="math inline">\(\hat{\btheta}\)</span> dependences on <span class="math inline">\(\y\)</span> and not <span class="math inline">\(\y_0\)</span>. Informally speaking this divergence measure how far is <span class="math inline">\(f (\y_0| \btheta_0)\)</span> from <span class="math inline">\(f (\y_0| \hat{\btheta})\)</span>, where in the latter <span class="math inline">\(\hat{\btheta}\)</span> is estimated on <span class="math inline">\(\y\)</span>, a sample independent from <span class="math inline">\(\y_0\)</span>.</p>
+<p>To derive the AIC we start by considering a generic a linear model <span class="math inline">\(\mathcal{M}\)</span> with parameter vector <span class="math inline">\(\btheta = [\bbeta^T \;\;\; \sigma_{\epsilon}^2]\)</span>. Indeed, we have that its density is given by</p>
+<p><span class="math display">\[\begin{aligned} 
+  f\left( {\y|\btheta } \right) &amp;= {\left( {2\pi } \right)^{ - n/2}}{\left| { \sigma_{\epsilon}^2 \I} \right|^{ - 1/2}}\exp \left( { - \frac{1}{2}{{\left( {\y - \X{\bbeta}} \right)}^T}{{\left( {\sigma_{\epsilon}^2 \I} \right)}^{ - 1}}\left( {\y - \X{\beta _i}} \right)} \right)  \\
+   &amp;= {\left( {2\pi } \right)^{ - n/2}}{\left( {\sigma_{\epsilon}^2} \right)^{ - n/2}}\exp \left( { - \frac{1}{{2 \sigma_{\epsilon}^2}}{{\left( {\y - \X{\bbeta}} \right)}^T}\left( {\y - \X{\bbeta}} \right)} \right).  \\ 
+\end{aligned} \]</span></p>
+<p>Using this result and letting</p>
+<p><span class="math display">\[{\btheta}_0 = [{\bbeta}_0^T \;\;\; {\sigma}^2_0] \;\;\;\;\; \text{ and }  \;\;\;\;\; \hat{\btheta} = [\hat{\bbeta}^T \;\;\; \hat{\sigma}^2], \]</span></p>
+<p>where <span class="math inline">\(\hat{\btheta}\)</span> denotes the MLE for <span class="math inline">\(\hat{\btheta}\)</span>, we obtain</p>
+<p><span class="math display">\[\scriptsize \begin{aligned}
+ \frac{1}{n} {E}\left[ {E_0}\left[ {\log \left( {\frac{{f\left( {\y_0|{\btheta_0}} \right)}}{{f\left( {\y_0|{\hat{\btheta}}} \right)}}} \right)} \right]\right]
+   &amp;= \frac{1}{n} {E}\left[ {E_0}\left[ \log \left( {\frac{{{{\left( {\sigma _0^2} \right)}^{ - n/2}}}}{{{{\left( {\hat{\sigma}^2} \right)}^{ - n/2}}}}} \right)  
+ + \log \left( \frac{{\exp \left( { - \frac{1}{{2\sigma _0^2}}{{\left( {\y_0 - \X{\bbeta _0}} \right)}^T}\left( {\y_0 - \X{\bbeta _0}} \right)} \right)}}{{\exp \left( { - \frac{1}{{2\hat{\sigma}^2}}{{\left( {\y_0 - \X{\hat{\bbeta}}} \right)}^T}\left( {\y_0 - \X{\hat{\bbeta}}} \right)} \right)}} \right) \right]  \right] \\
+  &amp;= -\frac{1}{2} E \left[\log \left( {\frac{{\sigma _0^2}}{{\hat{\sigma}^2}}} \right)\right] - \frac{1}{{2n\sigma _0^2}}{E_0}\left[ {{{\left( {\y_0 - \X{\bbeta _0}} \right)}^T}\left( {\y_0 - \X{\bbeta _0}} \right)} \right] \\
+   &amp;+ \frac{1}{{2n}}{E}\left[\frac{1}{\hat{\sigma}^2}E_0\left[ {{{\left( {\y_0 - \X{\hat{\bbeta}}} \right)}^T}\left( {\y_0 - \X{\hat{\bbeta}}} \right)} \right]\right].
+ \end{aligned} \]</span></p>
+<p>Next, we consider each term of the above equation. For the first term, we have</p>
+<p><span class="math display">\[
+-\frac{1}{2} E \left[\log \left( {\frac{{\sigma _0^2}}{{\hat{\sigma}^2}}} \right)\right] = 
+\frac{1}{2} \left(E \left[ \log \left( \hat{\sigma}^2 \right) \right] - \log \left( \sigma_0^2 \right)\right).
+\]</span></p>
+<p>For the second term, we obtain</p>
+<p><span class="math display">\[ -\frac{1}{{2n\sigma _0^2}} {E_0}\left[ {{{\left( {\y_0 - \X{\bbeta _0}} \right)}^T}\left( {\y_0 - \X{\bbeta _0}} \right)} \right] = -\frac{1}{2}. \]</span></p>
+<p>Finally, we have for the last term</p>
+<p><span class="math display">\[\scriptsize \begin{aligned}
+\frac{1}{{2n}} {E}\left[ \frac{1}{\hat{\sigma}^2} {E_0}\left[ {{{\left( {\y_0 - \X{\hat{\bbeta}}} \right)}^T}\left( {\y_0 - \X\hat{\bbeta}} \right)} \right]\right]
+   &amp;=  \frac{1}{{2n}} {E}\left[ \frac{1}{\hat{\sigma}^2} {E_0}\left[ {{{\left( {\y_0 - \X \bbeta_0 - \X\left( {\hat{\bbeta} - \bbeta_0} \right)} \right)}^T}\left( {\y_0 - \X \bbeta_0 - \X\left( {\hat{\bbeta} - \bbeta_0} \right)} \right)} \right] \right] \\
+   &amp;= \frac{1}{{2n}} E\left[  \frac{1}{\hat{\sigma}^2}  \left[ {E_0}\left[ {{{\left( {\y_0 - \X \bbeta_0} \right)}^T}\left( {\y_0 - \X \bbeta_0} \right)} \right]\right] \right]\\
+   &amp;+ \frac{1}{{2n}} E \left[ \frac{1}{\hat{\sigma}^2}  \left( \bbeta_0 - \hat{\bbeta} \right)^T \X^T \X\left( \bbeta_0 - \hat{\bbeta} \right)\right]\\
+   &amp;= \frac{1}{{2}} E \left[ \frac{\sigma_0^2}{\hat{\sigma}^2} \right]
+   + \frac{1}{{2n}} E \left[ \frac{\sigma_0^2}{\hat{\sigma}^2}  \frac{\left( \bbeta_0 - \hat{\bbeta} \right)^T \X^T \X\left( \bbeta_0 - \hat{\bbeta} \right)}{\sigma_0^2}\right].\\
+\end{aligned}\]</span></p>
+<p>To simplify further this result it is usefull to remeber that</p>
+<p><span class="math display">\[
+U_1 = \frac{n \hat{\sigma}^2}{\sigma_0^2} \sim \chi^2_{n-p}, \;\;\;\;\;\;
+U_2 = \frac{\left( \bbeta_0 - \hat{\bbeta} \right)^T \X^T \X\left( \bbeta_0 - \hat{\bbeta} \right)}{\sigma_0^2} \sim \chi^2_p,
+\]</span></p>
+<p>and that <span class="math inline">\(U_1\)</span> and <span class="math inline">\(U_2\)</span> are independent. Moreover, we have that if <span class="math inline">\(U \sim \chi^2_k\)</span> then <span class="math inline">\(E[1/U] = 1/(k-2)\)</span>. Thus, we obtain</p>
+<p><span class="math display">\[\begin{aligned}
+\frac{1}{{2n}} {E}\left[ \frac{1}{\hat{\sigma}^2} {E_0}\left[ {{{\left( {\y_0 - \X{\hat{\bbeta}}} \right)}^T}\left( {\y_0 - \X\hat{\bbeta}} \right)} \right]\right]
+   = \frac{n+p}{{2(n-p-2)}}.
+\end{aligned}\]</span></p>
+<p>Combining, the above result we have</p>
+<p><span class="math display">\[\KL = \frac{1}{2} \left[ E \left[ \log \left( \hat{\sigma}^2 \right) \right] + \frac{n+p}{(n-p-2)} + c \right],\]</span></p>
+<p>where <span class="math inline">\(c = - \log \left( \sigma_0^2 \right) - 1\)</span>. Since the constant <span class="math inline">\(c\)</span> is <em>common</em> to all models it can neglated for the purpose of model selection. Therefore, neglecting the constant we obtain that</p>
+<p><span class="math display">\[\KL \propto E \left[ \log \left( \hat{\sigma}^2 \right) \right] + \frac{n+p}{(n-p-2)}.\]</span></p>
+<p>Thus, an unbiased estimator of <span class="math inline">\(\KL\)</span> is given by</p>
+<p><span class="math display">\[\text{AICc} = \log \left( \hat{\sigma}^2 \right)  + \frac{n+p}{(n-p-2)},\]</span></p>
+<p>since an unbiased estimator of <span class="math inline">\(E \left[\log \left( \hat{\sigma}^2 \right)\right]\)</span> is simply <span class="math inline">\(\log \left( \hat{\sigma}^2 \right)\)</span>. However, it can be observed that the result we derived is not equal to the AIC defined in (\ref{eq:defAIC}). Indeed, this result is known as the bias-corrected AIC or AICc. To understand the relationship between the AIC and AICc it is instructif to consider their difference and letting <span class="math inline">\(n\)</span> diverge to infinity, i.e.</p>
+<p><span class="math display">\[\lim_{n \to \infty} \; \text{AIC} - \text{AICc} = \frac{2 \left(p^2 + 2p + n\right)}{n \left(p - n - 2\right)} = 0.\]</span></p>
+<p>Therefore, the AIC is an asymptotically unbiased estimator of <span class="math inline">\(\KL\)</span>. In practice, the AIC and AICc provides very similar result expect when the sample size is rather small.</p>
+<p><strong>TO DO</strong> Talk about BIC</p>
+<p>Illustration for model selection with linear model:</p>
+<p><strong>TO DO</strong> add comments</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load libraries</span>
+<span class="kw">library</span>(astsa)
+
+<span class="co"># Load data</span>
+<span class="kw">data</span>(gtemp)
+
+<span class="co"># Degree of polynomial regression</span>
+deg_max =<span class="st"> </span><span class="dv">30</span>
+
+<span class="co"># Construct design matrix (no intercept)</span>
+year =<span class="st"> </span><span class="kw">time</span>(gtemp)
+X =<span class="st"> </span><span class="kw">cbind</span>(year)
+for (i in <span class="dv">2</span>:deg_max){X =<span class="st"> </span><span class="kw">cbind</span>(X,year^i)}
+
+<span class="co"># Define response vector</span>
+y =<span class="st"> </span>gtemp
+
+<span class="co"># Initialisation</span>
+model.AIC =<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>,deg_max)
+model.BIC =<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>,deg_max)
+model.pred =<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>,deg_max,<span class="kw">length</span>(y))
+
+<span class="co"># Fit models</span>
+for (i in <span class="dv">1</span>:deg_max){
+  <span class="co"># Fit model</span>
+  model =<span class="st"> </span><span class="kw">lm</span>(y~X[,<span class="dv">1</span>:i])
+  
+  <span class="co"># Compute AIC, BIC and \hat{y}</span>
+  model.AIC[i] =<span class="st"> </span><span class="kw">AIC</span>(model)
+  model.BIC[i] =<span class="st"> </span><span class="kw">BIC</span>(model)
+  model.pred[i,] =<span class="st"> </span><span class="kw">fitted</span>(model)
+}
+
+<span class="co"># Compute best AIC and BIC</span>
+aic.best =<span class="st"> </span><span class="kw">which.min</span>(model.AIC)
+bic.best =<span class="st"> </span><span class="kw">which.min</span>(model.BIC)
+
+<span class="co"># Plot results</span>
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(<span class="ot">NA</span>, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">1</span>,deg_max),
+     <span class="dt">ylim =</span> <span class="kw">range</span>(<span class="kw">cbind</span>(model.AIC, model.BIC)), 
+     <span class="dt">xlab =</span> <span class="st">&quot;Polynomial order&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;AIC/BIC&quot;</span>)
+<span class="kw">grid</span>()
+<span class="kw">lines</span>(model.AIC, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue3&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
+<span class="kw">lines</span>(model.BIC, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgoldenrod2&quot;</span>, <span class="dt">pch =</span> <span class="dv">22</span>)
+<span class="kw">points</span>(aic.best,model.AIC[aic.best], <span class="dt">col =</span> <span class="st">&quot;dodgerblue3&quot;</span>, 
+       <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">cex =</span> <span class="dv">2</span>)
+<span class="kw">points</span>(bic.best,model.BIC[bic.best], <span class="dt">col =</span> <span class="st">&quot;darkgoldenrod2&quot;</span>, 
+       <span class="dt">pch =</span> <span class="dv">15</span>, <span class="dt">cex =</span> <span class="dv">2</span>)
+
+<span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;BIC&quot;</span>,<span class="st">&quot;Min BIC&quot;</span>,<span class="st">&quot;AIC&quot;</span>,<span class="st">&quot;Min AIC&quot;</span>),
+<span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">22</span>,<span class="dv">15</span>,<span class="dv">21</span>,<span class="dv">16</span>), <span class="dt">pt.cex =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="dv">2</span>),
+<span class="dt">col =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;darkgoldenrod2&quot;</span>,<span class="st">&quot;dodgerblue3&quot;</span>), <span class="dt">each =</span> <span class="dv">2</span>),
+<span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="ot">NA</span>,<span class="dv">2</span>,<span class="ot">NA</span>), <span class="dt">lwd =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="ot">NA</span>,<span class="dv">1</span>,<span class="ot">NA</span>),
+<span class="dt">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="dt">bg =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">box.col =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">cex =</span> <span class="fl">1.2</span>)
+
+<span class="kw">plot</span>(<span class="ot">NA</span>, <span class="dt">xlim =</span> <span class="kw">range</span>(year), <span class="dt">ylim =</span> <span class="kw">range</span>(y), 
+     <span class="dt">xlab =</span> <span class="st">&quot;Time (year)&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="st">&quot;Global Temperature Deviation&quot;</span>)
+<span class="kw">grid</span>()
+<span class="kw">lines</span>(gtemp, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)
+<span class="kw">lines</span>(<span class="kw">cbind</span>(year,model.pred[aic.best,])[,<span class="dv">2</span>], 
+      <span class="dt">col =</span> <span class="st">&quot;dodgerblue3&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+
+<span class="kw">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Data&quot;</span>,<span class="st">&quot;Fitted (best AIC)&quot;</span>),
+       <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkgrey&quot;</span>,<span class="st">&quot;dodgerblue3&quot;</span>),
+       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">lwd =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),
+       <span class="dt">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="dt">bg =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">box.col =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">cex =</span> <span class="fl">1.2</span>)</code></pre></div>
+<p><img src="tts_files/figure-html/modelSelectionEg-1.png" width="960" /></p>
+</div>
+<div id="linear-regression-with-autocorrelated-errors" class="section level2">
+<h2><span class="header-section-number">5.2</span> Linear Regression with Autocorrelated Errors</h2>
+<p><strong>TO DO</strong></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="arma.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="state-space-models.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/SMAC-Group/TTS/edit/master/05-linear-models.Rmd",
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
