@@ -38,8 +38,8 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="introduction.html">
+<link rel="prev" href="time-series-models-of-heteroskedasticity.html">
+<link rel="next" href="remark-on-syntax.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -238,59 +238,89 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">A Tour of Time Series Analysis with R</h1>
-<h4 class="author"><em>James Balamuta, Stéphane Guerrier, Roberto Molinari and Haotian Xu</em></h4>
-<h4 class="date"><em>2016-08-20</em></h4>
-</div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<p>This text is designed as an introduction to time series analysis and is used as a support document for the class STAT 429 (Time Series Analysis) given at the University of Illinois at Urbana-Champaign. It preferable to always access the text online rather than a printed to be sure you are using the latest version. The online version so affords additional features over the traditional PDF copy such as a scaling text, variety of font faces, and themed backgrounds. However, if you are in need of a local copy, a <a href="http://tts.smac-group.com/tts.pdf"><strong>pdf version</strong> is also available</a>.</p>
-<p>This document is under active development and as a result is likely to contains many errors. As Montesquieu puts it:</p>
-<blockquote>
-<p>“<em>La nature semblait avoir sagement pourvu à ce que les sottises des hommes fussent passagères, et les livres les immortalisent.</em>”</p>
-</blockquote>
-<div id="contributing" class="section level2 unnumbered">
-<h2>Contributing</h2>
-<p>If you notice any errors, we would be grateful if you would let us know. To let us know about the errors, there are two options available to you. The first and subsequently the fastest being if you are familiar with GitHub and know RMarkdown, then <a href="https://github.com/SMAC-Group/TTS">make a pull request and fix the issue yourself!</a>. Note, in the online version, there is even an option to automatically start the pull request by clicking the edit button in the top-left corner of the text.</p>
-<p><img src="images/support/edit_button.png" style="display: block; margin: auto;" /></p>
-<p>The second option, that will have a slightly slower resolution time is to send an email to <code>balamut2 AT illinois DOT edu</code> that includes: the error and a possible revision. Please put in the subject header: <code>[TTS]</code>.</p>
-</div>
-<div id="bibliographic-note" class="section level2 unnumbered">
-<h2>Bibliographic Note</h2>
-<p>This text is heavily inspired by the following three execellent references:</p>
-<ol style="list-style-type: decimal">
-<li>“<em>Time Series Analysis and Its Applications</em>”, Third Edition, Robert H. Shumway &amp; David S. Stoffer.</li>
-<li>“<em>Time Series for Macroeconomics and Finance</em>”, John H. Cochrane.</li>
-<li>“<em>Cours de Séries Temporelles: Théorie et Applications</em>”, Volume 1, Arthur Charpentier.</li>
-</ol>
-</div>
-<div id="rendering-mathematical-formulae" class="section level2 unnumbered">
-<h2>Rendering Mathematical Formulae</h2>
-<p>Throughout the book, there will be mathematical symbols used to express the material. Depending on the version of the book, there are two different render engines.</p>
-<ul>
-<li>For the online version, the text uses <a href="https://www.mathjax.org/">MathJax</a> to render mathematical notation for the web. In the event the formulae does not load for a specific chapter, first try to refresh the page. 9 times out of 10 the issue is related to the software library not loading quickly.</li>
-<li>For the pdf version, the text is built using the recommended AMS LaTeX symbolic packages. As a result, there should be no issue displaying equations.</li>
-</ul>
-<p>An example of a mathematical rendering capabilities would be given as:</p>
-<p><span class="math display">\[ a^2 + b^2 = c^2 \]</span></p>
-</div>
-<div id="r-code-conventions" class="section level2 unnumbered">
-<h2>R Code Conventions</h2>
-<p>The code used throughout the book will predominately be <code>R</code> code. To obtain a copy of <a href="https://cloud.r-project.org/"><code>R</code></a>, go to the <a href="https://cloud.r-project.org/">Comprehensive R Archive Network (CRAN)</a> and download the appropriate installer for your operating system.</p>
-<p>When <code>R</code> code is displayed it will be typeset using a <code>monospace</code> font with syntax highlighting enabled to ensure the differentiation of functions, variables, and so on. For example, the following adds 1 to 1</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a =<span class="st"> </span>1L +<span class="st"> </span>1L
-a</code></pre></div>
-<p>Each code segment may contain actual output from <code>R</code>. Such output will appear in grey font prefixed by <code>##</code>. For example, the output of the above code segment would look like so:</p>
-<pre><code>## [1] 2</code></pre>
-<p>Alongside the PDF download of the book, you should find the R code used within each chapter.</p>
-</div>
-<div id="license" class="section level2 unnumbered">
-<h2>License</h2>
-<div class="figure">
-<img src="images/license/cc.png" alt="This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License." />
-<p class="caption">This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
-</div>
+<div id="proofs" class="section level1">
+<h1><span class="header-section-number">A</span> Proofs</h1>
+<div id="proof-of-theorem-1" class="section level2">
+<h2><span class="header-section-number">A.1</span> Proof of Theorem 1</h2>
+<p>Let <span class="math inline">\((X_t)_1^T\)</span> be white noise process with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span> and finite fourth moment.</p>
+And the sample autocovariance function is defined as
+\begin{equation*}
+    \hat \gamma \left( h \right) = \frac{1}{T}\sum\limits_{t = 1}^{T - h} {\left( {{X_t} - \bar X} \right)\left( {{X_{t + h}} - \bar X} \right)}.
+\end{equation*}
+Since it is difficult to obtain the asymptotic distribution of <span class="math inline">\(\hat \gamma \left( h \right)\)</span>, we define a new statistic
+\begin{equation*}
+    \tilde{\gamma} \left( h \right) = \frac{1}{T}\sum\limits_{t = 1}^{T} {\left( {{X_t} - \mu} \right)\left( {{X_{t + h}} - \mu} \right)}.
+\end{equation*}
+According to Problem 1.30 on TS text book, we have
+\begin{equation*}
+    T^{\frac{1}{2}}[\tilde{\gamma} \left( h \right) - \hat \gamma \left( h \right)] = o_p(1).
+\end{equation*}
+<p>Therefore <span class="math inline">\(\tilde{\gamma} \left( h \right)\)</span> and <span class="math inline">\(\hat \gamma \left( h \right)\)</span> have the same asymptotic distribution, it is suffice to show the asymptotic distribution of <span class="math inline">\(\tilde{\gamma} \left( h \right)\)</span>.</p>
+The expectation of <span class="math inline">\(\tilde{\gamma} \left( h \right)\)</span>
+\begin{equation*}
+    \mathbb{E}[\tilde{\gamma} \left( h \right)] = \frac{1}{T}\mathbb{E}\left[\sum\limits_{t = 1}^{T} {\left( {{X_t} - \mu} \right)\left( {{X_{t + h}} - \mu} \right)}\right].
+\end{equation*}
+By Cauchy–Schwarz inequality and <span class="math inline">\(\var(X_t) = \sigma^2\)</span>, we have
+\begin{equation*}
+    \sum\limits_{t = 1}^{T} {\left( {{X_t} - \mu} \right)\left( {{X_{t + h}} - \mu} \right)} \leq \sum\limits_{t = 1}^{T} {\left( {{X_t} - \mu} \right)^2} \sum\limits_{t = 1}^{T} {\left( {{X_{t + h}} - \mu} \right)^2} &lt; \infty.
+\end{equation*}
+<p>Then by bounded convergence theorem and <span class="math inline">\(\{X_t\}_1^T\)</span> are independent, we have</p>
+\begin{equation*}
+    \mathbb{E}[\tilde{\gamma} \left( h \right)] = \frac{1}{T}\left[\sum\limits_{t = 1}^{T} { \mathbb{E}\left( {{X_t} - \mu} \right)\mathbb{E}\left( {{X_{t + h}} - \mu} \right)}\right] =
+    \begin{cases}
+        \sigma^2, &amp; \text{for } h = 0\\
+        0, &amp; \text{for } h \neq 0
+    \end{cases}.
+\end{equation*}
+<p>The variance of <span class="math inline">\(\tilde{\gamma} \left( h \right)\)</span>,</p>
+when <span class="math inline">\(h \neq 0\)</span>,
+\begin{equation*}
+    \begin{aligned}
+        \var[\tilde{\gamma} \left( h \right)] &amp;= \frac{1}{T^2}\mathbb{E}\left\{\left[\sum\limits_{t = 1}^{T} {\left( {{X_t} - \mu} \right)\left( {{X_{t + h}} - \mu} \right)}\right]^2\right\}\\
+        &amp;= \frac{1}{T^2}\mathbb{E}\left\{\left[\sum\limits_{i = 1}^{T} {\left( {{X_i} - \mu} \right)\left( {{X_{i + h}} - \mu} \right)}\right] \left[\sum\limits_{j = 1}^{T} {\left( {{X_j} - \mu} \right)\left( {{X_{j + h}} - \mu} \right)}\right]\right\}\\
+        &amp;= \frac{1}{T^2}\mathbb{E}\left[\sum\limits_{i = 1}^{T}\sum\limits_{j = 1}^{T} {\left( {{X_i} - \mu} \right)\left( {{X_{i + h}} - \mu} \right)}{\left( {{X_j} - \mu} \right)\left( {{X_{j + h}} - \mu} \right)}\right].
+    \end{aligned}
+\end{equation*}
+<p>Also by Cauchy–Schwarz inequality and the finite fourth moment assumption, we can use the bounded convergence theorem. And since <span class="math inline">\(\{X_t\}_1^T\)</span> is white noise process, we have</p>
+\begin{equation*}
+    \mathbb{E}\left[{\left( {{X_i} - \mu} \right)\left( {{X_{i + h}} - \mu} \right)}{\left( {{X_j} - \mu} \right)\left( {{X_{j + h}} - \mu} \right)}\right] \neq 0
+\end{equation*}
+<p>only when <span class="math inline">\(i = j\)</span>.</p>
+Therefore,
+\begin{equation*}
+    \begin{aligned}
+        \var[\tilde{\gamma} \left( h \right)] &amp;= \frac{1}{T^2}\sum\limits_{i = 1}^{T} \mathbb{E}\left[ {\left( {{X_i} - \mu} \right)^2\left( {{X_{i + h}} - \mu} \right)^2}\right]\\
+        &amp;= \frac{1}{T^2}\sum\limits_{i = 1}^{T} \mathbb{E}{\left( {{X_i} - \mu} \right)^2\mathbb{E}\left( {{X_{i + h}} - \mu} \right)^2}\\
+        &amp;= \frac{1}{T}\sigma^4, \text{for } (h \neq 0).
+    \end{aligned}
+\end{equation*}
+<p>Similarly, when <span class="math inline">\(h = 0\)</span>, we have</p>
+\begin{equation*}
+    \begin{aligned}
+        \var[\tilde{\gamma} \left( 0 \right)] &amp;= \frac{1}{T^2}\mathbb{E}\left\{\left[\sum\limits_{t = 1}^{T} {\left( {{X_t} - \mu} \right)^2}\right]^2\right\} - \frac{1}{T^2}\left[\mathbb{E}\sum\limits_{t = 1}^{T} {\left( {{X_t} - \mu} \right)^2}\right]^2\\
+        &amp;= \frac{2}{T}\sigma^4, \text{for } (h = 0).
+    \end{aligned}
+\end{equation*}
+Next, since <span class="math inline">\(\{\left( {{X_t} - \mu} \right)\left( {{X_{t + h}} - \mu} \right)\}_1^T\)</span> are iid, we can apply CLT to it, and have
+\begin{equation*}
+    \sqrt{T}\tilde{\gamma} \left( h \right) = \frac{1}{\sqrt{T}}\sum\limits_{t = 1}^{T} {\left( {{X_t} - \mu} \right)\left( {{X_{t + h}} - \mu} \right)} \overset{\mathcal{D}}{\to} 
+    \begin{cases}
+        N(\sigma^2, 2\sigma^4), &amp; \text{for } h = 0\\
+        N(0, \sigma^4), &amp; \text{for } h \neq 0
+    \end{cases}.
+\end{equation*}
+Therefore, we also have
+\begin{equation*}
+    \sqrt{T}\hat \gamma \left( h \right) \overset{\mathcal{D}}{\to} 
+    \begin{cases}
+        N(\sigma^2, 2\sigma^4), &amp; \text{for } h = 0\\
+        N(0, \sigma^4), &amp; \text{for } h \neq 0
+    \end{cases}.
+\end{equation*}
+Since we can show that <span class="math inline">\(\hat \gamma \left( 0 \right) \overset{p}{\to} \sigma^2\)</span>, by Slutsky Theorem, for <span class="math inline">\(h \neq 0\)</span>
+\begin{equation*}
+    \hat \rho \left( h \right) = \frac{ \hat \gamma \left( h \right)}{\hat \gamma \left( 0 \right)} \overset{\mathcal{D}}{\to} N(0, \frac{1}{T}).
+\end{equation*}
 
 </div>
 </div>
@@ -299,8 +329,8 @@ a</code></pre></div>
           </div>
         </div>
       </div>
-
-<a href="introduction.html" class="navigation navigation-next navigation-unique" aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="time-series-models-of-heteroskedasticity.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="remark-on-syntax.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -327,7 +357,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/SMAC-Group/TTS/edit/master/index.Rmd",
+"link": "https://github.com/SMAC-Group/TTS/edit/master/91-appendix-a.Rmd",
 "text": null
 },
 "download": null,

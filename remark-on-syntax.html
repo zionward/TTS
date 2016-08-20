@@ -38,8 +38,8 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
+<link rel="prev" href="proofs.html">
 
-<link rel="next" href="introduction.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -238,59 +238,68 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">A Tour of Time Series Analysis with R</h1>
-<h4 class="author"><em>James Balamuta, Stéphane Guerrier, Roberto Molinari and Haotian Xu</em></h4>
-<h4 class="date"><em>2016-08-20</em></h4>
-</div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<p>This text is designed as an introduction to time series analysis and is used as a support document for the class STAT 429 (Time Series Analysis) given at the University of Illinois at Urbana-Champaign. It preferable to always access the text online rather than a printed to be sure you are using the latest version. The online version so affords additional features over the traditional PDF copy such as a scaling text, variety of font faces, and themed backgrounds. However, if you are in need of a local copy, a <a href="http://tts.smac-group.com/tts.pdf"><strong>pdf version</strong> is also available</a>.</p>
-<p>This document is under active development and as a result is likely to contains many errors. As Montesquieu puts it:</p>
-<blockquote>
-<p>“<em>La nature semblait avoir sagement pourvu à ce que les sottises des hommes fussent passagères, et les livres les immortalisent.</em>”</p>
-</blockquote>
-<div id="contributing" class="section level2 unnumbered">
-<h2>Contributing</h2>
-<p>If you notice any errors, we would be grateful if you would let us know. To let us know about the errors, there are two options available to you. The first and subsequently the fastest being if you are familiar with GitHub and know RMarkdown, then <a href="https://github.com/SMAC-Group/TTS">make a pull request and fix the issue yourself!</a>. Note, in the online version, there is even an option to automatically start the pull request by clicking the edit button in the top-left corner of the text.</p>
-<p><img src="images/support/edit_button.png" style="display: block; margin: auto;" /></p>
-<p>The second option, that will have a slightly slower resolution time is to send an email to <code>balamut2 AT illinois DOT edu</code> that includes: the error and a possible revision. Please put in the subject header: <code>[TTS]</code>.</p>
-</div>
-<div id="bibliographic-note" class="section level2 unnumbered">
-<h2>Bibliographic Note</h2>
-<p>This text is heavily inspired by the following three execellent references:</p>
-<ol style="list-style-type: decimal">
-<li>“<em>Time Series Analysis and Its Applications</em>”, Third Edition, Robert H. Shumway &amp; David S. Stoffer.</li>
-<li>“<em>Time Series for Macroeconomics and Finance</em>”, John H. Cochrane.</li>
-<li>“<em>Cours de Séries Temporelles: Théorie et Applications</em>”, Volume 1, Arthur Charpentier.</li>
-</ol>
-</div>
-<div id="rendering-mathematical-formulae" class="section level2 unnumbered">
-<h2>Rendering Mathematical Formulae</h2>
-<p>Throughout the book, there will be mathematical symbols used to express the material. Depending on the version of the book, there are two different render engines.</p>
-<ul>
-<li>For the online version, the text uses <a href="https://www.mathjax.org/">MathJax</a> to render mathematical notation for the web. In the event the formulae does not load for a specific chapter, first try to refresh the page. 9 times out of 10 the issue is related to the software library not loading quickly.</li>
-<li>For the pdf version, the text is built using the recommended AMS LaTeX symbolic packages. As a result, there should be no issue displaying equations.</li>
-</ul>
-<p>An example of a mathematical rendering capabilities would be given as:</p>
-<p><span class="math display">\[ a^2 + b^2 = c^2 \]</span></p>
-</div>
-<div id="r-code-conventions" class="section level2 unnumbered">
-<h2>R Code Conventions</h2>
-<p>The code used throughout the book will predominately be <code>R</code> code. To obtain a copy of <a href="https://cloud.r-project.org/"><code>R</code></a>, go to the <a href="https://cloud.r-project.org/">Comprehensive R Archive Network (CRAN)</a> and download the appropriate installer for your operating system.</p>
-<p>When <code>R</code> code is displayed it will be typeset using a <code>monospace</code> font with syntax highlighting enabled to ensure the differentiation of functions, variables, and so on. For example, the following adds 1 to 1</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a =<span class="st"> </span>1L +<span class="st"> </span>1L
-a</code></pre></div>
-<p>Each code segment may contain actual output from <code>R</code>. Such output will appear in grey font prefixed by <code>##</code>. For example, the output of the above code segment would look like so:</p>
-<pre><code>## [1] 2</code></pre>
-<p>Alongside the PDF download of the book, you should find the R code used within each chapter.</p>
-</div>
-<div id="license" class="section level2 unnumbered">
-<h2>License</h2>
-<div class="figure">
-<img src="images/license/cc.png" alt="This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License." />
-<p class="caption">This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
-</div>
+<div id="remark-on-syntax" class="section level1">
+<h1><span class="header-section-number">B</span> Remark on Syntax</h1>
+<p>Hi guys, since we are all using a different syntax here is what I propose. Let me know if we should change it. Once we agree, we will unify the syntax:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\mathbb{E} []\)</span></td>
+<td align="left">Expected value</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\var\)</span></td>
+<td align="left">variance</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\cov\)</span></td>
+<td align="left">covariance</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\corr\)</span></td>
+<td align="left">correlation</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\boldsymbol{1}\)</span></td>
+<td align="left">indicator</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\real\)</span></td>
+<td align="left">real</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\natural\)</span></td>
+<td align="left">natural</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\integers\)</span></td>
+<td align="left">integers</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\((X_t)\)</span></td>
+<td align="left">a time series</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\{X_t\}\)</span></td>
+<td align="left">a set</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\gamma()\)</span></td>
+<td align="left">autocov. fun.</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\rho()\)</span></td>
+<td align="left">autocor. fun.</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(W_t\)</span></td>
+<td align="left">white noise</td>
+</tr>
+</tbody>
+</table>
+<p>Also for the parenthesis, I propose to use as much as possible <span class="math inline">\(\{[(\{[( \cdot )]\})]\}\)</span></p>
+
+<div id="refs" class="references">
 
 </div>
 </div>
@@ -299,8 +308,8 @@ a</code></pre></div>
           </div>
         </div>
       </div>
+<a href="proofs.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="introduction.html" class="navigation navigation-next navigation-unique" aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -327,7 +336,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/SMAC-Group/TTS/edit/master/index.Rmd",
+"link": "https://github.com/SMAC-Group/TTS/edit/master/92-syntax.Rmd",
 "text": null
 },
 "download": null,
