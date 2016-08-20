@@ -217,7 +217,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="A" data-path="appendix-a.html"><a href="appendix-a.html"><i class="fa fa-check"></i><b>A</b> Appendix A</a><ul>
 <li class="chapter" data-level="A.1" data-path="appendix-a.html"><a href="appendix-a.html#subject"><i class="fa fa-check"></i><b>A.1</b> Subject</a></li>
 </ul></li>
-<li class="chapter" data-level="B" data-path="appendix-b.html"><a href="appendix-b.html"><i class="fa fa-check"></i><b>B</b> Appendix B</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/SMAC-Group/TTS" target="blank">&copy; 2016 Balamuta, Guerrier, Molinari, Xu</a></li>
 
@@ -857,6 +856,7 @@ Since we can show that <span class="math inline">\(\hat \gamma \left( 0 \right) 
 \begin{equation*}
     \hat \rho \left( h \right) = \frac{ \hat \gamma \left( h \right)}{\hat \gamma \left( 0 \right)} \overset{\mathcal{D}}{\to} N(0, \frac{1}{T}).
 \end{equation*}
+<p>The proof of this Theorem is given in Appendix <a href="appendix-a.html#appendix-a">A</a></p>
 <p>Using on this result, we now have an approximate method to assess whether peaks in sample autocorrelation are significant by determining whether the observed peak lies outside the interval <span class="math inline">\(\pm 2/\sqrt{T}\)</span> (i.e. an approximate 95% confidence interval). Returning to our previous example:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot autocorrelation with confidence bands </span>
 <span class="kw">plot</span>(acf_Xt)</code></pre></div>

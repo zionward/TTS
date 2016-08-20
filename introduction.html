@@ -217,7 +217,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="A" data-path="appendix-a.html"><a href="appendix-a.html"><i class="fa fa-check"></i><b>A</b> Appendix A</a><ul>
 <li class="chapter" data-level="A.1" data-path="appendix-a.html"><a href="appendix-a.html#subject"><i class="fa fa-check"></i><b>A.1</b> Subject</a></li>
 </ul></li>
-<li class="chapter" data-level="B" data-path="appendix-b.html"><a href="appendix-b.html"><i class="fa fa-check"></i><b>B</b> Appendix B</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/SMAC-Group/TTS" target="blank">&copy; 2016 Balamuta, Guerrier, Molinari, Xu</a></li>
 
@@ -455,6 +454,12 @@ b =<span class="st"> </span><span class="kw">RW2dimension</span>(<span class="dt
   {X_t} &amp;= \sum\limits_{i = 1}^t {{W_i}} + X_0 =  \sum\limits_{i = 1}^t {{W_i}} + c \\ 
 \end{aligned} \]</span></p>
 <p>The code below presents an example of how to simulate a such process</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This code simulates a gaussian random walk process</span>
+n =<span class="st"> </span><span class="dv">1000</span>                               <span class="co"># process length</span>
+gamma2 =<span class="st"> </span><span class="dv">1</span>                             <span class="co"># innovation variance</span>
+Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">RW</span>(<span class="dt">gamma2 =</span> gamma2), <span class="dt">N =</span> n)
+<span class="kw">plot</span>(Xt)</code></pre></div>
+<p><img src="tts_files/figure-html/example_RW-1.png" width="672" /></p>
 </div>
 <div id="autoregressive-process-of-order-1" class="section level3">
 <h3><span class="header-section-number">1.3.3</span> Autoregressive Process of Order 1</h3>
