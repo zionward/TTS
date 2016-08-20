@@ -23,7 +23,7 @@
   
   
 
-<meta name="author" content="James Balamuta, Stéphane Guerrier and Roberto Molinari">
+<meta name="author" content="James Balamuta, Stéphane Guerrier, Roberto Molinari and Haotian Xu">
 
 <meta name="date" content="2016-08-20">
 
@@ -219,7 +219,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="B" data-path="appendix-b.html"><a href="appendix-b.html"><i class="fa fa-check"></i><b>B</b> Appendix B</a></li>
 <li class="divider"></li>
-<li><a href="https://github.com/SMAC-Group/TTS" target="blank">&copy; 2016 Balamuta, Guerrier, Molinari</a></li>
+<li><a href="https://github.com/SMAC-Group/TTS" target="blank">&copy; 2016 Balamuta, Guerrier, Molinari, Xu</a></li>
 
 </ul>
 
@@ -255,73 +255,67 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>After reading this chapter you will be able to:</p>
 <ul>
 <li>Describe what a <em>time series</em> is.</li>
-<li>Perform explore data analysis on time series data.</li>
+<li>Perform exploratory data analysis on time series data.</li>
 <li>Evaluate different characteristics of a time series.</li>
-<li>Classify basic time series models by equation and plots.</li>
+<li>Classify basic time series models through equations and plots.</li>
 <li>Manipulate a time series equation using <em>backsubstitution</em>.</li>
 </ul>
 <div id="time-series" class="section level2">
 <h2><span class="header-section-number">1.1</span> Time Series</h2>
 <p>Generally speaking a <em>time series</em> (or stochastic process) corresponds to set of “repeated” observations of the same variable such as price of a financial asset or temperature in a given location. In terms of notation a time series is often written as</p>
 <p><span class="math display">\[\left(X_1, X_2, ..., X_n \right) \;\;\; \text{ or } \;\;\; \left(X_t\right)_{t = 1,...,n}.\]</span></p>
-<p>The time index <span class="math inline">\(t\)</span> is contained within either the set of reals, <span class="math inline">\(\real\)</span>, or integers, <span class="math inline">\(\integers\)</span>. When <span class="math inline">\(t \in \real\)</span>, the time series becomes a <em>continuous-time</em> stochastic process such a Brownian motion, a model used to represent the random movement of particles within a suspended liquid or gas, or an ElectroCardioGram (ECG) signal, which corresponds to the pulpitations of the heart. <!-- as shown in Figure \@ref(fig:ecg-img).--> However, within this text, we will limit ourselves to the case the later case. That is, the focus will be on cases where <span class="math inline">\(t \in \integers\)</span> better known as <em>discrete-time</em> processes. <em>Discrete-time</em> processes are where a variable is measured sequentially at fixed and equally spaced intervals in time akin to <a href="introduction.html#fig:numberline">1.1</a>. This implies that we will assume two tenents:</p>
+<p>The time index <span class="math inline">\(t\)</span> is contained within either the set of reals, <span class="math inline">\(\real\)</span>, or integers, <span class="math inline">\(\integers\)</span>. When <span class="math inline">\(t \in \real\)</span>, the time series becomes a <em>continuous-time</em> stochastic process such a Brownian motion, a model used to represent the random movement of particles within a suspended liquid or gas, or an ElectroCardioGram (ECG) signal, which corresponds to the palpitations of the heart. However, within this text, we will limit ourselves to the cases where <span class="math inline">\(t \in \integers\)</span>, better known as <em>discrete-time</em> processes. <em>Discrete-time</em> processes are where a variable is measured sequentially at fixed and equally spaced intervals in time akin to <a href="introduction.html#fig:numberline">1.1</a>. This implies that we will have two assumptions:</p>
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\(t\)</span> is not random e.g. the time at which each observation is measured is known, and</li>
-<li>the time between two consequtive observation is constant.</li>
+<li>the time between two consecutive observations is constant.</li>
 </ol>
-<!-- JAMES: I commented this figure, not sure it is very useful. If you want to keep it let me know...
-<div class="figure" style="text-align: center">
-<img src="images/ecg.png" alt="Continuous-time view that is used by an ECG"  />
-<p class="caption">(\#fig:ecg-img)Continuous-time view that is used by an ECG</p>
-</div>
--->
 <div class="figure" style="text-align: center"><span id="fig:numberline"></span>
 <img src="tts_files/figure-html/numberline-1.png" alt="Discrete-time can be thought of as viewing a number line with equally spaced points." width="672" />
 <p class="caption">
 Figure 1.1: Discrete-time can be thought of as viewing a number line with equally spaced points.
 </p>
 </div>
-<p>Moreover, the term “time series” can also represent a probability model for set of observations. For example, one of the fundamental probability models used in time series analysis is called a <em>white noise</em> process and is defined as</p>
+<p>Moreover, the term “time series” can also represent a probability model for a set of observations. For example, one of the fundamental probability models used in time series analysis is called a <em>white noise</em> process and is defined as</p>
 <p><span class="math display">\[W_t \mathop \sim \limits^{iid} N(0, \sigma^2).\]</span></p>
-<p>This statement simply means that <span class="math inline">\((W_t)\)</span> is normally distributed and independent over time. This model may appear to be dull but as we will see it is a crucial component to constructing intricate and riveting models. Unlike the white noise process, time series are typically <em>not</em> independent over time. Suppose that the temperature in Champaign is unusually low, then it is reasonable to assume that tomorrow’s temperature will also be low. Indeed, such behavior would suggest the existence of a dependency over time. The time series methods we will discuss in this text consists of parametric models used to characterize (or at least approximate) the joint distribution of <span class="math inline">\((X_t)\)</span>. Often, time series models can be decomposed into two components the first of which is what we call a <em>signal</em>, say <span class="math inline">\((Y_t)\)</span>, and the second component is a <em>noise</em>, say <span class="math inline">\((W_t)\)</span>, leading to the model</p>
+<p>This statement simply means that <span class="math inline">\((W_t)\)</span> is normally distributed and independent over time. This model may appear to be dull but as we will see it is a crucial component to constructing more complex models. Unlike the white noise process, time series are typically <em>not</em> independent over time. Suppose that the temperature in Champaign is unusually low, then it is reasonable to assume that tomorrow’s temperature will also be low. Indeed, such behavior would suggest the existence of a dependency over time. The time series methods we will discuss in this text consists of parametric models used to characterize (or at least approximate) the joint distribution of <span class="math inline">\((X_t)\)</span>. Often, time series models can be decomposed into two components, the first of which is what we call a <em>signal</em>, say <span class="math inline">\((Y_t)\)</span>, and the second component is a <em>noise</em>, say <span class="math inline">\((W_t)\)</span>, leading to the model</p>
 <p><span class="math display">\[X_t = Y_t + W_t.\]</span></p>
 <p>Typically, we have <span class="math inline">\(E[Y_t] \neq 0\)</span> while <span class="math inline">\(E[W_t] = 0\)</span> (although we may have <span class="math inline">\(E[W_t | W_{t-1}, ..., W_1] \neq 0\)</span>). Such models impose some parametric structure which represents a convenient and flexible way of studying time series as well as a means to evalute <em>future</em> values of the series through forecasting. As we will see, predicting future values is one of the main aspects of time series analysis. However, making predictions is often a daunting task or as famously stated by Nils Bohr:</p>
 <blockquote>
 <p>“<em>Prediction is very difficult, especially about the future.</em>”</p>
 </blockquote>
-<p>There are plenty of examples predictions which were revealed to be completely erroneous. For example, Irving Fisher, Professor of Economics at Yale University, famously predicted three days before the 1929 crash:</p>
+<p>There are plenty of examples of predictions that turned out to be completely erroneous. For example, three days before the 1929 crash, Irving Fisher, Professor of Economics at Yale University, famously predicted:</p>
 <blockquote>
 <p>“<em>Stock prices have reached what looks like a permanently high plateau</em>”.</p>
 </blockquote>
-<p>Another example is Thomas Watson, president of IBM, who said in 1943:</p>
+<p>Another example is given by Thomas Watson, president of IBM, who said in 1943:</p>
 <blockquote>
 <p>“<em>I think there is a world market for maybe five computers.</em>”</p>
 </blockquote>
 </div>
 <div id="exploratory-data-analysis-for-time-series" class="section level2">
 <h2><span class="header-section-number">1.2</span> Exploratory Data Analysis for Time Series</h2>
-<p>When dealing with relatively small time series (e.g. a few thousands), it is often useful to look at a graph of the original data. Such graphs can be informative to “detect” some features of a time series such as trends and the presence of outliers.</p>
-<p>Indeed, a trend is typically deemed present in a time series when the data exhibit some form of long term increase or decrease or combination of increases or decreases. Such trends could be linear or non-linear and represent a important part of the “signal” of a model. Here are few examples of non-linear trends:</p>
+<p>When dealing with relatively small time series (e.g. a few thousands), it is often useful to look at a graph of the original data. These graphs can be informative to “detect” some features of a time series such as trends and the presence of outliers.</p>
+<p>Indeed, a trend is typically assumed to be present in a time series when the data exhibit some form of long term increase or decrease or combination of increases or decreases. Such trends could be linear or non-linear and represent an important part of the “signal” of a model. Here are a few examples of non-linear trends:</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>Seasonal trends</strong> (periodic): These are the cyclical patterns which repeat after a fixed/regular time period. This could be due to business cycles (e.g. bust/recession, recovery).</p></li>
-<li><p><strong>Non-seasonal trends</strong> (periodic): These patterns cannot be associated to seasonal variation and can for example to external variable. For example, impact of economic indicators on stock returns. Note that such trends are often hard to detect based on a graphical analysis of the data.</p></li>
-<li><p><strong>“Other” trends</strong>: These trends have typically no regular patterns and are over a segment of time, known as a “window”, that change the statistical properties of a time series. A common example of such trends corresponds to vibrations observed before, during and after an earthquake.</p></li>
+<li><p><strong>Non-seasonal trends</strong> (periodic): These patterns cannot be associated to seasonal variation and can for example be due to an external variable such as, for example, the impact of economic indicators on stock returns. Note that such trends are often hard to detect based on a graphical analysis of the data.</p></li>
+<li><p><strong>“Other” trends</strong>: These trends have typically no regular patterns and are over a segment of time, known as a “window”, that change the statistical properties of a time series. A common example of such trends is given by the vibrations observed before, during and after an earthquake.</p></li>
 </ol>
 <p><strong>Example:</strong> A traditional example of a time series is the quarterly earnings of the company Johnson and Johson. In the figure below, we present these earnings between 1960 and 1980:</p>
 <p><img src="tts_files/figure-html/example_jj-1.png" width="672" /></p>
-<p>One trait that the graph makes evident is the data contains a non-linear increasing trend as well as a yearly seasonal component. In addition, one can note that the <em>variability</em> of the data seems to increase with time. Being able to make such observations provides actionable information to select a suitable models for the data.</p>
-<p>Moreover, when observing “raw” time series data it is also interesting to evaluate if some the following phenomenon occur:</p>
+<p>One trait that the graph makes evident is that the data contains a non-linear increasing trend as well as a yearly seasonal component. In addition, one can note that the <em>variability</em> of the data seems to increase with time. Being able to make such observations provides important information to select suitable models for the data.</p>
+<p>Moreover, when observing “raw” time series data it is also interesting to evaluate if some of the following phenomena occur:</p>
 <ol style="list-style-type: decimal">
-<li><strong>Change in Means:</strong> Does the mean of the process shift over time?</li>
-<li><strong>Change in Variance:</strong> Does the variance of the process evolves with time?</li>
+<li><strong>Change in Mean:</strong> Does the mean of the process shift over time?</li>
+<li><strong>Change in Variance:</strong> Does the variance of the process evolve with time?</li>
 <li><strong>Change in State:</strong> Does the time series appear to change between “states” having distinct statistical properties?</li>
 <li><strong>Outliers</strong> Does the time series contain some “extreme” observations? Note that this is typically difficult to assess visually.</li>
 </ol>
-<p><strong>Example:</strong> In the figure below, we present an example of displacement recorded during an earthquake as well as explosion.</p>
+<p><strong>Example:</strong> In the figure below, we present an example of displacement recorded during an earthquake as well as an explosion.</p>
 <p><img src="tts_files/figure-html/example_eq-1.png" width="672" /></p>
-<p>From the graph, it can be observed that the statistical properties of the time series appear to change over time. For instance, the variance of the time series shifts at around <span class="math inline">\(t = 1150\)</span> for both series. The shift in variance also opens “windows” where there appears to be distinct states. In the case of the explosion data this is particularly relevant around <span class="math inline">\(t = 50, \cdots, 250\)</span> and then again from <span class="math inline">\(t = 1200, \cdots, 1500\)</span>. Even within these windows, there are “spikes” that could be considered as outliers most notably around <span class="math inline">\(t = 1200\)</span> for explosion series.</p>
-<p>Next, we consider an example about high-frequency finance to illustate to limitation our current framework.</p>
-<p><strong>Example:</strong> The figure below present the returns (i.e. informally speaking the changes in price) for Starbuck’s stock on the first of July 2011 during about 150 seconds (left panel) and about 400 minutes (right panel).</p>
+<p>From the graph, it can be observed that the statistical properties of the time series appear to change over time. For instance, the variance of the time series shifts at around <span class="math inline">\(t = 1150\)</span> for both series. The shift in variance also opens “windows” where there appear to be distinct states. In the case of the explosion data, this is particularly relevant around <span class="math inline">\(t = 50, \cdots, 250\)</span> and then again from <span class="math inline">\(t = 1200, \cdots, 1500\)</span>. Even within these windows, there are “spikes” that could be considered as outliers most notably around <span class="math inline">\(t = 1200\)</span> for explosion series.</p>
+<p>Next, we consider an example coming from high-frequency finance to illustrate the limitations our current framework.</p>
+<p><strong>Example:</strong> The figure below presents the returns (i.e. informally speaking the changes in price) for the Starbuck’s stock on July 1, 2011 for about 150 seconds (left panel) and about 400 minutes (right panel).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load packages</span>
 <span class="kw">library</span>(timeDate)
 
@@ -333,9 +327,9 @@ Figure 1.1: Discrete-time can be thought of as viewing a number line with equall
 <span class="kw">plot</span>(sbux.xts[<span class="dv">1</span>:<span class="dv">89</span>], <span class="dt">main =</span> <span class="st">&quot; &quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Returns&quot;</span>)
 <span class="kw">plot</span>(sbux.xts, <span class="dt">main =</span> <span class="st">&quot; &quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Returns&quot;</span>)</code></pre></div>
 <p><img src="tts_files/figure-html/example_highfreq-1.png" width="672" /></p>
-<p>It can be observed on the left panel that points are not equally spaced. Indeed, in high-frequency data interval between two points is typically not constant and is, even worse, a random variable. This implies that when a new observation will be available is in general unknown. On the right panel, one can observe that the variability of the data seems to change during the course of the trading day. Such phenomenon is well known in the finance community as a lot variation occurs at the start (and the end) of the day while the middle of the day is associated with small changes. Moreover, clear extreme observations can also be noted in this graph at around 09:30:34.</p>
+<p>It can be observed on the left panel that points are not equally spaced. Indeed, in high-frequency data the intervals between two points is typically not constant and, even worse, is a random variable. This implies that the time when a new observation will be available is in general unknown. On the right panel, one can observe that the variability of the data seems to change during the course of the trading day. Such a phenomenon is well known in the finance community since a lot of variation occurs at the start (and the end) of the day while the middle of the day is associated with small changes. Moreover, clear extreme observations can also be noted in this graph at around 09:30:34.</p>
 <!-- Geatan: Could you please check and if you have the time expend with example a little -->
-<p>Finally, ….</p>
+<p>Finally, let us consider the limitations of a direct graphical representation of a time series when the sample size is large. Indeed, due to visual limitations, a direct plotting of the data will probably result in an uninformative aggregation of points between which it is unable to distinguish anything. As an example, let us take the data coming from the calibration procedure of an Inertial Measurement Unit (IMU) which, in general terms, is used to enhance navigation precision. The signals coming from these instruments are measured at high frequencies over a long time and are often characterized by linear trends and numerous underlying stochastic processes. The code below retrieves some data from an IMU and plots it directly:</p>
 <!--
 Complete example on IMU to show the limit for such graph when n is too big.
 -->
@@ -350,6 +344,7 @@ Xt =<span class="st"> </span><span class="kw">gts</span>(imu6[,<span class="dv">
 <span class="co"># Plot gryoscope data</span>
 <span class="kw">autoplot</span>(Xt) +<span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Error (rad/s^2)&quot;</span>)</code></pre></div>
 <p><img src="tts_files/figure-html/example_IMU-1.png" width="672" /></p>
+<p>Although a linear trend and other processes are present in this signal (time series), it is practically impossible to understand or guess anything from the plot.</p>
 </div>
 <div id="basic-time-series-models" class="section level2">
 <h2><span class="header-section-number">1.3</span> Basic Time Series Models</h2>
@@ -365,20 +360,20 @@ Xt =<span class="st"> </span><span class="kw">gts</span>(imu6[,<span class="dv">
 <li><span class="math inline">\(E[W_t | \Omega_t] = 0\)</span> for all <span class="math inline">\(t\)</span>,</li>
 <li><span class="math inline">\(\cov\left(W_t, W_{t-h} \right) = \boldsymbol{1}_{h = 0} \; \sigma^2\)</span> for all <span class="math inline">\(t, h\)</span>.</li>
 </ol>
-<p>Therefore, this process present an absence of temporal (or serial) dependence and is homoskedastic (i.e it has a constant variance). This definition can be generalized in two sorts of processes, the <em>weak</em> and <em>strong</em> white noise. The process <span class="math inline">\((W_t)\)</span> is a weak white noise if</p>
+<p>Therefore, in this process there is an absence of temporal (or serial) dependence and is homoskedastic (i.e it has a constant variance). This definition can be generalized into two sorts of processes, the <em>weak</em> and <em>strong</em> white noise. The process <span class="math inline">\((W_t)\)</span> is a weak white noise if</p>
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\(E[W_t] = 0\)</span> for all <span class="math inline">\(t\)</span>,</li>
 <li><span class="math inline">\(\var\left(W_t\right) = \sigma^2\)</span> for all <span class="math inline">\(t\)</span>,</li>
 <li><span class="math inline">\(\cov \left(W_t, W_{t-h}\right) = 0\)</span>, for all <span class="math inline">\(t\)</span>, and for all <span class="math inline">\(h \neq 0\)</span>.</li>
 </ol>
-<p>Note that this definition does not imply that <span class="math inline">\(W_t\)</span> and <span class="math inline">\(W_{t-h}\)</span> are independent (for <span class="math inline">\(h \neq 0\)</span>) but simply uncorrelated. However, the notion of indepence is used to define a <em>strong</em> white noise as</p>
+<p>Note that this definition does not imply that <span class="math inline">\(W_t\)</span> and <span class="math inline">\(W_{t-h}\)</span> are independent (for <span class="math inline">\(h \neq 0\)</span>) but simply uncorrelated. However, the notion of independence is used to define a <em>strong</em> white noise as</p>
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\(E[W_t] = 0\)</span> and <span class="math inline">\(\var(W_t) = \sigma^2 &lt; \infty\)</span>, for all <span class="math inline">\(t\)</span>,</li>
 <li><span class="math inline">\(F(W_t) = F(W_{t-h})\)</span>, for all <span class="math inline">\(t,h\)</span> (where <span class="math inline">\(F(W_t)\)</span> denotes the distribution of <span class="math inline">\(W_t\)</span>),</li>
 <li><span class="math inline">\(W_t\)</span> and <span class="math inline">\(W_{t-h}\)</span> are independent for all <span class="math inline">\(t\)</span> and for all <span class="math inline">\(h \neq 0\)</span>.</li>
 </ol>
-<p>It is clear from these definitions that if a process is a strong white noise it is also a weak white noise. However, the converse is not true a shown in the following example:</p>
-<p><strong>Example</strong>: Let <span class="math inline">\(X_t \mathop \sim \limits^{iid} F_t\)</span>, where <span class="math inline">\(F_t\)</span> denote a Student distribution with <span class="math inline">\(t\)</span> degrees of freedom. Such process is a weak but not a strong white noise.</p>
+<p>It is clear from these definitions that if a process is a strong white noise it is also a weak white noise. However, the converse is not true as shown in the following example:</p>
+<p><strong>Example</strong>: Let <span class="math inline">\(X_t \mathop \sim \limits^{iid} F_t\)</span>, where <span class="math inline">\(F_t\)</span> denotes a Student distribution with <span class="math inline">\(t\)</span> degrees of freedom. This process is a weak white noise but not a strong one.</p>
 <p>The code below presents an example of how to simulate a Gaussian white noise process</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This code simulates a gaussian white noise process</span>
 n =<span class="st"> </span><span class="dv">100</span>                               <span class="co"># process length</span>
@@ -389,7 +384,7 @@ Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">WN
 </div>
 <div id="random-walk-processes" class="section level3">
 <h3><span class="header-section-number">1.3.2</span> Random Walk Processes</h3>
-<p>The term <em>random walk</em> was first introduce by Karl Pearson in the early 19 hunders. As for the white noise, there exist a large range of random walk processes. For example, one of the simplest form of random walk are be explained as follows: suppose that you are walking on campus and your next step can either be on your left, your right, forward or backward (each with equal probability). Two realizations of such processes are represented below:</p>
+<p>The term <em>random walk</em> was first introduce by Karl Pearson in the early 19 hundreds. As for the white noise, there exist a large range of random walk processes. For example, one of the simplest forms of random walk can be explained as follows: suppose that you are walking on campus and your next step can either be to your left, your right, forward or backward (each with equal probability). Two realizations of such processes are represented below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Function computes direction random walk moves</span>
 RW2dimension =<span class="st"> </span>function(<span class="dt">steps =</span> <span class="dv">100</span>){
   <span class="co"># Initial matrix</span>
@@ -450,7 +445,7 @@ b =<span class="st"> </span><span class="kw">RW2dimension</span>(<span class="dt
 <blockquote>
 <p>“<em>the most likely place to find a drunken walker is somewhere near his starting point.</em>”</p>
 </blockquote>
-<p>Empirical evidence of this phenomenon is not too hard to find on a Friday night in Champaign. In this class, we only consider one very specific form of randon walk, namely the Gaussian random walk which can be defined as:</p>
+<p>Empirical evidence of this phenomenon is not too hard to find on a Friday night in Champaign. In this class, we only consider one very specific form of random walk, namely the Gaussian random walk which can be defined as:</p>
 <p><span class="math display">\[X_t = X_{t-1} + W_t,\]</span></p>
 <p>where <span class="math inline">\(W_t\)</span> is a Gaussian white noise and with initial condition <span class="math inline">\(X_0 = c\)</span> (typically <span class="math inline">\(c = 0\)</span>). This process can be expressed differently by <em>backsubstitution</em> as follows:</p>
 <p><span class="math display">\[\begin{aligned}
@@ -463,14 +458,14 @@ b =<span class="st"> </span><span class="kw">RW2dimension</span>(<span class="dt
 </div>
 <div id="autoregressive-process-of-order-1" class="section level3">
 <h3><span class="header-section-number">1.3.3</span> Autoregressive Process of Order 1</h3>
-<p>An autoregressive process of order 1 or AR(1) is a generalization of both the white noise and random walk process which are both special case of an AR(1). A (Gaussian) AR(1) process can be defined as</p>
+<p>An autoregressive process of order 1 or AR(1) is a generalization of both the white noise and random walk processes which are both themselves special cases of an AR(1). A (Gaussian) AR(1) process can be defined as</p>
 <p><span class="math display">\[{X_t} = {\phi}{X_{t - 1}} + {W_t},\]</span></p>
 <p>where <span class="math inline">\(W_t\)</span> is a Gaussian white noise. Clearly, an AR(1) with <span class="math inline">\(\phi = 0\)</span> is a Gaussian white noise and when <span class="math inline">\(\phi = 1\)</span> the process becomes a random walk.</p>
-<p><strong>Remark:</strong> We generally assume that an AR(1) (as well as other time series models) have zero mean. The reason for this assumption is only to simplfy the notation but it is easy to consider an AR(1) process around an arbitrary mean <span class="math inline">\(\mu\)</span>, i.e.</p>
+<p><strong>Remark:</strong> We generally assume that an AR(1), as well as other time series models, have zero mean. The reason for this assumption is only to simplfy the notation but it is easy to consider an AR(1) process around an arbitrary mean <span class="math inline">\(\mu\)</span>, i.e.</p>
 <p><span class="math display">\[\left(X_t - \mu\right) = \phi \left(X_{t-1} - \mu \right) + W_t,\]</span></p>
 <p>which is of course equivalent to</p>
 <p><span class="math display">\[X_t = \left(1 - \phi \right) \mu + \phi X_{t-1} + W_t.\]</span></p>
-<p>Thus, we will generally onyl work with zero mean processes since adding means is simple.</p>
+<p>Thus, we will generally only work with zero mean processes since adding means is simple.</p>
 <p><strong>Remark:</strong> An AR(1) is in fact a linear combination of the past realisations of the white noise <span class="math inline">\(W_t\)</span>. Indeed, we have</p>
 <p><span class="math display">\[\begin{aligned}
  {X_t} &amp;= {\phi_t}{X_{t - 1}} + {W_t} 
@@ -492,12 +487,12 @@ Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">AR
 </div>
 <div id="moving-average-process-of-order-1" class="section level3">
 <h3><span class="header-section-number">1.3.4</span> Moving Average Process of Order 1</h3>
-<p>As we have seen in the previous example, an AR(1) can be expressed as a linear combination of all past observation of <span class="math inline">\((W_t)\)</span>, the next process, called a moving average process of order 1 or MA(1) is (in some sense) a “truncated” version of an AR(1). It is defined as</p>
+<p>As we have seen in the previous example, an AR(1) can be expressed as a linear combination of all past observations of <span class="math inline">\((W_t)\)</span> while the next process, called a moving average process of order 1 or MA(1), is (in some sense) a “truncated” version of an AR(1). It is defined as</p>
 \begin{equation} 
   X_t = \theta W_{t-1} + W_t,
  \label{eq:defMA1}
 \end{equation}
-<p>where (again) <span class="math inline">\(W_t\)</span> denotes a Gaussian white noise process. An example on how generate an MA(1) is given below:</p>
+<p>where (again) <span class="math inline">\(W_t\)</span> denotes a Gaussian white noise process. An example on how to generate an MA(1) is given below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This code simulates a gaussian white noise process</span>
 n =<span class="st"> </span><span class="dv">100</span>                               <span class="co"># process length</span>
 sigma2 =<span class="st"> </span><span class="dv">1</span>                            <span class="co"># innovation variance</span>
@@ -508,15 +503,15 @@ Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">MA
 </div>
 <div id="linear-drift" class="section level3">
 <h3><span class="header-section-number">1.3.5</span> Linear Drift</h3>
-<p>A linear drift is a very simple detemrinistic time series model which can be expressed as</p>
+<p>A linear drift is a very simple deterministic time series model which can be expressed as</p>
 <p><span class="math display">\[X_t = X_{t+1} + \omega, \]</span></p>
 <p>where <span class="math inline">\(\omega\)</span> is a constant and with the initial condition <span class="math inline">\(X_0 = c\)</span>, an arbitrary constant (typically zero). This process can be expressed in a more familiar form as follows:</p>
 <p><span class="math display">\[
   {X_t} = {X_{t - 1}} + \omega 
    = \left( {{X_{t - 2}} + \omega} \right) + \omega 
-   = t{\delta} + c  \]</span></p>
+   = t{\omega} + c  \]</span></p>
 <p>Therefore, a (linear) drift corresponds to a simple linear model with slope <span class="math inline">\(\omega\)</span> and intercept <span class="math inline">\(c\)</span>.</p>
-<p>A drift can simply be generated used the code below:</p>
+<p>A drift can simply be generated using the code below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This code simulate a linear drift with 0 intercept</span>
 n =<span class="st"> </span><span class="dv">100</span>                               <span class="co"># process length</span>
 omega =<span class="st"> </span><span class="fl">0.5</span>                           <span class="co"># slope parameter</span>
@@ -526,18 +521,18 @@ Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">DR
 </div>
 <div id="composite-stochastic-processes" class="section level3">
 <h3><span class="header-section-number">1.3.6</span> Composite Stochastic Processes</h3>
-<p>A composite stochastic processes can be defined as the sum of underlying (or latent) stochastic processes. In this text, we will use the term <em>latent time series</em> as a synomym to composite stochastic processes. A simple example of such process is for example</p>
+<p>A composite stochastic process can be defined as the sum of underlying (or latent) stochastic processes. In this text, we will use the term <em>latent time series</em> as a synomym for composite stochastic processes. A simple example of such a process is given by</p>
 <p><span class="math display">\[\begin{aligned}
 Y_t &amp;= Y_{t-1} + W_t + \delta\\
 X_t &amp;= Y_t + Z_t,
 \end{aligned}\]</span></p>
-<p>where <span class="math inline">\(W_t\)</span> and <span class="math inline">\(Z_t\)</span> are two independent Gaussian white noise processes. This model often used as first tool to approximate the number of individuals in the context ecological population dynamic. For example, suppose we want to study the popiulation of Chamois in the Swiss Alpes so let <span class="math inline">\(Y_t\)</span> denote the “true” number of individual in this population at time <span class="math inline">\(t\)</span>. It is reasonable that <span class="math inline">\(Y_t\)</span> is (approximately) the population at the previous time <span class="math inline">\(t-1\)</span> (e.g the previous year) plus a random variation and a drift. This random variation is due to the natural random in ecological population and reflects changes in number of predators, in aboundance of food or weather condition. On the other hand, the drift is often of particular interest for ecologist as it can used to determine the “long” term trends for the population (e.g. is the population increasing, stable or decreasing). Of course, <span class="math inline">\(Y_t\)</span> (the number of individauls) is typically unknown and we observed a noisy version of it, denotes as <span class="math inline">\(X_t\)</span>. This process corresponds to the true population plus a measruementr error as some Chamois may not be observed individuals and some counted several times. Interestingly, this process can clearly be expressed as a <em>latent time series model</em> (or composite stochastic process) as follows:</p>
+<p>where <span class="math inline">\(W_t\)</span> and <span class="math inline">\(Z_t\)</span> are two independent Gaussian white noise processes. This model is often used as a first tool to approximate the number of individuals in the context ecological population dynamics. For example, suppose we want to study the population of Chamois in the Swiss Alps. Let <span class="math inline">\(Y_t\)</span> denote the “true” number of individuals in this population at time <span class="math inline">\(t\)</span>. It is reasonable that <span class="math inline">\(Y_t\)</span> is (approximately) the population at the previous time <span class="math inline">\(t-1\)</span> (e.g the previous year) plus a random variation and a drift. This random variation is due to the natural randomness in ecological population dynamics and reflects the changes in the number of predators, in the aboundance of food or in the weather conditions. On the other hand, the drift is often of particular interest for ecologists as it can be used to determine the “long” term trends of the population (e.g. is the population increasing, stable or decreasing). Of course, <span class="math inline">\(Y_t\)</span> (the number of individauls) is typically unknown and we observe a noisy version of it, denoted as <span class="math inline">\(X_t\)</span>. This process corresponds to the true population plus a measurement error since some individuals may not be observed while others may have been counted several times. Interestingly, this process can clearly be expressed as a <em>latent time series model</em> (or composite stochastic process) as follows:</p>
 <p><span class="math display">\[\begin{aligned}
 R_t &amp;= R_{t-1} + W_t \\
 S_t &amp;= \delta t \\
 X_t &amp;= R_t + S_t + Z_t,
 \end{aligned}\]</span></p>
-<p>where <span class="math inline">\(R_t\)</span>, <span class="math inline">\(S_t\)</span> and <span class="math inline">\(Z_t\)</span> denote, respectively, a radnom walk, a drift and a white noise. The code below can be used to simulate such data:</p>
+<p>where <span class="math inline">\(R_t\)</span>, <span class="math inline">\(S_t\)</span> and <span class="math inline">\(Z_t\)</span> denote, respectively, a random walk, a drift and a white noise. The code below can be used to simulate such data:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n =<span class="st"> </span><span class="dv">1000</span>                                <span class="co"># process length</span>
 delta =<span class="st"> </span><span class="fl">0.005</span>                           <span class="co"># delta parameter (drift)</span>
 sigma2 =<span class="st"> </span><span class="dv">10</span>                             <span class="co"># variance parameter (white noise)</span>
@@ -546,7 +541,7 @@ model =<span class="st"> </span><span class="kw">WN</span>(<span class="dt">sigm
 Xt =<span class="st"> </span><span class="kw">gen.lts</span>(model, <span class="dt">N =</span> n)
 <span class="kw">plot</span>(Xt)</code></pre></div>
 <p><img src="tts_files/figure-html/example_ecolo-1.png" width="672" /></p>
-<p>In the above graph, the three latent (unobserved) processes are first depicted (i.e. white noise, random walk and drift) and then the sum of the three is present (i.e. <span class="math inline">\((X_t)\)</span>).</p>
+<p>In the above graph, the first three plots represent the latent (unobserved) processes (i.e. white noise, random walk and drift) and the last one represents the sum of the three (i.e. <span class="math inline">\((X_t)\)</span>).</p>
 
 </div>
 </div>
