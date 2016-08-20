@@ -337,7 +337,6 @@ Complete example on IMU to show the limit for such graph when n is too big.
 -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load packages</span>
 <span class="kw">library</span>(gmwm)
-<span class="kw">library</span>(imudata)
 
 <span class="co"># Load IMU data</span>
 <span class="kw">data</span>(imu6, <span class="dt">package =</span> <span class="st">&quot;imudata&quot;</span>)
@@ -376,7 +375,7 @@ Xt =<span class="st"> </span><span class="kw">gts</span>(imu6[,<span class="dv">
 <p>It is clear from these definitions that if a process is a strong white noise it is also a weak white noise. However, the converse is not true a shown in the following example:</p>
 <p><strong>Example</strong>: Let <span class="math inline">\(X_t \mathop \sim \limits^{iid} F_t\)</span>, where <span class="math inline">\(F_t\)</span> denote a Student distribution with <span class="math inline">\(t\)</span> degrees of freedom. Such process is a weak but not a strong white noise.</p>
 <p>The code below presents an example of how to simulate a Gaussian white noise process</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This code simulate a gaussian white noise process</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This code simulates a gaussian white noise process</span>
 n =<span class="st"> </span><span class="dv">100</span>                               <span class="co"># process length</span>
 sigma2 =<span class="st"> </span><span class="dv">1</span>                            <span class="co"># process variance</span>
 Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">WN</span>(<span class="dt">sigma2 =</span> sigma2), <span class="dt">N =</span> n)
