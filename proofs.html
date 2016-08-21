@@ -242,19 +242,20 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">A</span> Proofs</h1>
 <div id="proof-of-theorem-1" class="section level2">
 <h2><span class="header-section-number">A.1</span> Proof of Theorem 1</h2>
-<p>Let <span class="math inline">\((X_t)_1^T\)</span> be white noise process with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span> and finite fourth moment.</p>
-And the sample autocovariance function is defined as
+<p>Let <span class="math inline">\(X_t = W_t + \mu\)</span>, where <span class="math inline">\(\mu &lt; \infty\)</span> and <span class="math inline">\((W_t)\)</span> is a strong white noise process with variance <span class="math inline">\(\sigma^2\)</span> and finite fourth moment.</p>
+<p>Next, we consider the sample autocovariance function computed on <span class="math inline">\((X_t)\)</span>, i.e.</p>
 \begin{equation*}
     \hat \gamma \left( h \right) = \frac{1}{T}\sum\limits_{t = 1}^{T - h} {\left( {{X_t} - \bar X} \right)\left( {{X_{t + h}} - \bar X} \right)}.
 \end{equation*}
-Since it is difficult to obtain the asymptotic distribution of <span class="math inline">\(\hat \gamma \left( h \right)\)</span>, we define a new statistic
+<p>For this equation, it is clear that <span class="math inline">\(\hat \gamma \left( 0 \right)\)</span> and <span class="math inline">\(\hat \gamma \left( h \right)\)</span> (with <span class="math inline">\(h &gt; 0\)</span>) are two statistics involving sums of different lengths. As we will see, this prevents us from using directely the multivariate central limit theorem on the vector <span class="math inline">\([ \hat \gamma \left( h \right) \;\;\; \hat \gamma \left( h \right) ]^T\)</span>. However, the lag <span class="math inline">\(h\)</span> is fixed and therefore the difference in the number of elements of both sums is asymptotically negligible. Therefore, we define a new statistic</p>
 \begin{equation*}
-    \tilde{\gamma} \left( h \right) = \frac{1}{T}\sum\limits_{t = 1}^{T} {\left( {{X_t} - \mu} \right)\left( {{X_{t + h}} - \mu} \right)}.
+    \tilde{\gamma} \left( h \right) = \frac{1}{T}\sum\limits_{t = 1}^{T} {\left( {{X_t} - \mu} \right)\left( {{X_{t + h}} - \mu} \right)},
 \end{equation*}
-According to Problem 1.30 on TS text book, we have
+<p>which is easier to “handle” and show that <span class="math inline">\(\hat \gamma \left( h \right)\)</span> and <span class="math inline">\(\tilde{\gamma} \left( h \right)\)</span> are asymptotically equivalent in the sense that:</p>
 \begin{equation*}
     T^{\frac{1}{2}}[\tilde{\gamma} \left( h \right) - \hat \gamma \left( h \right)] = o_p(1).
 \end{equation*}
+<p><strong>ADD HERE PROOF OF THE ABOVE RESULT</strong></p>
 <p>Therefore <span class="math inline">\(\tilde{\gamma} \left( h \right)\)</span> and <span class="math inline">\(\hat \gamma \left( h \right)\)</span> have the same asymptotic distribution, it is suffice to show the asymptotic distribution of <span class="math inline">\(\tilde{\gamma} \left( h \right)\)</span>.</p>
 The expectation of <span class="math inline">\(\tilde{\gamma} \left( h \right)\)</span>
 \begin{equation*}
