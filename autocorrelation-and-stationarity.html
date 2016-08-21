@@ -65,7 +65,10 @@ MathJax.Hub.Config({
           natural: "\\mathbb{N}",
           rational: "\\mathbb{Q}",
           irrational: "\\mathbb{P}",
+          ind: "\\boldsymbol{1}",
+          normal: "\\mathcal{N}",
           0: "\\boldsymbol{0}",
+          e: ["\\mathbb{E} [#1]",1],
           I: "\\boldsymbol{\\mathbf{I}}",
           S: "\\boldsymbol{S}",
           y: "\\boldsymbol{y}",
@@ -328,7 +331,7 @@ points, the covariance between $X_t$ and $X_{t+h}$ is defined as the Autocovaria
 <p>A few other remarks:</p>
 <ol style="list-style-type: decimal">
 <li>The covariance function is <strong>symmetric</strong>. That is, <span class="math inline">\({\gamma}\left( {h} \right) = {\gamma}\left( -h \right)\)</span> since <span class="math inline">\(\operatorname{cov} \left( {{X_t},{X_{t+h}}} \right) = \operatorname{cov} \left( X_{t+h},X_{t} \right)\)</span>.</li>
-<li>Note that <span class="math inline">\(\operatorname{var} \left( X_{t} \right) = {\gamma}\left( 0 \right)\)</span>.</li>
+<li>Note that <span class="math inline">\(\var \left( X_{t} \right) = {\gamma}\left( 0 \right)\)</span>.</li>
 <li>We have that <span class="math inline">\(|\gamma(h)| \leq \gamma(0)\)</span> for all <span class="math inline">\(h\)</span>. The proof of this inequality follows from Cauchy-Schwarz inequality, i.e. <span class="math display">\[ \begin{aligned}
 \left(|\gamma(h)| \right)^2 &amp;= \gamma(h)^2 = \left(E\left[\left(X_t - E[X_t] \right)\left(X_{t+h} - E[X_{t+h}] \right)\right]\right)^2\\
 &amp;\leq E\left[\left(X_t - E[X_t] \right)^2 \right] E\left[\left(X_{t+h} - E[X_{t+h}] \right)^2 \right] =  \gamma(0)^2. 
@@ -362,10 +365,10 @@ points, the covariance between $X_t$ and $X_{t+h}$ is defined as the Autocovaria
 <p>Since the autocorrelation is related to a fundamental representation of time series it implies that one might be able to define a stochastic process by picking a set autocorrelation values. However, it turns out not every collection of numbers such as <span class="math inline">\(\{\rho_1, \rho_2, ...\}\)</span> is the autocorrelation of a process. Two conditions are required to ensure the validity of an autocorrelation sequence:</p>
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\(\operatorname{max}_j \; | \rho_j| \leq 1\)</span>.</li>
-<li><span class="math inline">\(\operatorname{var} \left[\sum_{j = 0}^\infty \alpha_j X_{t-j} \right] \geq 0\)</span> for all <span class="math inline">\(\{\alpha_0, \alpha_1, ...\}\)</span>.</li>
+<li><span class="math inline">\(\var \left[\sum_{j = 0}^\infty \alpha_j X_{t-j} \right] \geq 0\)</span> for all <span class="math inline">\(\{\alpha_0, \alpha_1, ...\}\)</span>.</li>
 </ol>
 <p>The first condition is obvious and simply relects the fact that <span class="math inline">\(|\rho \left( h \right)| \leq 1\)</span> but the second is more difficult to verify. Let <span class="math inline">\(\alpha_j = 0, \; j &gt; 1\)</span>, then conditon 2 implies that</p>
-<p><span class="math display">\[\operatorname{var} \left[ \alpha_0 X_{t} + \alpha_1 X_{t-1}  \right] = \gamma_0 \begin{bmatrix}
+<p><span class="math display">\[\var \left[ \alpha_0 X_{t} + \alpha_1 X_{t-1}  \right] = \gamma_0 \begin{bmatrix}
   \alpha_0 &amp; \alpha_1
  \end{bmatrix}   \begin{bmatrix}
   1 &amp; \rho_1\\
@@ -382,7 +385,7 @@ points, the covariance between $X_t$ and $X_{t+h}$ is defined as the Autocovaria
 <p>must be positive semi-definite. Therefore,</p>
 <p><span class="math display">\[\operatorname{det} \left(\boldsymbol{A}_1\right) = 1 - \rho_1^2 \]</span></p>
 <p>implying that <span class="math inline">\(|\rho_1| &lt; 1\)</span>. Next, let <span class="math inline">\(\alpha_j = 0, \; j &gt; 2\)</span>, then we must verify that:</p>
-<p><span class="math display">\[\operatorname{var} \left[ \alpha_0 X_{t} + \alpha_1 X_{t-1}  + \alpha_2 X_{t-2} \right] = \gamma_0 \begin{bmatrix}
+<p><span class="math display">\[\var \left[ \alpha_0 X_{t} + \alpha_1 X_{t-1}  + \alpha_2 X_{t-2} \right] = \gamma_0 \begin{bmatrix}
   \alpha_0 &amp; \alpha_1 &amp;\alpha_2
  \end{bmatrix}   \begin{bmatrix}
   1 &amp; \rho_1 &amp; \rho_2\\
@@ -510,7 +513,7 @@ We obtain these properties through:
 <p>It is important to understand how to verify if a postulated model is (waekly) stationary. In order to do so, we must ensure that the model satisfies three properties, i.e.</p>
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\(E\left[X_t \right] = \mu_t = \mu &lt; \infty\)</span>,</li>
-<li><span class="math inline">\(\operatorname{var}\left[X_t \right] = \sigma^2_t = \sigma^2 &lt; \infty\)</span>,</li>
+<li><span class="math inline">\(\var\left[X_t \right] = \sigma^2_t = \sigma^2 &lt; \infty\)</span>,</li>
 <li><span class="math inline">\(\operatorname{cov}\left(X_t, X_{t+h} \right) = \gamma \left(h\right)\)</span>.</li>
 </ol>
 <p>In the following examples we evaluate the stationarity of the processes introduced in Section <a href="introduction.html#basic-time-series-models">1.3</a>.</p>
@@ -530,11 +533,11 @@ We obtain these properties through:
    = c \\ 
 \end{aligned} \]</span> Note that the mean here is constant since it depends only on the value of the first term in the sequence.</li>
 <li><p><span class="math display">\[\begin{aligned}
-  \operatorname{var}\left( {{X_t}} \right) &amp;= \operatorname{var}\left( {\sum\limits_{i = 1}^t {{W_t}}  + {X_0}} \right) 
-   = \operatorname{var}\left( {\sum\limits_{i = 1}^t {{w_t}} } \right) + \underbrace {\operatorname{var}\left( {{X_0}} \right)}_{= 0} \\
+  \var\left( {{X_t}} \right) &amp;= \var\left( {\sum\limits_{i = 1}^t {{W_t}}  + {X_0}} \right) 
+   = \var\left( {\sum\limits_{i = 1}^t {{w_t}} } \right) + \underbrace {\var\left( {{X_0}} \right)}_{= 0} \\
    &amp;= \sum\limits_{i = 1}^t {Var\left( {{w_t}} \right)} 
    = t \sigma_w^2. 
-\end{aligned}\]</span> where <span class="math inline">\(\sigma_w^2 = \operatorname{var}(W_t)\)</span>. Therefore, the variance has a dependence on time contradicting our second property. Moreover, we have: <span class="math display">\[\mathop {\lim }\limits_{t \to \infty } \; \operatorname{var}\left(X_t\right) = \infty.\]</span> This process is therefore not weakly stationary.</p></li>
+\end{aligned}\]</span> where <span class="math inline">\(\sigma_w^2 = \var(W_t)\)</span>. Therefore, the variance has a dependence on time contradicting our second property. Moreover, we have: <span class="math display">\[\mathop {\lim }\limits_{t \to \infty } \; \var\left(X_t\right) = \infty.\]</span> This process is therefore not weakly stationary.</p></li>
 <li><p>Rgearding the autovariance of a random walk we have: <span class="math display">\[\begin{aligned}
   \gamma \left( h \right) &amp;= Cov\left( {{X_t},{X_{t + h}}} \right) 
    = Cov\left( {\sum\limits_{i = 1}^t {{W_i}} ,\sum\limits_{j = 1}^{t + h} {{W_j}} } \right) \\
@@ -675,8 +678,8 @@ for (i in <span class="dv">1</span>:B){
 <p><span class="math display">\[\bar{X} = {\frac{1}{n}\sum\limits_{t = 1}^n {{X_t}} }.\]</span></p>
 <p>This estimator is clearly unbiased and has the following variance:</p>
 <p><span class="math display">\[\begin{aligned}
-  \var \left( {\bar X} \right) &amp;= \operatorname{var} \left( {\frac{1}{n}\sum\limits_{t = 1}^n {{X_t}} } \right)  \\
-   &amp;= \frac{1}{{{n^2}}}\operatorname{var} \left( {{{\left[ {\begin{array}{*{20}{c}}
+  \var \left( {\bar X} \right) &amp;= \var \left( {\frac{1}{n}\sum\limits_{t = 1}^n {{X_t}} } \right)  \\
+   &amp;= \frac{1}{{{n^2}}}\var \left( {{{\left[ {\begin{array}{*{20}{c}}
   1&amp; \cdots &amp;1
 \end{array}} \right]}_{1 \times n}}{{\left[ {\begin{array}{*{20}{c}}
   {{X_1}} \\
@@ -698,7 +701,7 @@ for (i in <span class="dv">1</span>:B){
    &amp;= \frac{1}{{{n^2}}}\left( {n\gamma \left( 0 \right) + 2\left( {n - 1} \right)\gamma \left( 1 \right) + 2\left( {n - 2} \right)\gamma \left( 2 \right) +  \cdots  + 2\gamma \left( {n - 1} \right)} \right)  \\
    &amp;= \frac{1}{n}\sum\limits_{h =  - n}^n {\left( {1 - \frac{{\left| h \right|}}{n}} \right)\gamma \left( h \right)}   \\
 \end{aligned}. \]</span></p>
-<p>In the white noise case, the above formula reduces to the usual <span class="math inline">\(\operatorname{var} \left( {\bar X} \right) = \operatorname{var}(X_t)/n\)</span>.</p>
+<p>In the white noise case, the above formula reduces to the usual <span class="math inline">\(\var \left( {\bar X} \right) = \var(X_t)/n\)</span>.</p>
 <p><strong>Example:</strong> For an AR(1) we have <span class="math inline">\(\gamma(h) = \phi^h \sigma_w^2 \left(1 - \phi^2\right)^2\)</span>, therefore, we obtain (after a bit of algebra):</p>
 <p><span class="math display">\[ \var \left( {\bar X} \right) = \frac{\sigma_w^2 \left( n - 2\phi - n \phi^2 + 2 \phi^{n + 1}\right)}{n^2\left(1-\phi^2\right)\left(1-\phi\right)^2}.\]</span></p>
 <p>Unfortunately, deriving such an exact formula is often difficult when considering more complexe models, however, asymptotic approximations are often employed simply the calculation. For example, in our case we have</p>

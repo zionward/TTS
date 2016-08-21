@@ -65,7 +65,10 @@ MathJax.Hub.Config({
           natural: "\\mathbb{N}",
           rational: "\\mathbb{Q}",
           irrational: "\\mathbb{P}",
+          ind: "\\boldsymbol{1}",
+          normal: "\\mathcal{N}",
           0: "\\boldsymbol{0}",
+          e: ["\\mathbb{E} [#1]",1],
           I: "\\boldsymbol{\\mathbf{I}}",
           S: "\\boldsymbol{S}",
           y: "\\boldsymbol{y}",
@@ -242,62 +245,68 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">B</span> Remark on Syntax</h1>
 <p>Hi guys, since we are all using a different syntax here is what I propose. Let me know if we should change it. Once we agree, we will unify the syntax:</p>
 <table>
+<thead>
+<tr class="header">
+<th align="left">Symbol</th>
+<th align="left">Meaning</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td align="left"><span class="math inline">\(\mathbb{E} []\)</span></td>
+<td align="left"><span class="math inline">\(\e{ }\)</span></td>
 <td align="left">Expected value</td>
 </tr>
 <tr class="even">
 <td align="left"><span class="math inline">\(\var\)</span></td>
-<td align="left">variance</td>
+<td align="left">Variance</td>
 </tr>
 <tr class="odd">
 <td align="left"><span class="math inline">\(\cov\)</span></td>
-<td align="left">covariance</td>
+<td align="left">Covariance</td>
 </tr>
 <tr class="even">
 <td align="left"><span class="math inline">\(\corr\)</span></td>
-<td align="left">correlation</td>
+<td align="left">Correlation</td>
 </tr>
 <tr class="odd">
-<td align="left"><span class="math inline">\(\boldsymbol{1}\)</span></td>
-<td align="left">indicator</td>
+<td align="left"><span class="math inline">\(\ind\)</span></td>
+<td align="left">Indicator</td>
 </tr>
 <tr class="even">
 <td align="left"><span class="math inline">\(\real\)</span></td>
-<td align="left">real</td>
+<td align="left">Real</td>
 </tr>
 <tr class="odd">
 <td align="left"><span class="math inline">\(\natural\)</span></td>
-<td align="left">natural</td>
+<td align="left">Natural</td>
 </tr>
 <tr class="even">
 <td align="left"><span class="math inline">\(\integers\)</span></td>
-<td align="left">integers</td>
+<td align="left">Integers</td>
 </tr>
 <tr class="odd">
 <td align="left"><span class="math inline">\((X_t)\)</span></td>
-<td align="left">a time series</td>
+<td align="left">A time series</td>
 </tr>
 <tr class="even">
 <td align="left"><span class="math inline">\(\{X_t\}\)</span></td>
-<td align="left">a set</td>
+<td align="left">A set</td>
 </tr>
 <tr class="odd">
 <td align="left"><span class="math inline">\(\gamma()\)</span></td>
-<td align="left">autocov. fun.</td>
+<td align="left">Autocov. fun.</td>
 </tr>
 <tr class="even">
 <td align="left"><span class="math inline">\(\rho()\)</span></td>
-<td align="left">autocor. fun.</td>
+<td align="left">Autocor. fun.</td>
 </tr>
 <tr class="odd">
 <td align="left"><span class="math inline">\(W_t\)</span></td>
-<td align="left">white noise</td>
+<td align="left">White noise</td>
 </tr>
 <tr class="even">
-<td align="left"><span class="math inline">\(\mathcal{N}\)</span></td>
-<td align="left">normal dist.</td>
+<td align="left"><span class="math inline">\(\normal\)</span></td>
+<td align="left">Normal dist.</td>
 </tr>
 <tr class="odd">
 <td align="left"><span class="math inline">\(\KL\)</span></td>
@@ -305,7 +314,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </tr>
 <tr class="even">
 <td align="left"><span class="math inline">\(n\)</span></td>
-<td align="left">length of time series</td>
+<td align="left">Length of time series</td>
 </tr>
 </tbody>
 </table>
