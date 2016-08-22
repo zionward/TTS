@@ -25,7 +25,7 @@
 
 <meta name="author" content="James Balamuta, Stéphane Guerrier, Roberto Molinari and Haotian Xu">
 
-<meta name="date" content="2016-08-21">
+<meta name="date" content="2016-08-22">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -744,11 +744,11 @@ var.theo =<span class="st"> </span>(n -<span class="st"> </span><span class="dv"
 
 <span class="co"># Compute (approximate) vairance</span>
 var.approx =<span class="st"> </span><span class="dv">1</span>/(n*(<span class="dv">1</span>-phi)^<span class="dv">2</span>)
-  
+
 <span class="co"># Compare variance estimations</span>
 <span class="kw">plot</span>(<span class="ot">NA</span>, <span class="dt">xlim =</span> <span class="kw">c</span>(-<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">ylim =</span> <span class="kw">range</span>(var.approx), <span class="dt">log =</span> <span class="st">&quot;y&quot;</span>, 
-    <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="kw">paste</span>(<span class="st">&quot;var(&quot;</span>, <span class="kw">bar</span>(X), <span class="st">&quot;)&quot;</span>)),
-    <span class="dt">xlab=</span> <span class="kw">expression</span>(phi), <span class="dt">cex.lab =</span> <span class="fl">1.5</span>)
+     <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="kw">paste</span>(<span class="st">&quot;var(&quot;</span>, <span class="kw">bar</span>(X), <span class="st">&quot;)&quot;</span>)),
+     <span class="dt">xlab=</span> <span class="kw">expression</span>(phi), <span class="dt">cex.lab =</span> <span class="fl">1.5</span>)
 <span class="kw">grid</span>()
 <span class="kw">lines</span>(phi,var.theo, <span class="dt">col =</span> <span class="st">&quot;deepskyblue4&quot;</span>)
 <span class="kw">lines</span>(phi, var.Xbar, <span class="dt">col =</span> <span class="st">&quot;firebrick3&quot;</span>)
@@ -767,7 +767,7 @@ var.approx =<span class="st"> </span><span class="dv">1</span>/(n*(<span class="
 <p><span class="math display">\[\hat \rho \left( h \right) = \frac{{\hat \gamma \left( h \right)}}{{\hat \gamma \left( 0 \right)}}.\]</span></p>
 <p>A graphical representation of the autocorrelation function is often the first step for any time series analysis (assuming the process to be stationary). Consider the following simulated example:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load package</span>
-<span class="kw">library</span>(gmwm)
+<span class="kw">library</span>(<span class="st">&quot;gmwm&quot;</span>)
 
 <span class="co"># Simulate 100 observation from a Gaussian white noise</span>
 Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">WN</span>(<span class="dt">sigma2 =</span> <span class="dv">1</span>), <span class="dt">N =</span> <span class="dv">100</span>)
@@ -911,8 +911,62 @@ for (i in <span class="dv">1</span>:<span class="dv">4</span>){
 <p><img src="tts_files/figure-html/simulationRobust-1.png" width="672" /></p>
 <p>The boxplots in each figure show how the standard autocorrelation estimator is centred around the true value (red line) when the sample is not contaminated (left boxplot) while it is considerably biased when the sample is contaminated (right boxplot), especially at the smallest lags. Indeed, it can be seen how the boxplots under contamination are often close to zero indicating that it does not detect much dependence in the data although it should. This is a known result in robustness, more specifically that outliers in the data can break the dependence structure and make it more difficult for the latter to be detected.</p>
 <p>In order to limit this problematic, different robust estimators exist for time series problems allowing to reduce the impact of contamination on the estimation procedure. Among these estimators there are a few that estimate the autocorrelation (autocovariance) functions in a robust manner. One of these estimators is provided in the robacf() function in the “robcor” package and the following simulated example shows how it limits the bias due to contamination:</p>
-<!--```{r simulationRobust2, cache = TRUE}
-```-->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load packages</span>
+<span class="kw">library</span>(<span class="st">&quot;robcor&quot;</span>)
+
+<span class="co"># Define sample size</span>
+n =<span class="st"> </span><span class="dv">100</span>
+
+<span class="co"># Define proportion of &quot;extreme&quot; observation</span>
+alpha =<span class="st"> </span><span class="fl">0.05</span>
+
+<span class="co"># Extreme observation are generated from N(0,sigma2.cont)</span>
+sigma2.cont =<span class="st"> </span><span class="dv">10</span>
+
+<span class="co"># Number of Monte-Carlo replications</span>
+B =<span class="st"> </span><span class="dv">1000</span>
+
+<span class="co"># Define model AR(1)</span>
+phi =<span class="st"> </span><span class="fl">0.5</span>
+sigma2 =<span class="st"> </span><span class="dv">1</span>
+model =<span class="st"> </span><span class="kw">AR1</span>(<span class="dt">phi =</span> phi, <span class="dt">sigma2 =</span> sigma2)
+
+<span class="co"># Initialization of result array</span>
+result =<span class="st"> </span><span class="kw">array</span>(<span class="ot">NA</span>, <span class="kw">c</span>(B,<span class="dv">2</span>,<span class="dv">20</span>))
+
+<span class="co"># Start Monte-Carlo</span>
+for (i in <span class="dv">1</span>:B){
+  <span class="co"># Simulate AR(1)</span>
+  Xt =<span class="st"> </span><span class="kw">gen.gts</span>(model, <span class="dt">N =</span> n)
+  
+  <span class="co"># Add a proportion alpha of extreme observations to Yt</span>
+  Xt[<span class="kw">sample</span>(<span class="dv">1</span>:n,<span class="kw">round</span>(alpha*n))] =<span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">round</span>(alpha*n), <span class="dv">0</span>, sigma2.cont)
+  
+  <span class="co"># Compute standard and robust ACF of Xt and Yt</span>
+  acf =<span class="st"> </span><span class="kw">ACF</span>(Xt)
+  rob_acf =<span class="st"> </span><span class="kw">robacf</span>(Xt, <span class="dt">plot=</span><span class="ot">FALSE</span>)$acf
+  
+  <span class="co"># Store ACFs</span>
+  result[i,<span class="dv">1</span>,] =<span class="st"> </span>acf[<span class="dv">1</span>:<span class="dv">20</span>]
+  result[i,<span class="dv">2</span>,] =<span class="st"> </span>rob_acf[<span class="dv">1</span>:<span class="dv">20</span>]
+}
+
+
+<span class="co"># Compare empirical distribution of standard and robust ACF based on Xt</span>
+
+<span class="co"># Vector of lags considered (h &lt;= 20)</span>
+lags =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">10</span>) +<span class="st"> </span><span class="dv">1</span>
+
+<span class="co"># Make graph</span>
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
+
+for (i in <span class="dv">1</span>:<span class="dv">4</span>){
+  <span class="kw">boxplot</span>(result[,<span class="dv">1</span>,lags[i]], result[,<span class="dv">2</span>,lags[i]], <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>,
+          <span class="dt">names =</span> <span class="kw">c</span>(<span class="st">&quot;Standard&quot;</span>,<span class="st">&quot;Robust&quot;</span>), <span class="dt">main =</span> <span class="kw">paste</span>(<span class="st">&quot;lag: h = &quot;</span>, lags[i]-<span class="dv">1</span>),
+          <span class="dt">ylab =</span> <span class="st">&quot;Sample autocorrelation&quot;</span>)
+  <span class="kw">abline</span>(<span class="dt">h =</span> phi^(lags[i]-<span class="dv">1</span>), <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+}</code></pre></div>
+<p><img src="tts_files/figure-html/simulationRobust2-1.png" width="672" /></p>
 <p>The robust estimator remains close to the true value represented by the red line in the boxplots as opposed to the standard estimator. It can also be observed that to reduce the bias induced by contamination in the sample, robust estimators pay a certain price in terms of efficiency as highlighted by the boxplots that show more variability compared to those of the standard estimator.</p>
 <p>Robustness issues therefore need to be considered for any time series analysis, not only when estimating the autocorrelation (autocovariance) functions.</p>
 
