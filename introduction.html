@@ -25,7 +25,7 @@
 
 <meta name="author" content="James Balamuta, Stéphane Guerrier, Roberto Molinari and Haotian Xu">
 
-<meta name="date" content="2016-08-24">
+<meta name="date" content="2016-08-25">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -268,7 +268,7 @@ Figure 1.1: Discrete-time can be thought of as viewing a number line with equall
 <p><img src="tts_files/figure-html/example_eq-1.png" width="672" /></p>
 <p>From the graph, it can be observed that the statistical properties of the time series appear to change over time. For instance, the variance of the time series shifts at around <span class="math inline">\(t = 1150\)</span> for both series. The shift in variance also opens “windows” where there appear to be distinct states. In the case of the explosion data, this is particularly relevant around <span class="math inline">\(t = 50, \cdots, 250\)</span> and then again from <span class="math inline">\(t = 1200, \cdots, 1500\)</span>. Even within these windows, there are “spikes” that could be considered as outliers most notably around <span class="math inline">\(t = 1200\)</span> for explosion series.</p>
 <p>Next, we consider an example coming from high-frequency finance to illustrate the limitations our current framework.</p>
-<p><strong>Example:</strong> The figure below presents the returns or price innovation (i.e. informally speaking the changes in price from one observation to the other) for the Starbuck’s stock on July 1, 2011 for about 150 seconds (left panel) and about 400 minutes (right panel).</p>
+<p><strong>Example:</strong> The figure below presents the returns or price innovations (i.e. informally speaking the changes in price from one observation to the other) for the Starbuck’s stock on July 1, 2011 for about 150 seconds (left panel) and about 400 minutes (right panel).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load packages</span>
 <span class="kw">library</span>(timeDate)
 
