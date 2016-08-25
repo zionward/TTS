@@ -464,7 +464,7 @@ Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">MA
 <div id="linear-drift" class="section level3">
 <h3><span class="header-section-number">1.3.5</span> Linear Drift</h3>
 <p>A linear drift is a very simple deterministic time series model which can be expressed as</p>
-<p><span class="math display">\[X_t = X_{t+1} + \omega, \]</span></p>
+<p><span class="math display">\[X_t = X_{t-1} + \omega, \]</span></p>
 <p>where <span class="math inline">\(\omega\)</span> is a constant and with the initial condition <span class="math inline">\(X_0 = c\)</span>, an arbitrary constant (typically zero). This process can be expressed in a more familiar form as follows:</p>
 <p><span class="math display">\[
   {X_t} = {X_{t - 1}} + \omega 
