@@ -327,7 +327,12 @@ Xt =<span class="st"> </span><span class="kw">gts</span>(imu6[,<span class="dv">
 <li><span class="math inline">\(W_t\)</span> and <span class="math inline">\(W_{t-h}\)</span> are independent for all <span class="math inline">\(t\)</span> and for all <span class="math inline">\(h \neq 0\)</span>.</li>
 </ol>
 <p>It is clear from these definitions that if a process is a strong white noise it is also a weak white noise. However, the converse is not true as shown in the following example:</p>
-<p><strong>Example</strong>: Let <span class="math inline">\(X_t \mathop \sim \limits^{iid} F_t\)</span>, where <span class="math inline">\(F_t\)</span> denotes a Student distribution with <span class="math inline">\(t\)</span> degrees of freedom. This process is a weak white noise but not a strong one.</p>
+<p><strong>Example</strong>: Let <span class="math inline">\(Y_t \mathop \sim F_{t+2}\)</span>, where <span class="math inline">\(F_{t+2}\)</span> denotes a Student distribution with <span class="math inline">\(t+2\)</span> degrees of freedom. Assuming the sequence <span class="math inline">\((Y_1, \ldots, Y_n)\)</span> to be independent, we let <span class="math inline">\(X_t = \sqrt{\frac{t}{t+2}} Y_t\)</span>. Then, the process <span class="math inline">\((X_t)\)</span> is obviously not a strong white noise as the distribution of <span class="math inline">\(X_t\)</span> changes with <span class="math inline">\(t\)</span>. However, this process is a weak white noise since we have:</p>
+<ul>
+<li><span class="math inline">\(E[X_t] = \sqrt{\frac{t}{t+2}} E[Y_t] = 0\)</span> for all <span class="math inline">\(t\)</span>.</li>
+<li><span class="math inline">\(\var(X_t) = \frac{t}{t+2} \var(Y_t) = \frac{t}{t+2} \frac{t+2}{t} = 1\)</span> for all <span class="math inline">\(t\)</span>.</li>
+<li><span class="math inline">\(\cov(X_t, X_{t+h}) = 0\)</span> (by independence), for all <span class="math inline">\(t\)</span>, and for all <span class="math inline">\(h \neq 0\)</span>.</li>
+</ul>
 <p>The code below presents an example of how to simulate a Gaussian white noise process</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This code simulates a gaussian white noise process</span>
 n =<span class="st"> </span><span class="dv">100</span>                               <span class="co"># process length</span>
