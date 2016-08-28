@@ -168,8 +168,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.3.3" data-path="introduction.html"><a href="introduction.html#autoregressive-process-of-order-1"><i class="fa fa-check"></i><b>1.3.3</b> Autoregressive Process of Order 1</a></li>
 <li class="chapter" data-level="1.3.4" data-path="introduction.html"><a href="introduction.html#moving-average-process-of-order-1"><i class="fa fa-check"></i><b>1.3.4</b> Moving Average Process of Order 1</a></li>
 <li class="chapter" data-level="1.3.5" data-path="introduction.html"><a href="introduction.html#linear-drift"><i class="fa fa-check"></i><b>1.3.5</b> Linear Drift</a></li>
-<li class="chapter" data-level="1.3.6" data-path="introduction.html"><a href="introduction.html#composite-stochastic-processes"><i class="fa fa-check"></i><b>1.3.6</b> Composite Stochastic Processes</a></li>
 </ul></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#composite-stochastic-processes"><i class="fa fa-check"></i><b>1.4</b> Composite Stochastic Processes</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/SMAC-Group/TTS" target="blank">&copy; 2016 Balamuta, Guerrier, Molinari, Xu</a></li>
@@ -249,6 +249,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><p><strong>“Other” trends</strong>: These trends have typically no regular patterns and are over a segment of time, known as a “window”, that change the statistical properties of a time series. A common example of such trends is given by the vibrations observed before, during and after an earthquake.</p></li>
 </ol>
 <p><strong>Example:</strong> A traditional example of a time series is the quarterly earnings of the company Johnson and Johson. In the figure below, we present these earnings between 1960 and 1980:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load data</span>
+<span class="kw">data</span>(jj, <span class="dt">package =</span> <span class="st">&quot;astsa&quot;</span>)
+
+<span class="co"># Construct gts object</span>
+jj =<span class="st"> </span><span class="kw">gts</span>(jj, <span class="dt">start =</span> <span class="dv">1960</span>, <span class="dt">freq =</span> <span class="dv">4</span>, <span class="dt">name =</span> <span class="st">&#39;Johnson and Johnson Quarterly Earnings&#39;</span>, 
+         <span class="dt">unit =</span> <span class="st">&quot;year&quot;</span>)
+
+<span class="co"># Plot time series</span>
+<span class="kw">autoplot</span>(jj) +<span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Quarterly Earnings per Share ($)&quot;</span>)</code></pre></div>
+<p><img src="tts_files/figure-html/example_JJ-1.png" width="672" /></p>
 <p>One trait that the graph makes evident is that the data contains a non-linear increasing trend as well as a yearly seasonal component. In addition, one can note that the <em>variability</em> of the data seems to increase with time. Being able to make such observations provides important information to select suitable models for the data.</p>
 <p>Moreover, when observing “raw” time series data it is also interesting to evaluate if some of the following phenomena occur:</p>
 <ol style="list-style-type: decimal">
@@ -258,9 +268,45 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><strong>Outliers</strong> Does the time series contain some “extreme” observations? Note that this is typically difficult to assess visually.</li>
 </ol>
 <p><strong>Example:</strong> In the figure below, we present an example of displacement recorded during an earthquake as well as an explosion.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load data</span>
+<span class="kw">data</span>(EQ5, <span class="dt">package=</span><span class="st">&quot;astsa&quot;</span>)
+<span class="kw">data</span>(EXP6, <span class="dt">package=</span><span class="st">&quot;astsa&quot;</span>)
+
+EQ5.df =<span class="st"> </span><span class="kw">fortify</span>(EQ5)
+EQ5.df$type =<span class="st"> &quot;earthquake&quot;</span>
+EXP6.df =<span class="st"> </span><span class="kw">fortify</span>(EXP6)
+EXP6.df$type =<span class="st"> &quot;explosion&quot;</span>
+eq.df =<span class="st"> </span><span class="kw">rbind</span>(EQ5.df, EXP6.df)
+
+<span class="co"># Plot time series</span>
+<span class="kw">ggplot</span>(<span class="dt">data =</span> eq.df, <span class="kw">aes</span>(Index, Data)) +<span class="st"> </span><span class="kw">geom_line</span>() +<span class="st"> </span><span class="kw">facet_grid</span>( type ~<span class="st"> </span>.) +
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Ground Displacement (mm)&quot;</span>) +<span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Time (seconds)&quot;</span>) +<span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="tts_files/figure-html/example_EQ-1.png" width="672" /></p>
 <p>From the graph, it can be observed that the statistical properties of the time series appear to change over time. For instance, the variance of the time series shifts at around <span class="math inline">\(t = 1150\)</span> for both series. The shift in variance also opens “windows” where there appear to be distinct states. In the case of the explosion data, this is particularly relevant around <span class="math inline">\(t = 50, \cdots, 250\)</span> and then again from <span class="math inline">\(t = 1200, \cdots, 1500\)</span>. Even within these windows, there are “spikes” that could be considered as outliers most notably around <span class="math inline">\(t = 1200\)</span> for explosion series.</p>
+<p>Extreme observations or outliers are commonly observed in real time series data, this is illustrated in the following example.</p>
+<p><strong>Example:</strong> We consider here a data set coming from the domain of hydrology. The data concerns monthly precipitation (in mm) over a certain period of time (1907 to 1972) and is interesting for scientists in order to study water cycles. The data are presented in the graph below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load data</span>
+hydro =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/precipitation.csv&quot;</span>, <span class="dt">header=</span>T, <span class="dt">sep=</span><span class="st">&quot;;&quot;</span>)
+
+<span class="co"># Construct gts object</span>
+hydro =<span class="st"> </span><span class="kw">gts</span>(hydro[,<span class="dv">2</span>], <span class="dt">start =</span> <span class="dv">1907</span>, <span class="dt">freq =</span> <span class="dv">12</span>, <span class="dt">name =</span> <span class="st">&#39;Precipitation Data&#39;</span>, 
+            <span class="dt">unit =</span> <span class="st">&quot;month&quot;</span>)
+
+<span class="co"># Plot data</span>
+<span class="kw">autoplot</span>(hydro)  +<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Mean Monthly Precipitation (mm)&quot;</span>)</code></pre></div>
+<p><img src="tts_files/figure-html/example_hydro-1.png" width="672" /></p>
 <p>Next, we consider an example coming from high-frequency finance to illustrate the limitations our current framework.</p>
 <p><strong>Example:</strong> The figure below presents the returns or price innovations (i.e. informally speaking the changes in price from one observation to the other) for the Starbuck’s stock on July 1, 2011 for about 150 seconds (left panel) and about 400 minutes (right panel).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(timeDate)
+
+<span class="co"># Load &quot;high-frequency&quot; Starbucks returns for Jul 01 2011</span>
+<span class="kw">data</span>(sbux.xts, <span class="dt">package =</span> <span class="st">&quot;highfrequency&quot;</span>)
+
+<span class="co"># Plot returns</span>
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(sbux.xts[<span class="dv">1</span>:<span class="dv">89</span>], <span class="dt">main =</span> <span class="st">&quot; &quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Returns&quot;</span>)
+<span class="kw">plot</span>(sbux.xts, <span class="dt">main =</span> <span class="st">&quot; &quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Returns&quot;</span>)</code></pre></div>
+<p><img src="tts_files/figure-html/example_Starbucks-1.png" width="672" /></p>
 <p>It can be observed on the left panel that observations are not equally spaced. Indeed, in high-frequency data the intervals between two points is typically not constant and, even worse, is a random variable. This implies that the time when a new observation will be available is in general unknown. On the right panel, one can observe that the variability of the data seems to change during the course of the trading day. Such a phenomenon is well known in the finance community since a lot of variation occurs at the start (and the end) of the day while the middle of the day is associated with small changes. Moreover, clear extreme observations can also be noted in this graph at around 11:00</p>
 <p>Finally, let us consider the limitations of a direct graphical representation of a time series when the sample size is large. Indeed, due to visual limitations, a direct plotting of the data will probably result in an uninformative aggregation of points between which it is unable to distinguish anything. This is illustrated in the following example.</p>
 <p><strong>Example:</strong> We consider here the data coming from the calibration procedure of an Inertial Measurement Unit (IMU) which, in general terms, is used to enhance navigation precision or reconstruct three dimensional movements (see e.g. <a href="https://www.youtube.com/watch?v=htoBvSq8jLA">link</a>). These sensors are used in a very wide range of applications such as robotics, virtual reality, vehicle stability control, human and animal motion capture and so forth (see e.g. <a href="https://www.youtube.com/watch?v=g4tgtPA54_Y">link</a>). The signals coming from these instruments are measured at high frequencies over a long time and are often characterized by linear trends and numerous underlying stochastic processes. If you have never heard</p>
@@ -451,9 +497,16 @@ Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">MA
    = t{\omega} + c  \]</span></p>
 <p>Therefore, a (linear) drift corresponds to a simple linear model with slope <span class="math inline">\(\omega\)</span> and intercept <span class="math inline">\(c\)</span>.</p>
 <p>A drift can simply be generated using the code below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This code simulate a linear drift with 0 intercept</span>
+n =<span class="st"> </span><span class="dv">100</span>                               <span class="co"># process length</span>
+omega =<span class="st"> </span><span class="fl">0.5</span>                           <span class="co"># slope parameter</span>
+Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">DR</span>(<span class="dt">omega =</span> omega), <span class="dt">N =</span> n)
+<span class="kw">plot</span>(Xt)</code></pre></div>
+<p><img src="tts_files/figure-html/example_Drift-1.png" width="672" /></p>
 </div>
-<div id="composite-stochastic-processes" class="section level3">
-<h3><span class="header-section-number">1.3.6</span> Composite Stochastic Processes</h3>
+</div>
+<div id="composite-stochastic-processes" class="section level2">
+<h2><span class="header-section-number">1.4</span> Composite Stochastic Processes</h2>
 <p>A composite stochastic process can be defined as the sum of underlying (or latent) stochastic processes. In this text, we will use the term <em>latent time series</em> as a synomym for composite stochastic processes. A simple example of such a process is given by</p>
 <p><span class="math display">\[\begin{aligned}
 Y_t &amp;= Y_{t-1} + W_t + \delta\\
@@ -466,11 +519,30 @@ S_t &amp;= \delta t \\
 X_t &amp;= R_t + S_t + Z_t,
 \end{aligned}\]</span></p>
 <p>where <span class="math inline">\(R_t\)</span>, <span class="math inline">\(S_t\)</span> and <span class="math inline">\(Z_t\)</span> denote, respectively, a random walk, a drift and a white noise. The code below can be used to simulate such data:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n =<span class="st"> </span><span class="dv">1000</span>                                <span class="co"># process length</span>
+delta =<span class="st"> </span><span class="fl">0.005</span>                           <span class="co"># delta parameter (drift)</span>
+sigma2 =<span class="st"> </span><span class="dv">10</span>                             <span class="co"># variance parameter (white noise)</span>
+gamma2 =<span class="st"> </span><span class="fl">0.1</span>                            <span class="co"># innovation variance (random walk)</span>
+model =<span class="st"> </span><span class="kw">WN</span>(<span class="dt">sigma2 =</span> sigma2) +<span class="st"> </span><span class="kw">RW</span>(<span class="dt">gamma2 =</span> gamma2) +<span class="st"> </span><span class="kw">DR</span>(<span class="dt">omega =</span> delta)
+Xt =<span class="st"> </span><span class="kw">gen.lts</span>(model, <span class="dt">N =</span> n)
+<span class="kw">plot</span>(Xt)</code></pre></div>
+<p><img src="tts_files/figure-html/example_composite-1.png" width="672" /></p>
 <p>In the above graph, the first three plots represent the latent (unobserved) processes (i.e. white noise, random walk and drift) and the last one represents the sum of the three (i.e. <span class="math inline">\((X_t)\)</span>).</p>
+<p>Let us consider a real example where these latent processes are useful to describe (and predict) the behavior of economic variables such as Personal Saving Rates (PSR). A process that is used for these settings is the “random-walk-plus-noise” model, meaning that the data can be explained by a random walk process in addition to which we observe some other process (e.g. a white noise model, an autoregressive model such as an AR(1), etc.). The PSR taken from the Federal Reserve of St. Louis from January 1, 1959, to May 1, 2015, is presented in the following plot:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Saving Rates</span>
+saving =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/PSAVERT.csv&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;,&quot;</span>)
+
+<span class="co"># Construct gts object</span>
+saving =<span class="st"> </span><span class="kw">gts</span>(saving$VALUE, <span class="dt">start =</span> <span class="dv">1959</span>, <span class="dt">freq =</span> <span class="dv">12</span>, <span class="dt">name =</span> <span class="st">&#39;US Personal Saving Rates&#39;</span>, 
+    <span class="dt">unit =</span> <span class="st">&quot;month&quot;</span>)
+
+<span class="co"># Plot time series</span>
+<span class="kw">autoplot</span>(saving) +<span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;US Personal Saving Rates (%)&quot;</span>)</code></pre></div>
+<p><img src="tts_files/figure-html/example_PSR-1.png" width="672" /></p>
+<p>It can be observed that the mean of the process seems to vary over time, suggesting that a random walk can indeed be considered as a possible model to explain this data. In addition, aside from some “spikes” and occasional sudden changes, the observations appear to gradually change from one time point to the other, suggesting that some other form of dependence between them could exist.</p>
 
 <div id="refs" class="references">
 
-</div>
 </div>
 </div>
 </div>
