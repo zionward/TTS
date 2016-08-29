@@ -25,7 +25,7 @@
 
 <meta name="author" content="James Balamuta, Stéphane Guerrier, Roberto Molinari and Haotian Xu">
 
-<meta name="date" content="2016-08-28">
+<meta name="date" content="2016-08-29">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -217,11 +217,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">1.1</span> Time Series</h2>
 <p>Generally speaking a <em>time series</em> (or stochastic process) corresponds to set of “repeated” observations of the same variable such as price of a financial asset or temperature in a given location. In terms of notation a time series is often written as</p>
 <p><span class="math display">\[\left(X_1, X_2, ..., X_n \right) \;\;\; \text{ or } \;\;\; \left(X_t\right)_{t = 1,...,n}.\]</span></p>
-<p>The time index <span class="math inline">\(t\)</span> is contained within either the set of reals, <span class="math inline">\(\real\)</span>, or integers, <span class="math inline">\(\integers\)</span>. When <span class="math inline">\(t \in \real\)</span>, the time series becomes a <em>continuous-time</em> stochastic process such a Brownian motion, a model used to represent the random movement of particles within a suspended liquid or gas, or an ElectroCardioGram (ECG) signal, which corresponds to the palpitations of the heart. However, within this text, we will limit ourselves to the cases where <span class="math inline">\(t \in \integers\)</span>, better known as <em>discrete-time</em> processes. <em>Discrete-time</em> processes are where a variable is measured sequentially at fixed and equally spaced intervals in time akin to <a href="#fig:numberline"><strong>??</strong></a>. This implies that we will have two assumptions:</p>
+<p>The time index <span class="math inline">\(t\)</span> is contained within either the set of reals, <span class="math inline">\(\real\)</span>, or integers, <span class="math inline">\(\integers\)</span>. When <span class="math inline">\(t \in \real\)</span>, the time series becomes a <em>continuous-time</em> stochastic process such a Brownian motion, a model used to represent the random movement of particles within a suspended liquid or gas, or an ElectroCardioGram (ECG) signal, which corresponds to the palpitations of the heart. However, within this text, we will limit ourselves to the cases where <span class="math inline">\(t \in \integers\)</span>, better known as <em>discrete-time</em> processes. <em>Discrete-time</em> processes are where a variable is measured sequentially at fixed and equally spaced intervals in time akin to <a href="introduction.html#fig:numberline">1.1</a>. This implies that we will have two assumptions:</p>
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\(t\)</span> is not random e.g. the time at which each observation is measured is known, and</li>
 <li>the time between two consecutive observations is constant.</li>
 </ol>
+<div class="figure" style="text-align: center"><span id="fig:numberline"></span>
+<img src="tts_files/figure-html/numberline-1.png" alt="Discrete-time can be thought of as viewing a number line with equally spaced points." width="672" />
+<p class="caption">
+Figure 1.1: Discrete-time can be thought of as viewing a number line with equally spaced points.
+</p>
+</div>
 <p>Moreover, the term “time series” can also represent a probability model for a set of observations. For example, one of the fundamental probability models used in time series analysis is called a <em>white noise</em> process and is defined as</p>
 <p><span class="math display">\[W_t \mathop \sim \limits^{iid} N(0, \sigma^2).\]</span></p>
 <p>This statement simply means that <span class="math inline">\((W_t)\)</span> is normally distributed and independent over time. This model may appear to be dull but as we will see it is a crucial component to constructing more complex models. Unlike the white noise process, time series are typically <em>not</em> independent over time. Suppose that the temperature in Champaign is unusually low, then it is reasonable to assume that tomorrow’s temperature will also be low. Indeed, such behavior would suggest the existence of a dependency over time. The time series methods we will discuss in this text consists of parametric models used to characterize (or at least approximate) the joint distribution of <span class="math inline">\((X_t)\)</span>. Often, time series models can be decomposed into two components, the first of which is what we call a <em>signal</em>, say <span class="math inline">\((Y_t)\)</span>, and the second component is a <em>noise</em>, say <span class="math inline">\((W_t)\)</span>, leading to the model</p>
