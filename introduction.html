@@ -161,15 +161,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#time-series"><i class="fa fa-check"></i><b>1.1</b> Time Series</a></li>
-<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#exploratory-data-analysis-for-time-series-eda"><i class="fa fa-check"></i><b>1.2</b> Exploratory Data Analysis for Time Series {eda}</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#eda"><i class="fa fa-check"></i><b>1.2</b> Exploratory Data Analysis for Time Series</a></li>
 <li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#basic-time-series-models"><i class="fa fa-check"></i><b>1.3</b> Basic Time Series Models</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#white-noise-processes-wn"><i class="fa fa-check"></i><b>1.3.1</b> White noise processes {wn}</a></li>
-<li class="chapter" data-level="1.3.2" data-path="introduction.html"><a href="introduction.html#random-walk-processes-rw"><i class="fa fa-check"></i><b>1.3.2</b> Random Walk Processes {rw}</a></li>
-<li class="chapter" data-level="1.3.3" data-path="introduction.html"><a href="introduction.html#autoregressive-process-of-order-1-ar1"><i class="fa fa-check"></i><b>1.3.3</b> Autoregressive Process of Order 1 {ar1}</a></li>
-<li class="chapter" data-level="1.3.4" data-path="introduction.html"><a href="introduction.html#moving-average-process-of-order-1-ma1"><i class="fa fa-check"></i><b>1.3.4</b> Moving Average Process of Order 1 {ma1}</a></li>
-<li class="chapter" data-level="1.3.5" data-path="introduction.html"><a href="introduction.html#linear-drift-drift"><i class="fa fa-check"></i><b>1.3.5</b> Linear Drift {drift}</a></li>
+<li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#wn"><i class="fa fa-check"></i><b>1.3.1</b> White noise processes</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduction.html"><a href="introduction.html#rw"><i class="fa fa-check"></i><b>1.3.2</b> Random Walk Processes</a></li>
+<li class="chapter" data-level="1.3.3" data-path="introduction.html"><a href="introduction.html#ar1"><i class="fa fa-check"></i><b>1.3.3</b> Autoregressive Process of Order 1</a></li>
+<li class="chapter" data-level="1.3.4" data-path="introduction.html"><a href="introduction.html#ma1"><i class="fa fa-check"></i><b>1.3.4</b> Moving Average Process of Order 1</a></li>
+<li class="chapter" data-level="1.3.5" data-path="introduction.html"><a href="introduction.html#drift"><i class="fa fa-check"></i><b>1.3.5</b> Linear Drift</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#composite-stochastic-processes"><i class="fa fa-check"></i><b>1.4</b> Composite Stochastic Processes</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#lts"><i class="fa fa-check"></i><b>1.4</b> Composite Stochastic Processes</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html"><i class="fa fa-check"></i><b>2</b> Autocorrelation and Stationarity</a><ul>
 <li class="chapter" data-level="2.1" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#the-autocorrelation-and-autocovariance-functions"><i class="fa fa-check"></i><b>2.1</b> The Autocorrelation and Autocovariance Functions</a><ul>
@@ -256,8 +256,8 @@ Figure 1.1: Discrete-time can be thought of as viewing a number line with equall
 <p>“<em>I think there is a world market for maybe five computers.</em>”</p>
 </blockquote>
 </div>
-<div id="exploratory-data-analysis-for-time-series-eda" class="section level2">
-<h2><span class="header-section-number">1.2</span> Exploratory Data Analysis for Time Series {eda}</h2>
+<div id="eda" class="section level2">
+<h2><span class="header-section-number">1.2</span> Exploratory Data Analysis for Time Series</h2>
 <p>When dealing with relatively small time series (e.g. a few thousands), it is often useful to look at a graph of the original data. These graphs can be informative to “detect” some features of a time series such as trends and the presence of outliers.</p>
 <p>Indeed, a trend is typically assumed to be present in a time series when the data exhibit some form of long term increase or decrease or combination of increases or decreases. Such trends could be linear or non-linear and represent an important part of the “signal” of a model. Here are a few examples of non-linear trends:</p>
 <ol style="list-style-type: decimal">
@@ -351,8 +351,8 @@ Xt =<span class="st"> </span><span class="kw">gts</span>(imu6[,<span class="dv">
 <p>In this section, we introduce some simple time series models. Before doing so it is useful to define <span class="math inline">\(\Omega_t\)</span> as all the information avaiable up to time <span class="math inline">\(t-1\)</span>, i.e.</p>
 <p><span class="math display">\[\Omega_t = \left(X_{t-1}, X_{t-2}, ..., X_0 \right).\]</span></p>
 <p>As we will see this compact notation is quite useful.</p>
-<div id="white-noise-processes-wn" class="section level3">
-<h3><span class="header-section-number">1.3.1</span> White noise processes {wn}</h3>
+<div id="wn" class="section level3">
+<h3><span class="header-section-number">1.3.1</span> White noise processes</h3>
 <p>The building block for most time series models is the Gaussian white noise process, which can be defined as</p>
 <p><span class="math display">\[{W_t}\mathop \sim \limits^{iid} N\left( {0,\sigma _w^2} \right).\]</span></p>
 <p>This definition implies that:</p>
@@ -387,8 +387,8 @@ Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">WN
 <span class="kw">plot</span>(Xt)</code></pre></div>
 <p><img src="tts_files/figure-html/example_WN-1.png" width="672" /></p>
 </div>
-<div id="random-walk-processes-rw" class="section level3">
-<h3><span class="header-section-number">1.3.2</span> Random Walk Processes {rw}</h3>
+<div id="rw" class="section level3">
+<h3><span class="header-section-number">1.3.2</span> Random Walk Processes</h3>
 <p>The term <em>random walk</em> was first introduce by Karl Pearson in the early 19 hundreds. As for the white noise, there exist a large range of random walk processes. For example, one of the simplest forms of random walk can be explained as follows: suppose that you are walking on campus and your next step can either be to your left, your right, forward or backward (each with equal probability). Two realizations of such processes are represented below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;gridExtra&quot;</span>)
 
@@ -458,8 +458,8 @@ Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">RW
 <span class="kw">plot</span>(Xt)</code></pre></div>
 <p><img src="tts_files/figure-html/example_RW-1.png" width="672" /></p>
 </div>
-<div id="autoregressive-process-of-order-1-ar1" class="section level3">
-<h3><span class="header-section-number">1.3.3</span> Autoregressive Process of Order 1 {ar1}</h3>
+<div id="ar1" class="section level3">
+<h3><span class="header-section-number">1.3.3</span> Autoregressive Process of Order 1</h3>
 <p>An autoregressive process of order 1 or AR(1) is a generalization of both the white noise and random walk processes which are both themselves special cases of an AR(1). A (Gaussian) AR(1) process can be defined as</p>
 <p><span class="math display">\[{X_t} = {\phi}{X_{t - 1}} + {W_t},\]</span></p>
 <p>where <span class="math inline">\(W_t\)</span> is a Gaussian white noise. Clearly, an AR(1) with <span class="math inline">\(\phi = 0\)</span> is a Gaussian white noise and when <span class="math inline">\(\phi = 1\)</span> the process becomes a random walk.</p>
@@ -487,8 +487,8 @@ Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">AR
 <span class="kw">plot</span>(Xt)</code></pre></div>
 <p><img src="tts_files/figure-html/example_AR1-1.png" width="672" /></p>
 </div>
-<div id="moving-average-process-of-order-1-ma1" class="section level3">
-<h3><span class="header-section-number">1.3.4</span> Moving Average Process of Order 1 {ma1}</h3>
+<div id="ma1" class="section level3">
+<h3><span class="header-section-number">1.3.4</span> Moving Average Process of Order 1</h3>
 <p>As we have seen in the previous example, an AR(1) can be expressed as a linear combination of all past observations of <span class="math inline">\((W_t)\)</span> while the next process, called a moving average process of order 1 or MA(1), is (in some sense) a “truncated” version of an AR(1). It is defined as</p>
 \begin{equation} 
   X_t = \theta W_{t-1} + W_t,
@@ -503,8 +503,8 @@ Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">MA
 <span class="kw">plot</span>(Xt)</code></pre></div>
 <p><img src="tts_files/figure-html/example_MA1-1.png" width="672" /></p>
 </div>
-<div id="linear-drift-drift" class="section level3">
-<h3><span class="header-section-number">1.3.5</span> Linear Drift {drift}</h3>
+<div id="drift" class="section level3">
+<h3><span class="header-section-number">1.3.5</span> Linear Drift</h3>
 <p>A linear drift is a very simple deterministic time series model which can be expressed as</p>
 <p><span class="math display">\[X_t = X_{t-1} + \omega, \]</span></p>
 <p>where <span class="math inline">\(\omega\)</span> is a constant and with the initial condition <span class="math inline">\(X_0 = c\)</span>, an arbitrary constant (typically zero). This process can be expressed in a more familiar form as follows:</p>
@@ -522,7 +522,7 @@ Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">DR
 <p><img src="tts_files/figure-html/example_Drift-1.png" width="672" /></p>
 </div>
 </div>
-<div id="composite-stochastic-processes" class="section level2">
+<div id="lts" class="section level2">
 <h2><span class="header-section-number">1.4</span> Composite Stochastic Processes</h2>
 <p>A composite stochastic process can be defined as the sum of underlying (or latent) stochastic processes. In this text, we will use the term <em>latent time series</em> as a synomym for composite stochastic processes. A simple example of such a process is given by</p>
 <p><span class="math display">\[\begin{aligned}
