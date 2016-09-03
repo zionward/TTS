@@ -177,6 +177,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.1.2" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#a-fundamental-representation"><i class="fa fa-check"></i><b>2.1.2</b> A Fundamental Representation</a></li>
 <li class="chapter" data-level="2.1.3" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#admissible-autocorrelation-functions"><i class="fa fa-check"></i><b>2.1.3</b> Admissible Autocorrelation Functions</a></li>
 </ul></li>
+<li class="chapter" data-level="2.2" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#stationarity"><i class="fa fa-check"></i><b>2.2</b> Stationarity</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#definitions-1"><i class="fa fa-check"></i><b>2.2.1</b> Definitions</a></li>
+<li class="chapter" data-level="2.2.2" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#assessing-weak-stationarity-of-time-series-models"><i class="fa fa-check"></i><b>2.2.2</b> Assessing Weak Stationarity of Time Series Models</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/SMAC-Group/TTS" target="blank">&copy; 2016 Balamuta, Guerrier, Molinari, Xu</a></li>
@@ -332,6 +336,176 @@ Figure 2.2: Admissible autocorrelation functions
 </p>
 </div>
 <p>From our derivation it is clear that the restrictions on the autocorrelation are very complicated thereby justifying the need for other forms of fundamental representation which we will explore later in this text. Before moving on to the estimation of the autocorrelation and autocovariance functions, we must first discuss the stationarity of <span class="math inline">\((X_t)\)</span>, which will provide a convenient framework in which <span class="math inline">\(\gamma(h)\)</span> and <span class="math inline">\(\rho(h)\)</span> can be used (rather that <span class="math inline">\(\gamma(t,t+h)\)</span> for example) and (easily) estimated.</p>
+</div>
+</div>
+<div id="stationarity" class="section level2">
+<h2><span class="header-section-number">2.2</span> Stationarity</h2>
+<div id="definitions-1" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Definitions</h3>
+<p>There are two kinds of stationarity that are commonly used. They are defined below:</p>
+<ul>
+<li>A process <span class="math inline">\((X_t)\)</span> is <em>strongly stationary</em> or <em>strictly stationary</em> if the joint probability distribution of <span class="math inline">\((X_{t-h}, ..., X_t, ..., X_{t+h})\)</span> is independent of <span class="math inline">\(t\)</span> for all <span class="math inline">\(h\)</span>.</li>
+<li>A process <span class="math inline">\((X_t)\)</span> is <em>weakly stationary</em>, <em>covariance stationary</em> or <em>second order stationary</em> if <span class="math inline">\(\mathbb{E}[X_t]\)</span>, <span class="math inline">\(\mathbb{E}[X_t^2]\)</span> are finite and <span class="math inline">\(\mathbb{E}[X_t X_{t-h}]\)</span> depends only on <span class="math inline">\(h\)</span> and not on <span class="math inline">\(t\)</span>.</li>
+</ul>
+<p>These types of stationarity are <em>not equivalent</em> and the presence of one kind of stationarity does not imply the other. That is, a time series can be strongly stationary but not weakly stationary and vice versa. In some cases, a time series can be both strongly and weakly stationary and this is occurs, for example, in the (jointly) Gaussian case. Stationarity of <span class="math inline">\((X_t)\)</span> matters because <em>it provides the framework in which averaging dependent data makes sense</em> thereby allowing to easily estimate quantities such as the autocorrelation function.</p>
+<p>Several remarks and comments can be made on these definitions:</p>
+<ul>
+<li>As mentioned earlier, strong stationarity <em>does not imply</em> weak stationarity. <em>Example</em>: an iid Cauchy process is strongly but not weakly stationary.</li>
+<li>Weak stationarity <em>does not imply</em> strong stationarity. <em>Example</em>: Consider the following weak white noise process:
+\begin{equation*}
+X_t = \begin{cases}
+U_{t}      &amp; \quad \text{if } t \in \{2k:\, k\in \mathbb{Z} \}, \\
+V_{t}      &amp; \quad \text{if } t \in \{2k+1:\, k\in \mathbb{Z} \},\\
+  \end{cases}
+\end{equation*}
+where <span class="math inline">\({U_t} \mathop \sim \limits^{iid} N\left( {1,1} \right)\)</span> and <span class="math inline">\({V_t}\mathop \sim \limits^{iid} \mathcal{E}\left( 1 \right)\)</span> is a weakly stationary process that is <em>not</em> strongly stationary.</li>
+<li>Strong stationarity combined with bounded values of <span class="math inline">\(\mathbb{E}[X_t]\)</span> and <span class="math inline">\(\mathbb{E}[X_t^2]\)</span> <em>implies</em> weak stationarity</li>
+<li>Weak stationarity combined with normality distributed processes <em>implies</em> strong stationarity.</li>
+</ul>
+</div>
+<div id="assessing-weak-stationarity-of-time-series-models" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Assessing Weak Stationarity of Time Series Models</h3>
+<p>It is important to understand how to verify if a postulated model is (weakly) stationary. In order to do so, we must ensure that our model satisfies the following three properties:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(\mathbb{E}\left[X_t \right] = \mu_t = \mu &lt; \infty\)</span>,</li>
+<li><span class="math inline">\(\var\left[X_t \right] = \sigma^2_t = \sigma^2 &lt; \infty\)</span>,</li>
+<li><span class="math inline">\(\cov\left(X_t, X_{t+h} \right) = \gamma \left(h\right)\)</span>.</li>
+</ol>
+<p>In the following examples we evaluate the stationarity of the processes introduced in Section <a href="introduction.html#basic-time-series-models">1.3</a>.</p>
+<p><strong>Example: Gaussian White Noise</strong> It is easy to verify that this process is stationary. Indeed, we have:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(\mathbb{E}\left[ {{X_t}} \right] = 0\)</span>,</li>
+<li><span class="math inline">\(\gamma(0) = \sigma^2 &lt; \infty\)</span>,<br />
+</li>
+<li><span class="math inline">\(\gamma(h) = 0\)</span> for <span class="math inline">\(|h| &gt; 0\)</span>.</li>
+</ol>
+<p><strong>Example: Random Walk</strong> To evaluate the stationarity of this process we first derive its properties:</p>
+<ol style="list-style-type: decimal">
+<li><p>We begin by calculating the expectation of the process <span class="math display">\[
+  \mathbb{E}\left[ {{X_t}} \right] = \mathbb{E}\left[ {{X_{t - 1}} + {W_t}} \right] 
+   = \mathbb{E}\left[ {\sum\limits_{i = 1}^t {{W_i}}  + {X_0}} \right] 
+   = \mathbb{E}\left[ {\sum\limits_{i = 1}^t {{W_i}} } \right] + {c} 
+   = c.  \]</span> Observe that the mean obtained is constant since it depends only on the value of the first term in the sequence.</p></li>
+<li><p>Next, after finding the mean to be constant, we calculate the variance to check stationarity: <span class="math display">\[\begin{aligned}
+  \var\left( {{X_t}} \right) &amp;= \var\left( {\sum\limits_{i = 1}^t {{W_t}}  + {X_0}} \right) 
+   = \var\left( {\sum\limits_{i = 1}^t {{W_i}} } \right) + \underbrace {\var\left( {{X_0}} \right)}_{= 0} \\
+   &amp;= \sum\limits_{i = 1}^t {\var\left( {{W_i}} \right)} 
+   = t \sigma_w^2,
+\end{aligned}\]</span> where <span class="math inline">\(\sigma_w^2 = \var(W_t)\)</span>. Therefore, the variance depends on time <span class="math inline">\(t\)</span> contradicting our second property. Moreover, we have: <span class="math display">\[\mathop {\lim }\limits_{t \to \infty } \; \var\left(X_t\right) = \infty.\]</span> This process is therefore not weakly stationary.</p></li>
+<li><p>Regarding the autocovariance of a random walk we have: <span class="math display">\[\begin{aligned}
+  \gamma \left( h \right) &amp;= \cov\left( {{X_t},{X_{t + h}}} \right) 
+   = \cov\left( {\sum\limits_{i = 1}^t {{W_i}} ,\sum\limits_{j = 1}^{t + h} {{W_j}} } \right) 
+   = \cov\left( {\sum\limits_{i = 1}^t {{W_i}} ,\sum\limits_{j = 1}^t {{W_j}} } \right)\\ 
+   &amp;= \min \left( {t,t + h} \right)\sigma _w^2
+   = \left( {t + \min \left( {0,h} \right)} \right)\sigma _w^2,
+\end{aligned} \]</span> which further illustrates the non-stationarity of this process.</p></li>
+</ol>
+<p>Moreover, the autocorrelation of this process is given by</p>
+<p><span class="math display">\[\rho (h) = \frac{t + \min \left( {0,h} \right)}{\sqrt{t}\sqrt{t+h}},\]</span></p>
+<p>implying (for a fixed <span class="math inline">\(h\)</span>) that</p>
+<p><span class="math display">\[\mathop {\lim }\limits_{t \to \infty } \; \rho(h) = 1.\]</span></p>
+<p>In the following simulated example, we illustrate the non-stationary feature of such a process:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># In this example, we simulate a large number of random walks</span>
+
+<span class="co"># Number of simulated processes</span>
+B =<span class="st"> </span><span class="dv">200</span>
+
+<span class="co"># Length of random walks</span>
+n =<span class="st"> </span><span class="dv">1000</span>
+
+<span class="co"># Output matrix</span>
+out =<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>,B,n)
+
+<span class="co"># Set seed for reproducibility</span>
+<span class="kw">set.seed</span>(<span class="dv">6182</span>)
+
+<span class="co"># Simulate Data</span>
+for (i in <span class="kw">seq_len</span>(B)){
+  <span class="co"># Simulate random walk</span>
+  Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">RW</span>(<span class="dt">gamma=</span><span class="dv">1</span>), <span class="dt">N =</span> n)
+  
+  <span class="co"># Store process</span>
+  out[i,] =<span class="st"> </span>Xt
+}
+
+<span class="co"># Plot random walks</span>
+<span class="kw">plot</span>(<span class="ot">NA</span>, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">1</span>,n), <span class="dt">ylim =</span> <span class="kw">range</span>(out), <span class="dt">xlab =</span> <span class="st">&quot;Time&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot; &quot;</span>)
+color =<span class="st"> </span><span class="kw">sample</span>(<span class="kw">topo.colors</span>(B, <span class="dt">alpha =</span> <span class="fl">0.5</span>))
+for (i in <span class="kw">seq_len</span>(B)){
+  <span class="kw">lines</span>(out[i,], <span class="dt">col =</span> color[i])
+}
+
+<span class="co"># Add 95% confidence region</span>
+<span class="kw">lines</span>(<span class="dv">1</span>:n, <span class="fl">1.96</span>*<span class="kw">sqrt</span>(<span class="dv">1</span>:n), <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
+<span class="kw">lines</span>(<span class="dv">1</span>:n, -<span class="fl">1.96</span>*<span class="kw">sqrt</span>(<span class="dv">1</span>:n), <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:RW"></span>
+<img src="tts_files/figure-html/RW-1.png" alt="Two hundred simulated random walks." width="672" />
+<p class="caption">
+Figure 2.3: Two hundred simulated random walks.
+</p>
+</div>
+<p>In the plot, two hundred simulated random walks are plotted along with the theoretical 95% confidence intervals (red-dashed lines). The relationship between time and variance can clearly be observed (i.e. the variance of the process increases with the time).</p>
+<p><strong>Example: MA(1)</strong> Similarly to our previous examples, we attempt to verify the stationary properties for the MA(1) model defined in Section <a href="#ma1"><strong>??</strong></a>:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math display">\[ 
+  \mathbb{E}\left[ {{X_t}} \right] = \mathbb{E}\left[ {{\theta_1}{W_{t - 1}} + {W_t}} \right] 
+   = {\theta_1} \mathbb{E} \left[ {{W_{t - 1}}} \right] + \mathbb{E}\left[ {{W_t}} \right] 
+   = 0. \]</span></li>
+<li><span class="math display">\[\var \left( {{X_t}} \right) = \theta_1^2 \var \left( W_{t - 1}\right) + \var \left( W_{t}\right) = \left(1 + \theta^2 \right) \sigma^2_w.\]</span><br />
+</li>
+<li>Regarding the autocovariance, we have <span class="math display">\[\begin{aligned}
+  \cov\left( {{X_t},{X_{t + h}}} \right) &amp;= \mathbb{E}\left[ {\left( {{X_t} - \mathbb{E}\left[ {{X_t}} \right]} \right)\left( {{X_{t + h}} - \mathbb{E}\left[ {{X_{t + h}}} \right]} \right)} \right] = \mathbb{E}\left[ {{X_t}{X_{t + h}}} \right] \\
+   &amp;= \mathbb{E}\left[ {\left( {{\theta}{W_{t - 1}} + {W_t}} \right)\left( {{\theta }{W_{t + h - 1}} + {W_{t + h}}} \right)} \right] \\
+   &amp;= \mathbb{E}\left[ {\theta^2{W_{t - 1}}{W_{t + h - 1}} + \theta {W_t}{W_{t + h}} + {\theta}{W_{t - 1}}{W_{t + h}} + {W_t}{W_{t + h}}} \right]. \\
+  \end{aligned} \]</span> It is easy to see that <span class="math inline">\(\mathbb{E}\left[ {{W_t}{W_{t + h}}} \right] = {\boldsymbol{1}_{\left\{ {h = 0} \right\}}}\sigma _w^2\)</span> and therefore, we obtain <span class="math display">\[\cov \left( {{X_t},{X_{t + h}}} \right) = \left( {\theta^2{ \boldsymbol{1}_{\left\{ {h = 0} \right\}}} + {\theta}{\boldsymbol{1}_{\left\{ {h = 1} \right\}}} + {\theta}{\boldsymbol{1}_{\left\{ {h =  - 1} \right\}}} + {\boldsymbol{1}_{\left\{ {h = 0} \right\}}}} \right)\sigma _w^2\]</span> implying the following autocovariance function: <span class="math display">\[\gamma \left( h \right) = \left\{ {\begin{array}{*{20}{c}}
+  {\left( {\theta^2 + 1} \right)\sigma _w^2}&amp;{h = 0} \\ 
+  {{\theta}\sigma _w^2}&amp;{\left| h \right| = 1} \\ 
+  0&amp;{\left| h \right| &gt; 1} 
+  \end{array}} \right. .\]</span> Therefore, an MA(1) process is weakly stationary since both the mean and variance are constant over time and its covariance function is only a function of the lag <span class="math inline">\(h\)</span>. Finally, we can easily obtain the autocorrelation for this process, which is given by <span class="math display">\[\rho \left( h \right) = \left\{ {\begin{array}{*{20}{c}}
+  1&amp;{h = 0} \\ 
+  {\frac{{{\theta}\sigma _w^2}}{{\left( {\theta^2 + 1} \right)\sigma _w^2}} = \frac{{{\theta}}}{{\theta^2 + 1}}}&amp;{\left| h \right| = 1} \\ 
+  0&amp;{\left| h \right| &gt; 1} 
+\end{array}} \right. .\]</span> Interestingly, we can note that <span class="math inline">\(|\rho(1)| \leq 0.5\)</span>.</li>
+</ol>
+<p><strong>Example AR(1)</strong> As another example, we shall verify the stationary properties for the AR(1) model defined in Section <a href="#ar1"><strong>??</strong></a>.</p>
+<p>Using the <em>backsubstitution</em> technique, we can rearrange an AR(1) process so that it is written in a more compact form, i.e.</p>
+<p><span class="math display">\[\begin{aligned}
+  {X_t} &amp; =  {\phi }{X_{t - 1}} + {W_t} = \phi \left[ {\phi {X_{t - 2}} + {W_{t - 1}}} \right] + {W_t} 
+    =  {\phi ^2}{X_{t - 2}} + \phi {W_{t - 1}} + {W_t}  \\
+   &amp;  \vdots  \\
+   &amp; =  {\phi ^k}{X_{t-k}} + \sum\limits_{j = 0}^{k - 1} {{\phi ^j}{W_{t - j}}} .
+\end{aligned} \]</span></p>
+<p>By taking the limit in <span class="math inline">\(k\)</span> (which is perfectly valid as we assume <span class="math inline">\(t \in \mathbb{Z}\)</span>) and assuming <span class="math inline">\(|\phi|&lt;1\)</span>, we obtain</p>
+<p><span class="math display">\[\begin{aligned}
+  X_t = \mathop {\lim }\limits_{k \to \infty} \; {X_t}  =  \sum\limits_{j = 0}^{\infty} {{\phi ^j}{W_{t - j}}} 
+\end{aligned} \]</span></p>
+<p>and therefore such process can be interpreted as a linear combination of the white noise <span class="math inline">\((W_t)\)</span> and corresponds (as we will later on) to an MA(<span class="math inline">\(\infty\)</span>). In addition, the requirement <span class="math inline">\(\left| \phi \right| &lt; 1\)</span> turns out to be extremely useful as the above formula is related to Geometric series which would diverge if <span class="math inline">\(\phi \geq 1\)</span>. Indeed, remember that an infinite (converging) Geometric series is given by</p>
+<p><span class="math display">\[\sum\limits_{k = 0}^\infty  \, a{{r^k}}  = \frac{a}{{1 - r}}, \; {\text{ if }}\left| r \right| &lt; 1.\]</span></p>
+<!--
+The origin of the requirement comes from needing to ensure that the characteristic polynomial solution for an AR1 lies outside of the unit circle. Subsequently, stability enables the process to be stationary. If $\phi  \ge 1$, the process would not converge. Under the requirement, the process can represented as a 
+-->
+<p>With this setup, we demonstrate how crucial this property is by calculating each of the requirements of a stationary process.</p>
+<ol style="list-style-type: decimal">
+<li>First, we will check to see if the mean is stationary. In this case, we opt to use limits to derive the expectation <span class="math display">\[\begin{aligned}
+  \mathbb{E}\left[ {{X_t}} \right] &amp;= \mathop {\lim }\limits_{k \to \infty } \mathbb{E}\left[ {{\phi^k}{X_{t-k}} + \sum\limits_{j = 0}^{k - 1} {\phi^j{W_{t - j}}} } \right] 
+   = \mathop {\lim }\limits_{k \to \infty } \, \underbrace {{\phi ^k}{\mathbb{E}[X_{t-k}]}}_{= 0} + \mathop {\lim }\limits_{k \to \infty } \, \sum\limits_{j = 0}^{k - 1} {\phi^j\underbrace {\mathbb{E}\left[ {{W_{t - j}}} \right]}_{ = 0}}
+   = 0.
+\end{aligned} \]</span> As expected, the mean is zero and, hence, the first criteria for weak stationarity is satisfied.</li>
+<li>Next, we opt to determine the variance of the process <span class="math display">\[\begin{aligned}
+\var\left( {{X_t}} \right) &amp;= \mathop {\lim }\limits_{k \to \infty } \var\left( {{\phi^k}{X_{t-k}} + \sum\limits_{j = 0}^{k - 1} {\phi^j{W_{t - j}}} } \right)
+   = \mathop {\lim }\limits_{k \to \infty } \sum\limits_{j = 0}^{k - 1} {\phi ^{2j} \var\left( {{W_{t - j}}} \right)}  \\
+   &amp;= \mathop {\lim }\limits_{k \to \infty } \sum\limits_{j = 0}^{k - 1} \sigma _W^2 \, {\phi ^{2j}}  =  
+  \underbrace {\frac{\sigma _W^2}{{1 - {\phi ^2}}}.}_{\begin{subarray}{l} 
+  {\text{Geom. Serie}} 
+\end{subarray}}
+\end{aligned} \]</span> Once again, the above result only holds because we are able to use the geometric series convergence as a result of <span class="math inline">\(\left| \phi \right| &lt; 1\)</span>.</li>
+<li>Finally, we consider the autocovariance of an AR(1). For <span class="math inline">\(h &gt; 0\)</span>, we have <span class="math display">\[\gamma \left( h \right) =  \cov\left( {{X_t},{X_{t + h}}} \right) = \phi \cov\left( {{X_t},{X_{t + h - 1}}} \right) = \phi \, \gamma \left( h-1 \right).\]</span> Therefore, we using the symmetry of the autocovariance we have that <span class="math display">\[\gamma \left( h \right) = |h| \, \gamma(0).\]</span></li>
+</ol>
+<p>Both the mean and variance do not depend on time in addition the autocovariance function can be viewed as function dependent on only lags and, thus, the AR(1) process is weakly stationary if <span class="math inline">\(\left| \phi \right| &lt; 1\)</span>. Lastly, we can obtain the autocorrelation for this process. Indeed, for <span class="math inline">\(h &gt; 0\)</span>, we have</p>
+<p><span class="math display">\[\rho \left( h \right) = \frac{{\gamma \left( h \right)}}{{\gamma \left( 0 \right)}} = \frac{{\phi \gamma \left( {h - 1} \right)}}{{\gamma \left( 0 \right)}} = \phi \rho \left( {h - 1} \right).\]</span></p>
+<p>After fully simplifying, we obtain</p>
+<p><span class="math display">\[\rho \left( h \right) = {\phi^{|h|}}.\]</span></p>
+<p>Thus, the autocorrelation function for an AR(1) exhibits a <em>geometric decay</em>. As in, the smaller the <span class="math inline">\(|\phi|\)</span>, the faster the autocorrelation reaches zero. If <span class="math inline">\(|\phi|\)</span> is close to 1, then the decay rate is slower.</p>
 
 <div id="refs" class="references">
 
