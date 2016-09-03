@@ -203,7 +203,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <!-- > "I have seen the future and it is very much like the present, only longer."
 >
 > --- Kehlog Albran, The Profit -->
+<blockquote>
+<p>“<em>One of the first things taught in introductory statistics textbooks is that correlation is not causation. It is also one of the first things forgotten.</em>”, Thomas Sowell</p>
+</blockquote>
 <!--
+
 After reading this chapter you will be able to:
 
 - Describe independent and dependent data
@@ -213,15 +217,14 @@ After reading this chapter you will be able to:
 - Judge whether a process is stationary. 
 
 -->
-<blockquote>
-<p>“<em>One of the first things taught in introductory statistics textbooks is that correlation is not causation. It is also one of the first things forgotten.</em>”, Thomas Sowell</p>
-</blockquote>
 <p>In this chapter we will discuss and formalize how knowledge about <span class="math inline">\(X_{t-1}\)</span> (or more generally <span class="math inline">\(\Omega_t\)</span>) can provide us with some information about the properties of <span class="math inline">\(X_t\)</span>. In particular, we will consider the correlation (or covariance) of <span class="math inline">\((X_t)\)</span> at different times such as <span class="math inline">\(\corr \left(X_t, X_{t+h}\right)\)</span>. This “form” of correlation (covariance) is called the <em>autocorrelation</em> (<em>autocovariance</em>) and is a very useful tool in time series analysis. However, if we do not assume that a time series is characterized by a certain form of “stability”, it would be rather difficult to estimate <span class="math inline">\(\corr \left(X_t, X_{t+h}\right)\)</span> as this quantity would depend on both <span class="math inline">\(t\)</span> and <span class="math inline">\(h\)</span> leading to more parameters to estimate than observations available. Therefore, the concept of <em>stationarity</em> is convenient in this context as it allows (among other things) to assume that</p>
 <p><span class="math display">\[\corr \left(X_t, X_{t+h}\right) = \corr \left(X_{t+j}, X_{t+h+j}\right), \;\;\; \text{for all $j$},\]</span></p>
-<p>implying that the autocorrelation (or autocovariance) is only a function of the lag between observations (rather than time itself). These two concepts (i.e. autocorrelation and stationarity) will be discussed in this chapter. Before moving on, it is helpful to remind that correlation (or autocorrelation) is only appropriate to measure a very specific kind of dependence, i.e. the linear dependence. There are many other forms of dependence as illustrated in the bottom panels of the graph below, which all have a (true) zero correlation:</p>
-<div class="figure">
-<img src="images/1280px-Correlation_examples2.png" alt="" />
-
+<p>implying that the autocorrelation (or autocovariance) is only a function of the lag between observations (rather than time itself). These two concepts (i.e. autocorrelation and stationarity) will be discussed in this chapter. Before moving on, it is helpful to remember that correlation (or autocorrelation) is only appropriate to measure a very specific kind of dependence, i.e. the linear dependence. There are many other forms of dependence as illustrated in the bottom panels of the graph below, which all have a (true) zero correlation:</p>
+<div class="figure" style="text-align: center"><span id="fig:correxample"></span>
+<img src="images/corr_example.png" alt="Different forms of dependence and their Pearson's r value"  />
+<p class="caption">
+Figure 2.1: Different forms of dependence and their Pearson’s r value
+</p>
 </div>
 <p>Several other metrics have been introduced in the literature to assess the degree of “dependence” of two random variables however this goes beyond the material discussed in this chapter.</p>
 <div id="the-autocorrelation-and-autocovariance-functions" class="section level2">
@@ -259,15 +262,13 @@ After reading this chapter you will be able to:
 <li><span class="math inline">\({\gamma}\left( {h} \right)=0\)</span> does not imply that <span class="math inline">\(X_t\)</span> and <span class="math inline">\(X_{t+h}\)</span> are independent but simply <span class="math inline">\(X_t\)</span> and <span class="math inline">\(X_{t+h}\)</span> are uncorrelated. The independence is only implied by <span class="math inline">\({\gamma}\left( {h} \right)=0\)</span> in the jointly Gaussian case.</li>
 </ol>
 <p>As hinted in the introduction, an important related statistic is the correlation of <span class="math inline">\(X_t\)</span> with <span class="math inline">\(X_{t+h}\)</span> or <em>autocorrelation</em>, which is defined as</p>
-<p><span class="math display">\[\rho \left(  h \right) = \corr\left( {{X_t},{X_{t + h}}} \right) = \frac{\gamma(h) }{\gamma(0)}.\]</span></p>
-<!-- The more commonly used formulation for weakly stationary processes (more next section) is:
-\[\rho \left( {{X_t},{X_{t + h}}} \right) = \frac{{\cov\left( {{X_t},{X_{t + h}}} \right)}}{{{\sigma _{{X_t}}}{\sigma _{{X_{t + h}}}}}} = \frac{{\gamma \left( h \right)}}{{\gamma \left( 0 \right)}} = \rho \left( h \right)\] -->
+<p><span class="math display">\[\rho \left(  h \right) = \corr\left( {{X_t},{X_{t + h}}} \right) = \frac{{\cov\left( {{X_t},{X_{t + h}}} \right)}}{{{\sigma _{{X_t}}}{\sigma _{{X_{t + h}}}}}} = \frac{\gamma(h) }{\gamma(0)}.\]</span></p>
 <p>Similarly to <span class="math inline">\(\gamma(h)\)</span>, it is important to note that the above notation implies that the autocorrelation function is only a function of the lag <span class="math inline">\(h\)</span> between observations. Thus, autocovariances and autocorrelations are one possible way to describe the joint distribution of a time series. Indeed, the correlation of <span class="math inline">\(X_t\)</span> with <span class="math inline">\(X_{t+1}\)</span> is an obvious measure of how <em>persistent</em> a time series is.</p>
 <p>Remember that just as with any correlation:</p>
 <ol style="list-style-type: decimal">
-<li><span class="math inline">\(\rho \left( h \right)\)</span> is “scale free” so it is much easier to interpret than <span class="math inline">\(\gamma(h)\)</span>. <!-- 2. $\rho \left( {{X_t},{X_{t + h}}} \right)$ is closer to $\pm 1 \Rightarrow \left({ X_t, X_{t+h} } \right)$ "more dependent." --></li>
+<li><span class="math inline">\(\rho \left( h \right)\)</span> is “scale free” so it is much easier to interpret than <span class="math inline">\(\gamma(h)\)</span>.</li>
 <li><span class="math inline">\(|\rho \left( h \right)| \leq 1\)</span> since <span class="math inline">\(|\gamma(h)| \leq \gamma(0)\)</span>.</li>
-<li>Causation and correlation are two very different things!</li>
+<li><strong>Causation and correlation are two very different things!</strong></li>
 </ol>
 </div>
 <div id="a-fundamental-representation" class="section level3">
@@ -323,14 +324,14 @@ After reading this chapter you will be able to:
 &amp;\Rightarrow 1 - \rho_1^2 &gt; \rho_2 - \rho_1^2 \geq -(1 - \rho_1^2)\\
 &amp;\Rightarrow 1 &gt; \frac{\rho_2 - \rho_1^2 }{1 - \rho_1^2} \geq -1.
 \end{aligned}\]</span></p>
-<p>Therefore, <span class="math inline">\(\rho_1\)</span> and <span class="math inline">\(\rho_2\)</span> must lie in a parabolic shaped region defined by the above inequalities as illustrated in Figure (fig:admissibility).</p>
-<div class="figure"><span id="fig:admissibility"></span>
+<p>Therefore, <span class="math inline">\(\rho_1\)</span> and <span class="math inline">\(\rho_2\)</span> must lie in a parabolic shaped region defined by the above inequalities as illustrated in Figure <a href="autocorrelation-and-stationarity.html#fig:admissibility">2.2</a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:admissibility"></span>
 <img src="tts_files/figure-html/admissibility-1.png" alt="Admissible autocorrelation functions" width="672" />
 <p class="caption">
-Figure 2.1: Admissible autocorrelation functions
+Figure 2.2: Admissible autocorrelation functions
 </p>
 </div>
-<p>From our derivation it is clear that the restrictions on the autocorrelation are very complicated thereby justifying the need for other forms of fundamental representation which we will explore later in this text. Before moving on to the estimation of the autocorrelation and autocovariance functions, we first discuss the stationarity of <span class="math inline">\((X_t)\)</span>, which will provide a convenient framework in which <span class="math inline">\(\gamma(h)\)</span> and <span class="math inline">\(\rho(h)\)</span> can be used (rather that <span class="math inline">\(\gamma(t,t+h)\)</span> for example) and (easily) estimated.</p>
+<p>From our derivation it is clear that the restrictions on the autocorrelation are very complicated thereby justifying the need for other forms of fundamental representation which we will explore later in this text. Before moving on to the estimation of the autocorrelation and autocovariance functions, we must first discuss the stationarity of <span class="math inline">\((X_t)\)</span>, which will provide a convenient framework in which <span class="math inline">\(\gamma(h)\)</span> and <span class="math inline">\(\rho(h)\)</span> can be used (rather that <span class="math inline">\(\gamma(t,t+h)\)</span> for example) and (easily) estimated.</p>
 
 <div id="refs" class="references">
 
