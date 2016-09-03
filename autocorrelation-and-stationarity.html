@@ -8,7 +8,7 @@
   <title>A Tour of Time Series Analysis with R</title>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="A Tour of Time Series Analysis with R">
-  <meta name="generator" content="bookdown 0.1.6 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.1.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="A Tour of Time Series Analysis with R" />
   <meta property="og:type" content="book" />
@@ -180,6 +180,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.2" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#stationarity"><i class="fa fa-check"></i><b>2.2</b> Stationarity</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#definitions-1"><i class="fa fa-check"></i><b>2.2.1</b> Definitions</a></li>
 <li class="chapter" data-level="2.2.2" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#assessing-weak-stationarity-of-time-series-models"><i class="fa fa-check"></i><b>2.2.2</b> Assessing Weak Stationarity of Time Series Models</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#estimation-of-moments-of-stationary-processes"><i class="fa fa-check"></i><b>2.3</b> Estimation of Moments of Stationary Processes</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#estimation-of-the-mean-function"><i class="fa fa-check"></i><b>2.3.1</b> Estimation of the Mean Function</a></li>
+<li class="chapter" data-level="2.3.2" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#sample-autocovariance-and-autocorrelation-functions"><i class="fa fa-check"></i><b>2.3.2</b> Sample Autocovariance and Autocorrelation Functions</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -430,6 +434,7 @@ for (i in <span class="kw">seq_len</span>(B)){
 
 <span class="co"># Plot random walks</span>
 <span class="kw">plot</span>(<span class="ot">NA</span>, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">1</span>,n), <span class="dt">ylim =</span> <span class="kw">range</span>(out), <span class="dt">xlab =</span> <span class="st">&quot;Time&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot; &quot;</span>)
+<span class="kw">grid</span>()
 color =<span class="st"> </span><span class="kw">sample</span>(<span class="kw">topo.colors</span>(B, <span class="dt">alpha =</span> <span class="fl">0.5</span>))
 for (i in <span class="kw">seq_len</span>(B)){
   <span class="kw">lines</span>(out[i,], <span class="dt">col =</span> color[i])
@@ -487,8 +492,8 @@ The origin of the requirement comes from needing to ensure that the characterist
 <p>With this setup, we demonstrate how crucial this property is by calculating each of the requirements of a stationary process.</p>
 <ol style="list-style-type: decimal">
 <li>First, we will check to see if the mean is stationary. In this case, we opt to use limits to derive the expectation <span class="math display">\[\begin{aligned}
-  \mathbb{E}\left[ {{X_t}} \right] &amp;= \mathop {\lim }\limits_{k \to \infty } \mathbb{E}\left[ {{\phi^k}{X_{t-k}} + \sum\limits_{j = 0}^{k - 1} {\phi^j{W_{t - j}}} } \right] 
-   = \mathop {\lim }\limits_{k \to \infty } \, \underbrace {{\phi ^k}{\mathbb{E}[X_{t-k}]}}_{= 0} + \mathop {\lim }\limits_{k \to \infty } \, \sum\limits_{j = 0}^{k - 1} {\phi^j\underbrace {\mathbb{E}\left[ {{W_{t - j}}} \right]}_{ = 0}}
+  \mathbb{E}\left[ {{X_t}} \right] &amp;= \mathop {\lim }\limits_{k \to \infty } \mathbb{E}\left[ {{\phi^k}{X_{t-k}} + \sum\limits_{j = 0}^{k - 1} {\phi^j{W_{t - j}}} } \right] \\
+   &amp;= \mathop {\lim }\limits_{k \to \infty } \, \underbrace {{\phi ^k}{\mathbb{E}[X_{t-k}]}}_{= 0} + \mathop {\lim }\limits_{k \to \infty } \, \sum\limits_{j = 0}^{k - 1} {\phi^j\underbrace {\mathbb{E}\left[ {{W_{t - j}}} \right]}_{ = 0}}
    = 0.
 \end{aligned} \]</span> As expected, the mean is zero and, hence, the first criteria for weak stationarity is satisfied.</li>
 <li>Next, we opt to determine the variance of the process <span class="math display">\[\begin{aligned}
@@ -499,13 +504,251 @@ The origin of the requirement comes from needing to ensure that the characterist
   {\text{Geom. Serie}} 
 \end{subarray}}
 \end{aligned} \]</span> Once again, the above result only holds because we are able to use the geometric series convergence as a result of <span class="math inline">\(\left| \phi \right| &lt; 1\)</span>.</li>
-<li>Finally, we consider the autocovariance of an AR(1). For <span class="math inline">\(h &gt; 0\)</span>, we have <span class="math display">\[\gamma \left( h \right) =  \cov\left( {{X_t},{X_{t + h}}} \right) = \phi \cov\left( {{X_t},{X_{t + h - 1}}} \right) = \phi \, \gamma \left( h-1 \right).\]</span> Therefore, we using the symmetry of the autocovariance we have that <span class="math display">\[\gamma \left( h \right) = |h| \, \gamma(0).\]</span></li>
+<li>Finally, we consider the autocovariance of an AR(1). For <span class="math inline">\(h &gt; 0\)</span>, we have <span class="math display">\[\gamma \left( h \right) =  \cov\left( {{X_t},{X_{t + h}}} \right) = \phi \cov\left( {{X_t},{X_{t + h - 1}}} \right) = \phi \, \gamma \left( h-1 \right).\]</span> Therefore, we using the symmetry of the autocovariance we have that <span class="math display">\[\gamma \left( h \right) = \phi^{|h|} \, \gamma(0).\]</span></li>
 </ol>
 <p>Both the mean and variance do not depend on time in addition the autocovariance function can be viewed as function dependent on only lags and, thus, the AR(1) process is weakly stationary if <span class="math inline">\(\left| \phi \right| &lt; 1\)</span>. Lastly, we can obtain the autocorrelation for this process. Indeed, for <span class="math inline">\(h &gt; 0\)</span>, we have</p>
 <p><span class="math display">\[\rho \left( h \right) = \frac{{\gamma \left( h \right)}}{{\gamma \left( 0 \right)}} = \frac{{\phi \gamma \left( {h - 1} \right)}}{{\gamma \left( 0 \right)}} = \phi \rho \left( {h - 1} \right).\]</span></p>
 <p>After fully simplifying, we obtain</p>
 <p><span class="math display">\[\rho \left( h \right) = {\phi^{|h|}}.\]</span></p>
 <p>Thus, the autocorrelation function for an AR(1) exhibits a <em>geometric decay</em>. As in, the smaller the <span class="math inline">\(|\phi|\)</span>, the faster the autocorrelation reaches zero. If <span class="math inline">\(|\phi|\)</span> is close to 1, then the decay rate is slower.</p>
+</div>
+</div>
+<div id="estimation-of-moments-of-stationary-processes" class="section level2">
+<h2><span class="header-section-number">2.3</span> Estimation of Moments of Stationary Processes</h2>
+<p>In this section, we discuss how moments and related quantities of stationary process can be estimated. Informally speaking, the use of “averages” is meaningful for such processes suggesting that classical moments estimators can be employed. Indeed, suppose that one is interested in estimating <span class="math inline">\(\alpha \equiv \mathbb{E}[m (X_t)]\)</span>, where <span class="math inline">\(m(\cdot)\)</span> is a known function of <span class="math inline">\(X_t\)</span>. If <span class="math inline">\((X_t)\)</span> is a strongly stationary process, we have</p>
+<p><span class="math display">\[\alpha = \int m(x) \, f(x) dx\]</span></p>
+<p>where <span class="math inline">\(f(x)\)</span> denotes the density of <span class="math inline">\((X_t), \; \forall t\)</span>. Replacing <span class="math inline">\(f(x)\)</span> by <span class="math inline">\(f_n(x)\)</span>, the empirical density, we obtain the following estimator</p>
+<p><span class="math display">\[\hat{\alpha} = \frac{1}{n} \sum_{i = 1}^n m\left(x_i\right).\]</span></p>
+<p>In the next subsection, we examine how this simple idea can be used to estimate the mean, autocovariance and autocorrelation functions. Moreover, we discuss some of the properties of these estimators.</p>
+<div id="estimation-of-the-mean-function" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Estimation of the Mean Function</h3>
+<p>If a time series is stationary, the mean function is constant and a possible estimator of this quantity is, as discussed above, given by</p>
+<p><span class="math display">\[\bar{X} = {\frac{1}{n}\sum\limits_{t = 1}^n {{X_t}} }.\]</span></p>
+<p>Naturally, the <span class="math inline">\(k\)</span>-th moment, say <span class="math inline">\(\beta_k \equiv \mathbb{E}[X_t^k]\)</span> can be estimated by</p>
+<p><span class="math display">\[\hat{\beta}_k = {\frac{1}{n}\sum\limits_{t = 1}^n {{X_t^k}} }, \;\; k \in \left\{x \in \mathbb{N} : \, 0 &lt; x &lt; \infty  \right\}.\]</span></p>
+<p>The variance of such estimator can be derived as follows:</p>
+\begin{equation}
+\begin{aligned}
+  \var \left( \hat{\beta}_k \right) &amp;= \var \left( {\frac{1}{n}\sum\limits_{t = 1}^n {{X_t^k}} } \right)  \\
+   &amp;= \frac{1}{{{n^2}}}\var \left( {{{\left[ {\begin{array}{*{20}{c}}
+  1&amp; \cdots &amp;1
+\end{array}} \right]}_{1 \times n}}{{\left[ {\begin{array}{*{20}{c}}
+  {{X_1^k}} \\
+   \vdots  \\
+  {{X_n^k}}
+\end{array}} \right]}_{n \times 1}}} \right)  \\
+   &amp;= \frac{1}{{{n^2}}}{\left[ {\begin{array}{*{20}{c}}
+  1&amp; \cdots &amp;1
+\end{array}} \right]_{1 \times n}} \, \boldsymbol{\Sigma}(k) \, {\left[ {\begin{array}{*{20}{c}}
+  1 \\
+   \vdots  \\
+  1
+\end{array}} \right]_{n \times 1}}, 
+\end{aligned}
+\label{eq:chap2:var:moment}
+\end{equation}
+<p>where <span class="math inline">\(\boldsymbol{\Sigma}(k) \in \real^{n \times n}\)</span> and its <span class="math inline">\(i\)</span>th, <span class="math inline">\(j\)</span>-th element is given by</p>
+<p><span class="math display">\[ \left(\boldsymbol{\Sigma}(k)\right)_{i,j} = \cov \left(X_i^k, X_j^k\right).\]</span></p>
+<p>In the case <span class="math inline">\(k = 1\)</span>, (\ref{eq:chap2:var:moment}) can easily be further simplified. Indeed, we have</p>
+<p><span class="math display">\[\begin{aligned}
+  \var \left( {\bar X} \right) &amp;= \var \left( {\frac{1}{n}\sum\limits_{t = 1}^n {{X_t}} } \right)  \\
+   &amp;= \frac{1}{{{n^2}}}{\left[ {\begin{array}{*{20}{c}}
+  1&amp; \cdots &amp;1
+\end{array}} \right]_{1 \times n}}\left[ {\begin{array}{*{20}{c}}
+  {\gamma \left( 0 \right)}&amp;{\gamma \left( 1 \right)}&amp; \cdots &amp;{\gamma \left( {n - 1} \right)} \\
+  {\gamma \left( 1 \right)}&amp;{\gamma \left( 0 \right)}&amp;{}&amp; \vdots  \\
+   \vdots &amp;{}&amp; \ddots &amp; \vdots  \\
+  {\gamma \left( {n - 1} \right)}&amp; \cdots &amp; \cdots &amp;{\gamma \left( 0 \right)}
+\end{array}} \right]_{n \times n}{\left[ {\begin{array}{*{20}{c}}
+  1 \\
+   \vdots  \\
+  1
+\end{array}} \right]_{n \times 1}}  \\
+   &amp;= \frac{1}{{{n^2}}}\left( {n\gamma \left( 0 \right) + 2\left( {n - 1} \right)\gamma \left( 1 \right) + 2\left( {n - 2} \right)\gamma \left( 2 \right) +  \cdots  + 2\gamma \left( {n - 1} \right)} \right)  \\
+   &amp;= \frac{1}{n}\sum\limits_{h =  - n}^n {\left( {1 - \frac{{\left| h \right|}}{n}} \right)\gamma \left( h \right)} .  \\
+\end{aligned} \]</span></p>
+<p>Obviously, when the <span class="math inline">\((X_t)\)</span> is a white noise, the above formula reduces to the usual <span class="math inline">\(\var \left( {\bar X} \right) = \sigma^2_w/n\)</span>. In the following example, we consider the case of an AR(1) process and discussed how <span class="math inline">\(\var \left( {\bar X} \right)\)</span> can be obtained or estimated.</p>
+<p><strong>Example:</strong> For an AR(1) we have <span class="math inline">\(\gamma(h) = \phi^h \sigma_w^2 \left(1 - \phi^2\right)^{-1}\)</span>, therefore, we obtain (after some computations):</p>
+\begin{equation}
+\var \left( {\bar X} \right) = \frac{\sigma_w^2 \left( n - 2\phi - n \phi^2 + 2 \phi^{n + 1}\right)}{n^2\left(1-\phi^2\right)\left(1-\phi\right)^2}.
+\label{eq:chap2:exAR1}
+\end{equation}
+<p>Unfortunately, deriving such an exact formula is often difficult when considering more complex models. However, asymptotic approximations are often employed to simplify the calculation. For example, in our case we have</p>
+<p><span class="math display">\[\mathop {\lim }\limits_{n \to \infty } \; n \var \left( {\bar X} \right) = \frac{\sigma_w^2}{\left(1-\phi\right)^2},\]</span></p>
+<p>providing the following approximate formula:</p>
+<p><span class="math display">\[\var \left( {\bar X} \right) \approx \frac{\sigma_w^2}{n \left(1-\phi\right)^2}.\]</span></p>
+<p>Alternatively, simulation methods can also be employed. For example, a possible strategy (i.e. parametric bootstrap) could be the following:</p>
+<ol style="list-style-type: decimal">
+<li>Simulate a new sample under the postulated model, i.e. <span class="math inline">\(X_t^* \sim F_{\btheta}\)</span> (<em>note:</em> if <span class="math inline">\(\btheta\)</span> is unknown it can be replace by <span class="math inline">\(\hat{\btheta}\)</span>, a suitable estimator).</li>
+<li>Compute the statistics of interest on the simulated sample <span class="math inline">\((X_t^*)\)</span> (i.e. <span class="math inline">\({\bar{X}^*}\)</span> in our example).</li>
+<li>Repeat Steps 1 and 2 <span class="math inline">\(B\)</span> times where <span class="math inline">\(B\)</span> is sufficiently “large” (typically <span class="math inline">\(100 \leq B \leq 10000\)</span>).</li>
+<li>Compute the empirical variance of the statistics of interest based on the <span class="math inline">\(B\)</span> independent replications. In our example, we would have</li>
+</ol>
+<p><span class="math display">\[\hat{\sigma}^2_B = \frac{1}{B-1} \sum_{i = 1}^B \left(\bar{X}^*_i - \bar{X}^* \right)^2, \;\;\; \text{where} \;\;\; \bar{X}^* = \frac{1}{B} \sum_{i=1}^B \bar{X}^*_i,\]</span></p>
+<p>and where <span class="math inline">\(\bar{X}^*_i\)</span> denotes the value of the mean estimated on the <span class="math inline">\(i\)</span>-th simulated sample.</p>
+<p>The figure below generated by the following code compares these three methods for <span class="math inline">\(n = 10\)</span>, <span class="math inline">\(B = 1000\)</span>, <span class="math inline">\(\sigma^2 = 1\)</span> and a grid of values for <span class="math inline">\(\phi\)</span> going from <span class="math inline">\(-0.95\)</span> to <span class="math inline">\(0.95\)</span>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define sample size</span>
+n =<span class="st"> </span><span class="dv">10</span>
+
+<span class="co"># Number of Monte-Carlo replications</span>
+B =<span class="st"> </span><span class="dv">5000</span>
+
+<span class="co"># Define grid of values for phi</span>
+phi =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="fl">0.95</span>, <span class="dt">to =</span> -<span class="fl">0.95</span>, <span class="dt">length.out =</span> <span class="dv">30</span>)
+
+<span class="co"># Define result matrix</span>
+result =<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>,B,<span class="kw">length</span>(phi))
+
+<span class="co"># Start simulation</span>
+for (i in <span class="kw">seq_along</span>(phi)){
+  <span class="co"># Define model</span>
+  model =<span class="st"> </span><span class="kw">AR1</span>(<span class="dt">phi =</span> phi[i], <span class="dt">sigma2 =</span> <span class="dv">1</span>)
+  
+  <span class="co"># Monte-Carlo</span>
+  for (j in <span class="kw">seq_len</span>(B)){
+    <span class="co"># Simulate AR(1)</span>
+    Xt =<span class="st"> </span><span class="kw">gen.gts</span>(model, <span class="dt">N =</span> n)
+    
+    <span class="co"># Estimate Xbar</span>
+    result[j,i] =<span class="st"> </span><span class="kw">mean</span>(Xt)
+  }
+}
+
+<span class="co"># Estimate variance of Xbar</span>
+var.Xbar =<span class="st"> </span><span class="kw">apply</span>(result,<span class="dv">2</span>,var)
+
+<span class="co"># Compute theoretical variance</span>
+var.theo =<span class="st"> </span>(n -<span class="st"> </span><span class="dv">2</span>*phi -<span class="st"> </span>n*phi^<span class="dv">2</span> +<span class="st"> </span><span class="dv">2</span>*phi^(n<span class="dv">+1</span>))/(n^<span class="dv">2</span>*(<span class="dv">1</span>-phi^<span class="dv">2</span>)*(<span class="dv">1</span>-phi)^<span class="dv">2</span>)
+
+<span class="co"># Compute (approximate) vairance</span>
+var.approx =<span class="st"> </span><span class="dv">1</span>/(n*(<span class="dv">1</span>-phi)^<span class="dv">2</span>)
+
+<span class="co"># Compare variance estimations</span>
+<span class="kw">plot</span>(<span class="ot">NA</span>, <span class="dt">xlim =</span> <span class="kw">c</span>(-<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">ylim =</span> <span class="kw">range</span>(var.approx), <span class="dt">log =</span> <span class="st">&quot;y&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="kw">paste</span>(<span class="st">&quot;var(&quot;</span>, <span class="kw">bar</span>(X), <span class="st">&quot;)&quot;</span>)),
+     <span class="dt">xlab=</span> <span class="kw">expression</span>(phi), <span class="dt">cex.lab =</span> <span class="dv">1</span>)
+<span class="kw">grid</span>()
+<span class="kw">lines</span>(phi,var.theo, <span class="dt">col =</span> <span class="st">&quot;deepskyblue4&quot;</span>)
+<span class="kw">lines</span>(phi, var.Xbar, <span class="dt">col =</span> <span class="st">&quot;firebrick3&quot;</span>)
+<span class="kw">lines</span>(phi,var.approx, <span class="dt">col =</span> <span class="st">&quot;springgreen4&quot;</span>)
+<span class="kw">legend</span>(<span class="st">&quot;topleft&quot;</span>,<span class="kw">c</span>(<span class="st">&quot;Theoretical variance&quot;</span>,<span class="st">&quot;Bootstrap variance&quot;</span>,<span class="st">&quot;Approximate variance&quot;</span>), 
+       <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;deepskyblue4&quot;</span>,<span class="st">&quot;firebrick3&quot;</span>,<span class="st">&quot;springgreen4&quot;</span>), <span class="dt">lty =</span> <span class="dv">1</span>,
+       <span class="dt">bty =</span> <span class="st">&quot;n&quot;</span>,<span class="dt">bg =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">box.col =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">cex =</span> <span class="fl">1.2</span>)</code></pre></div>
+<p><img src="tts_files/figure-html/estimXbar-1.png" width="672" /></p>
+<p>It can be observed that the variance of <span class="math inline">\(\bar{X}\)</span> typically increases with the <span class="math inline">\(\phi\)</span>. As expected when <span class="math inline">\(\phi = 0\)</span> we have <span class="math inline">\(\var(\bar{X}) = 1/n\)</span> as in this case the process is a whote noise. Moreover, the bootstrap approach appears to (\ref{eq:chap2:exAR1}) while the asymptotic formula provides a reasonable approximate for <span class="math inline">\(\phi\)</span> being between -0.5 and 0.5. Naturally, the quality of this approximation would be far better for larger sample size (here we consider <span class="math inline">\(n = 10\)</span> which a little “extreme”).</p>
+</div>
+<div id="sample-autocovariance-and-autocorrelation-functions" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> Sample Autocovariance and Autocorrelation Functions</h3>
+<p>A natural estimator of the <em>autocovariance function</em> is given by:</p>
+<p><span class="math display">\[\hat \gamma \left( h \right) = \frac{1}{T}\sum\limits_{t = 1}^{T - h} {\left( {{X_t} - \bar X} \right)\left( {{X_{t + h}} - \bar X} \right)} \]</span></p>
+<p>leading the following “plug-in” estimator of the <em>autocorrelation function</em></p>
+<p><span class="math display">\[\hat \rho \left( h \right) = \frac{{\hat \gamma \left( h \right)}}{{\hat \gamma \left( 0 \right)}}.\]</span></p>
+<p>A graphical representation of the autocorrelation function is often the first step for any time series analysis (again assuming the process to be stationary). Consider the following simulated example:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load package</span>
+<span class="kw">library</span>(<span class="st">&quot;gmwm&quot;</span>)
+
+<span class="co"># Set seed for reproducibility</span>
+<span class="kw">set.seed</span>(<span class="dv">2241</span>)
+
+<span class="co"># Simulate 100 observation from a Gaussian white noise</span>
+Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">WN</span>(<span class="dt">sigma2 =</span> <span class="dv">1</span>), <span class="dt">N =</span> <span class="dv">100</span>)
+
+<span class="co"># Compute autocorrelation</span>
+acf_Xt =<span class="st"> </span><span class="kw">ACF</span>(Xt)
+
+<span class="co"># Plot autocorrelation</span>
+<span class="kw">plot</span>(acf_Xt, <span class="dt">show.ci =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p><img src="tts_files/figure-html/basicACF-1.png" width="672" /></p>
+<p>In this example, the true autocorrelation is equal to zero at any lag <span class="math inline">\(h \neq 0\)</span> but obviously the estimated autocorrelations are random variables and are not equal to their true values. It would therefore be useful to have some knowledge about the variability of the sample autocorrelations (under some conditions) to assess whether the data comes from a completely random series or presents some significant correlation at some lags. The following result provides an asymptotic solution to this problem:</p>
+<p><strong>Theorem:</strong> If <span class="math inline">\(X_t\)</span> is a strong white noise with finite fourth moment, then <span class="math inline">\(\hat{\rho}(h)\)</span> is approximately normally distributed with mean <span class="math inline">\(0\)</span> and variance <span class="math inline">\(n^{-1}\)</span> for all fixed <span class="math inline">\(h\)</span>.</p>
+<p>The proof of this Theorem is given in Appendix <a href="#appendix-a"><strong>??</strong></a>.</p>
+<p>Using this result, we now have an approximate method to assess whether peaks in the sample autocorrelation are significant by determining whether the observed peak lies outside the interval <span class="math inline">\(\pm 2/\sqrt{T}\)</span> (i.e. an approximate 95% confidence interval). Returning to our previous example and adding confidence bands in the previous graph, we obtain:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot autocorrelation with confidence bands </span>
+<span class="kw">plot</span>(acf_Xt)</code></pre></div>
+<p><img src="tts_files/figure-html/basicACF2-1.png" width="672" /></p>
+<p>It can now be observed that most peaks lie within the interval <span class="math inline">\(\pm 2/\sqrt{T}\)</span> suggesting that the true data generating process is uncorrelated.</p>
+<p><strong>Example:</strong> To illustrate how the autocorrelation function can be used to reveal some “features” of a time series we download the index level of the Standard &amp; Poor’s 500, often abbreviated as the S&amp;P 500. This financial index is based on the market capitalizations of 500 large companies having common stock listed on the New York Stock Exchange or the NASDAQ Stock Market. The graph below should the index level and daily returns from 1990.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load package</span>
+<span class="kw">library</span>(quantmod)
+
+<span class="co"># Download S&amp;P index</span>
+<span class="kw">getSymbols</span>(<span class="st">&quot;^GSPC&quot;</span>, <span class="dt">from=</span><span class="st">&quot;1990-01-01&quot;</span>, <span class="dt">to =</span> <span class="kw">Sys.Date</span>())</code></pre></div>
+<pre><code>## [1] &quot;GSPC&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Compute returns</span>
+GSPC.ret =<span class="st"> </span><span class="kw">ClCl</span>(GSPC)
+
+<span class="co"># Plot index level and returns</span>
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(GSPC, <span class="dt">main =</span> <span class="st">&quot; &quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Index level&quot;</span>)</code></pre></div>
+<pre><code>## Warning in plot.xts(GSPC, main = &quot; &quot;, ylab = &quot;Index level&quot;): only
+## the univariate series will be plotted</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(GSPC.ret, <span class="dt">main =</span> <span class="st">&quot; &quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Daily returns&quot;</span>)</code></pre></div>
+<p><img src="tts_files/figure-html/GSPC-1.png" width="768" /></p>
+<p>From these graphs it is clear that the returns are not identically distributed as the variance seems to vary in time and clusters with either high or low volatility can be observed. These characteristic of financial time series is well known and the Chapter 5, we will discuss how the variance of such process can be approximated. Nevertheless, we compute the empirical autocorrelation function of the S&amp;P 500 return to evaluate the degree of “linear” dependence between observation. The graph below presents the empirical autocorrelation.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sp500 =<span class="st"> </span><span class="kw">na.omit</span>(GSPC.ret)
+<span class="kw">names</span>(sp500) =<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;S&amp;P 500 (1990-01-01 - &quot;</span>,<span class="kw">Sys.Date</span>(),<span class="st">&quot;)&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)
+<span class="kw">plot</span>(<span class="kw">ACF</span>(sp500))</code></pre></div>
+<p><img src="tts_files/figure-html/GSPCacf-1.png" width="576" /></p>
+<p>As expected, the autocorrelation is small but it might be reasonable to believe that this sequence is not purely uncorrelated.</p>
+<p>Unfortunately, Theorem 1 is based on asymptotic argument and therefore the confidence bands constructed are also asymptotic and there are no “exact” tools that can be used in this case. To study the validity of this results when <span class="math inline">\(n\)</span> is “small” we performed a simulation. In the latter, we simulated processes following from a Gaussian white noise and examine the empirical distribution of <span class="math inline">\(\hat{\rho}(3)\)</span> with different sample sizes (i.e. <span class="math inline">\(n\)</span> is set to 5, 10, 30 and 300). Intuitively, the “quality” of of the approximation provided by Theorem should increase with the sample size <span class="math inline">\(n\)</span>. The code below perform such simulation and compares the empirical distribution of <span class="math inline">\(\sqrt{n} \hat{\rho}(3)\)</span> with a normal distribution with mean 0 and variance 1, i.e. its asymptotic distribution.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Number of Monte Carlo replications</span>
+B =<span class="st"> </span><span class="dv">10000</span>
+
+<span class="co"># Define considered lag</span>
+h =<span class="st"> </span><span class="dv">3</span>
+
+<span class="co"># Sample size considered</span>
+N =<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">30</span>,<span class="dv">300</span>)
+
+<span class="co"># Initialisation</span>
+result =<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>,B,<span class="kw">length</span>(N))
+
+<span class="co"># Set seed</span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+
+<span class="co"># Start Monte Carlo</span>
+for (i in <span class="kw">seq_len</span>(B)){
+  for (j in <span class="kw">seq_along</span>(N)){
+    <span class="co"># Simluate process</span>
+    Xt =<span class="st"> </span><span class="kw">rnorm</span>(N[j])
+    
+    <span class="co"># Save autocorrelation at lag h</span>
+    result[i,j] =<span class="st"> </span><span class="kw">acf</span>(Xt, <span class="dt">plot =</span> <span class="ot">FALSE</span>)$acf[h<span class="dv">+1</span>]
+  }
+}
+
+<span class="co"># Plot results</span>
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="kw">length</span>(N)/<span class="dv">2</span>))
+for (i in <span class="kw">seq_along</span>(N)){
+  <span class="co"># Estimated empirical distribution</span>
+  <span class="kw">hist</span>(<span class="kw">sqrt</span>(N[i])*result[,i], <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, 
+       <span class="dt">main =</span> <span class="kw">paste</span>(<span class="st">&quot;Sample size n =&quot;</span>,N[i]), <span class="dt">probability =</span> <span class="ot">TRUE</span>,
+       <span class="dt">xlim =</span> <span class="kw">c</span>(-<span class="dv">4</span>,<span class="dv">4</span>), <span class="dt">xlab =</span> <span class="st">&quot; &quot;</span>)
+  
+  <span class="co"># Asymptotic distribution</span>
+  xx =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> -<span class="dv">10</span>, <span class="dt">to =</span> <span class="dv">10</span>, <span class="dt">length.out =</span> <span class="dv">10</span>^<span class="dv">3</span>)
+  yy =<span class="st"> </span><span class="kw">dnorm</span>(xx,<span class="dv">0</span>,<span class="dv">1</span>)
+  <span class="kw">lines</span>(xx,yy, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
+}</code></pre></div>
+<p><img src="tts_files/figure-html/simulationACF-1.png" width="672" /></p>
+<p>As expected, it can clearly be observed that the asymptotic approximation is quite poor when <span class="math inline">\(n = 5\)</span> but as the sample size increases the approximation improves and is very close when, for example, <span class="math inline">\(n = 300\)</span>. This simulation could suggest that Theorem 1 provides a relatively “close” approximation of the distribution of <span class="math inline">\(\hat{\rho}(h)\)</span>.</p>
+<!--
+## Exercises
+
+1. Given three random variables $X_1$, $X_2$, and $X_3$ such that $\mathbb{\mu}  = \left[ {\begin{array}{*{20}{c}} 1 \\ 0 \\ { - 2} \end{array}} \right]$ and $\mathbb{\Sigma} = \left[ {\begin{array}{*{20}{c}} 2&0&{ - 5} \\ 0&3&{4.5} \\ { - 5}&{4.5}&1 \end{array}} \right]$ compute:
+    - $\e{X_1 + X_3}$
+    - $\e{3X_1 - X_2 + 4X_3}$
+    - $\var(X_2 - X_3)$
+    - $\var(X_2 + X_3)$
+    - $\cov(4X_2 + X_1, 3X_1 - 2X_3)$
+    - $\corr(X_3 + X_2, 2X_2 - 3X_1)$
+1. Consider the time series of ${X_t} = {X_{t - 1}} + {W_t}$, where $W_t \sim N(0,\sigma ^2)$ and ${X_0} = 0$. Let $\bar X = \frac{1}{n}\sum\limits_{i = 1}^n {{X_i}}$. Derive the general form for $\var(\bar X)$. (Hint: $\sum\limits_{i = 1}^n {{i^2}}  = \frac{{n\left( {n + 1} \right)\left( {2n + 1} \right)}}{6}$)
+1. For each of the following first construct an example and then show that it has the correct properties:
+    - $(X_t)$ with constant mean but has a variance that is a function of time.
+    - $(W_t)$ white noise process that is not strongly stationary.
+    - $(Z_t)$ a stationary process that has an autocovariance function whose lag does not go to zero as $h > 0$.
+    - $(V_t)$ that is nonstationary with an autocovariance function that depends on the lag as $h > 0$.
+-->
 
 <div id="refs" class="references">
 
