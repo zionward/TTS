@@ -187,8 +187,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.3.3" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#robustness-issues"><i class="fa fa-check"></i><b>2.3.3</b> Robustness Issues</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="proofs.html"><a href="proofs.html"><i class="fa fa-check"></i><b>3</b> Proofs</a><ul>
-<li class="chapter" data-level="3.1" data-path="proofs.html"><a href="proofs.html#proof-of-theorem-1"><i class="fa fa-check"></i><b>3.1</b> Proof of Theorem 1</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="proofs.html"><a href="proofs.html"><i class="fa fa-check"></i><b>A</b> Proofs</a><ul>
+<li class="chapter" data-level="A.1" data-path="proofs.html"><a href="proofs.html#proof-of-theorem-1"><i class="fa fa-check"></i><b>A.1</b> Proof of Theorem 1</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/SMAC-Group/TTS" target="blank">&copy; 2016 Balamuta, Guerrier, Molinari, Xu</a></li>
@@ -907,7 +908,7 @@ for (i in <span class="kw">seq_along</span>(lags)){
 <span class="kw">library</span>(robcor)
 
 <span class="co"># Load data</span>
-<span class="kw">data</span>(<span class="st">&quot;hydro&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;datapkg&quot;</span>)
+<span class="kw">data</span>(<span class="st">&quot;hydro&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;smacdata&quot;</span>)
 
 <span class="co"># Construct gts objects</span>
 hydro1 =<span class="st"> </span><span class="kw">gts</span>(hydro, <span class="dt">name =</span> <span class="st">&#39;Non-robust Estimator&#39;</span>)
@@ -954,6 +955,10 @@ b =<span class="st"> </span><span class="kw">plot</span>(inter)
 
 </div>
 </div>
+</div>
+
+
+
 </div>
             </section>
 

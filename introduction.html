@@ -187,8 +187,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.3.3" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html#robustness-issues"><i class="fa fa-check"></i><b>2.3.3</b> Robustness Issues</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="proofs.html"><a href="proofs.html"><i class="fa fa-check"></i><b>3</b> Proofs</a><ul>
-<li class="chapter" data-level="3.1" data-path="proofs.html"><a href="proofs.html#proof-of-theorem-1"><i class="fa fa-check"></i><b>3.1</b> Proof of Theorem 1</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="proofs.html"><a href="proofs.html"><i class="fa fa-check"></i><b>A</b> Proofs</a><ul>
+<li class="chapter" data-level="A.1" data-path="proofs.html"><a href="proofs.html#proof-of-theorem-1"><i class="fa fa-check"></i><b>A.1</b> Proof of Theorem 1</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/SMAC-Group/TTS" target="blank">&copy; 2016 Balamuta, Guerrier, Molinari, Xu</a></li>
@@ -555,14 +556,10 @@ Xt =<span class="st"> </span><span class="kw">gen.lts</span>(model, <span class=
 <p>In the above graph, the first three plots represent the latent (unobserved) processes (i.e. white noise, random walk and drift) and the last one represents the sum of the three (i.e. <span class="math inline">\((X_t)\)</span>).</p>
 <p>Let us consider a real example where these latent processes are useful to describe (and predict) the behavior of economic variables such as Personal Saving Rates (PSR). A process that is used for these settings is the “random-walk-plus-noise” model, meaning that the data can be explained by a random walk process in addition to which we observe some other process (e.g. a white noise model, an autoregressive model such as an AR(1), etc.). The PSR taken from the Federal Reserve of St. Louis from January 1, 1959, to May 1, 2015, is presented in the following plot:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Saving Rates</span>
-saving =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/PSAVERT.csv&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;,&quot;</span>)
-
-<span class="co"># Construct gts object</span>
-saving =<span class="st"> </span><span class="kw">gts</span>(saving$VALUE, <span class="dt">start =</span> <span class="dv">1959</span>, <span class="dt">freq =</span> <span class="dv">12</span>, <span class="dt">name =</span> <span class="st">&#39;US Personal Saving Rates&#39;</span>, 
-    <span class="dt">unit =</span> <span class="st">&quot;month&quot;</span>)
+<span class="kw">data</span>(<span class="st">&quot;savingrt&quot;</span>, <span class="dt">package=</span><span class="st">&quot;smacdata&quot;</span>)
 
 <span class="co"># Plot time series</span>
-<span class="kw">autoplot</span>(saving) +<span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;US Personal Saving Rates (%)&quot;</span>)</code></pre></div>
+<span class="kw">autoplot</span>(savingrt) +<span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;US Personal Saving Rates (%)&quot;</span>)</code></pre></div>
 <p><img src="tts_files/figure-html/example_PSR-1.png" width="672" /></p>
 <p>It can be observed that the mean of the process seems to vary over time, suggesting that a random walk can indeed be considered as a possible model to explain this data. In addition, aside from some “spikes” and occasional sudden changes, the observations appear to gradually change from one time point to the other, suggesting that some other form of dependence between them could exist.</p>
 
