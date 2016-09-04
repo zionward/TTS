@@ -730,7 +730,7 @@ for (i in <span class="kw">seq_along</span>(N)){
   <span class="co"># Asymptotic distribution</span>
   xx =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> -<span class="dv">10</span>, <span class="dt">to =</span> <span class="dv">10</span>, <span class="dt">length.out =</span> <span class="dv">10</span>^<span class="dv">3</span>)
   yy =<span class="st"> </span><span class="kw">dnorm</span>(xx,<span class="dv">0</span>,<span class="dv">1</span>)
-  <span class="kw">lines</span>(xx,yy, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
+  <span class="kw">lines</span>(xx,yy, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 }</code></pre></div>
 <p><img src="tts_files/figure-html/simulationACF-1.png" width="672" /></p>
 <p>As expected, it can clearly be observed that the asymptotic approximation is quite poor when <span class="math inline">\(n = 5\)</span> but as the sample size increases the approximation improves and is very close when, for example, <span class="math inline">\(n = 300\)</span>. This simulation could suggest that Theorem 1 provides a relatively “close” approximation of the distribution of <span class="math inline">\(\hat{\rho}(h)\)</span>.</p>
