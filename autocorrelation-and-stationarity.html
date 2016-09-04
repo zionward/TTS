@@ -723,7 +723,7 @@ for (i in <span class="kw">seq_len</span>(B)){
 <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="kw">length</span>(N)/<span class="dv">2</span>))
 for (i in <span class="kw">seq_along</span>(N)){
   <span class="co"># Estimated empirical distribution</span>
-  <span class="kw">hist</span>(<span class="kw">sqrt</span>(N[i])*result[,i], <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, 
+  <span class="kw">hist</span>(<span class="kw">sqrt</span>(N[i])*result[,i], <span class="dt">col =</span> <span class="st">&quot;royalblue1&quot;</span>, 
        <span class="dt">main =</span> <span class="kw">paste</span>(<span class="st">&quot;Sample size n =&quot;</span>,N[i]), <span class="dt">probability =</span> <span class="ot">TRUE</span>,
        <span class="dt">xlim =</span> <span class="kw">c</span>(-<span class="dv">4</span>,<span class="dv">4</span>), <span class="dt">xlab =</span> <span class="st">&quot; &quot;</span>)
   
