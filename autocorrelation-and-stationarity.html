@@ -25,7 +25,7 @@
 
 <meta name="author" content="James Balamuta, Stéphane Guerrier, Roberto Molinari and Haotian Xu">
 
-<meta name="date" content="2016-09-04">
+<meta name="date" content="2016-09-06">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -313,7 +313,7 @@ Figure 2.1: Different forms of dependence and their Pearson’s r value
  \end{bmatrix} \]</span></p>
 <p>must be positive semi-definite. Taking the determinant we have</p>
 <p><span class="math display">\[\operatorname{det} \left(\boldsymbol{A}_1\right) = 1 - \rho_1^2 \]</span></p>
-<p>implying that the condition <span class="math inline">\(|\rho_1| &lt; 1\)</span> must be respected. Now, let <span class="math inline">\(\alpha_j = 0\)</span> for <span class="math inline">\(j &gt; 2\)</span>, then we must verify that:</p>
+<p>implying that the condition <span class="math inline">\(|\rho_1| \leq 1\)</span> must be respected. Now, let <span class="math inline">\(\alpha_j = 0\)</span> for <span class="math inline">\(j &gt; 2\)</span>, then we must verify that:</p>
 <p><span class="math display">\[\var \left[ \alpha_0 X_{t} + \alpha_1 X_{t-1}  + \alpha_2 X_{t-2} \right] = \gamma_0 \begin{bmatrix}
   \alpha_0 &amp; \alpha_1 &amp;\alpha_2
  \end{bmatrix}   \begin{bmatrix}
@@ -333,10 +333,10 @@ Figure 2.1: Different forms of dependence and their Pearson’s r value
  \end{bmatrix} \]</span></p>
 <p>must be positive semi-definite and it is easy to verify that</p>
 <p><span class="math display">\[\operatorname{det} \left(\boldsymbol{A}_2\right) = \left(1 - \rho_2 \right)\left(- 2 \rho_1^2 + \rho_2 + 1\right). \]</span></p>
-<p>Thus, this implies that <span class="math inline">\(|\rho_2| &lt; 1\)</span> as well as</p>
-<p><span class="math display">\[\begin{aligned} &amp;- 2 \rho_1^2 + \rho_2 + 1 \geq 0 \Rightarrow 1 &gt; \rho_2 \geq 2 \rho_1^2 - 1 \\
-&amp;\Rightarrow 1 - \rho_1^2 &gt; \rho_2 - \rho_1^2 \geq -(1 - \rho_1^2)\\
-&amp;\Rightarrow 1 &gt; \frac{\rho_2 - \rho_1^2 }{1 - \rho_1^2} \geq -1.
+<p>Thus, this implies that</p>
+<p><span class="math display">\[\begin{aligned} &amp;- 2 \rho_1^2 + \rho_2 + 1 \geq 0 \Rightarrow 1 \geq \rho_2 \geq 2 \rho_1^2 - 1 \\
+&amp;\Rightarrow 1 - \rho_1^2 \geq \rho_2 - \rho_1^2 \geq -(1 - \rho_1^2)\\
+&amp;\Rightarrow 1 \geq \frac{\rho_2 - \rho_1^2 }{1 - \rho_1^2} \geq -1.
 \end{aligned}\]</span></p>
 <p>Therefore, <span class="math inline">\(\rho_1\)</span> and <span class="math inline">\(\rho_2\)</span> must lie in a parabolic shaped region defined by the above inequalities as illustrated in Figure <a href="autocorrelation-and-stationarity.html#fig:admissibility">2.2</a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:admissibility"></span>
@@ -442,6 +442,7 @@ for (i in <span class="kw">seq_len</span>(B)){
 <span class="kw">plot</span>(<span class="ot">NA</span>, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">1</span>,n), <span class="dt">ylim =</span> <span class="kw">range</span>(out), <span class="dt">xlab =</span> <span class="st">&quot;Time&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot; &quot;</span>)
 <span class="kw">grid</span>()
 color =<span class="st"> </span><span class="kw">sample</span>(<span class="kw">topo.colors</span>(B, <span class="dt">alpha =</span> <span class="fl">0.5</span>))
+<span class="kw">grid</span>()
 for (i in <span class="kw">seq_len</span>(B)){
   <span class="kw">lines</span>(out[i,], <span class="dt">col =</span> color[i])
 }
