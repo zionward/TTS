@@ -314,8 +314,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">3.3.2</span> Example: White Noise</h3>
 <p>The white noise process <span class="math inline">\(\left\{X_t\right\}\)</span>, defined in <a href="introduction.html#wn">1.3.1</a>, can be expressed as a linear process under:</p>
 <p><span class="math display">\[\psi _j = \begin{cases}
-      \frac{1}{{2q + 1}} , &amp;\mbox{ if } -q \le j \le q\\
-      0 , &amp;\mbox{ if } |j| &gt; q
+      1 , &amp;\mbox{ if } j = 0\\
+      0 , &amp;\mbox{ if } |j| \ge 1
 \end{cases}.\]</span></p>
 <p>and <span class="math inline">\(\mu = 0\)</span>.</p>
 <p>Therefore, <span class="math inline">\(\left\{X_t\right\} \sim WN(0, \sigma^2_W)\)</span></p>
