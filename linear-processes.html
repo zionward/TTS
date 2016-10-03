@@ -39,8 +39,8 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="introduction.html">
+<link rel="prev" href="autocorrelation-and-stationarity.html">
+<link rel="next" href="appendixa.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -234,69 +234,140 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">A Tour of Time Series Analysis with R</h1>
-<h4 class="author"><em>James Balamuta, Stéphane Guerrier, Roberto Molinari and Haotian Xu</em></h4>
-<h4 class="date"><em>2016-10-03</em></h4>
+<div id="linear-processes" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Linear Processes</h1>
+<div id="the-backshift-operator" class="section level2">
+<h2><span class="header-section-number">3.1</span> The Backshift Operator</h2>
+<div id="definition" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> Definition</h3>
+<p>The <strong>Backshift Operator</strong> is helpful when manipulating time series. When we backshift, we are changing the indices of the time series. e.g. <span class="math inline">\(t \rightarrow t-1\)</span>. The operator is defined as:</p>
+<p><span class="math display">\[B{X_t} = {X_{t - 1}}\]</span></p>
+<p>Backshifting on a constant, <span class="math inline">\(c\)</span>, results in:</p>
+<p><span class="math display">\[Bc = c\]</span></p>
+<p>If we were to repeatedly apply the backshift operator, we would receive:</p>
+<p><span class="math display">\[\begin{aligned}
+  {B^2}{X_t} &amp;= B\left( {B{X_t}} \right) \\
+   &amp;= B\left( {{X_{t - 1}}} \right) \\
+   &amp;= {X_{t - 2}} \\ 
+\end{aligned}\]</span></p>
+<p>We can generalize this behavior as:</p>
+<p><span class="math display">\[{B^k}{X_t} = {X_{t - k}}\]</span></p>
+<p>The backshift operator is helpful for later decompositions in addition to making differencing operations more straightforward.</p>
+<p>The notation for the backshift operator changes depending on the author’s preferences. An alternative way to denote a backshift operation given by <span class="math inline">\(B\)</span> is to use the lag operator <span class="math inline">\(L\)</span>. The same conventions as discussed above apply equally to the lag operator.</p>
 </div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<p>This text is designed as an introduction to time series analysis and is used as a support document for the class STAT 429 (Time Series Analysis) given at the University of Illinois at Urbana-Champaign. It preferable to always access the text online rather than a printed to be sure you are using the latest version. The online version so affords additional features over the traditional PDF copy such as a scaling text, variety of font faces, and themed backgrounds. However, if you are in need of a local copy, a <a href="http://tts.smac-group.com/tts.pdf"><strong>pdf version</strong> is also available</a>.</p>
-<p>This document is under active development and as a result is likely to contains many errors. As Montesquieu puts it:</p>
-<blockquote>
-<p>“<em>La nature semblait avoir sagement pourvu à ce que les sottises des hommes fussent passagères, et les livres les immortalisent.</em>”</p>
-</blockquote>
-<div id="contributing" class="section level2 unnumbered">
-<h2>Contributing</h2>
-<p>If you notice any errors, we would be grateful if you would let us know. To let us know about the errors, there are two options available to you. The first and subsequently the fastest being if you are familiar with GitHub and know RMarkdown, then <a href="https://github.com/SMAC-Group/TTS">make a pull request and fix the issue yourself!</a>. Note, in the online version, there is even an option to automatically start the pull request by clicking the edit button in the top-left corner of the text.</p>
-<p><img src="images/support/edit_button.png" style="display: block; margin: auto;" /></p>
-<p>The second option, that will have a slightly slower resolution time is to send an email to <code>balamut2 AT illinois DOT edu</code> that includes: the error and a possible revision. Please put in the subject header: <code>[TTS]</code>.</p>
 </div>
-<div id="bibliographic-note" class="section level2 unnumbered">
-<h2>Bibliographic Note</h2>
-<p>This text is heavily inspired by the following three execellent references:</p>
-<ol style="list-style-type: decimal">
-<li>“<em>Time Series Analysis and Its Applications</em>”, Third Edition, Robert H. Shumway &amp; David S. Stoffer.</li>
-<li>“<em>Time Series for Macroeconomics and Finance</em>”, John H. Cochrane.</li>
-<li>“<em>Cours de Séries Temporelles: Théorie et Applications</em>”, Volume 1, Arthur Charpentier.</li>
-</ol>
+<div id="differencing-operator" class="section level2">
+<h2><span class="header-section-number">3.2</span> Differencing Operator</h2>
+<p><em>Definition:</em> <strong>Differencing Operator</strong></p>
+<p>The <strong>Differencing Operator</strong> is defined as the gradient symbol applied to a time series: <span class="math display">\[\nabla {X_t} = {X_t} - {X_{t - 1}}\]</span></p>
+<p>The differencing operator is helpful when trying to remove trend from the data. Many make an analogy between this operator and taking a first derivative of a function.</p>
+<p>We can take higher moments of differences by: <span class="math display">\[\begin{aligned}
+  {\nabla ^2}{X_t} &amp;= \nabla \left( {\nabla {X_t}} \right) \\
+   &amp;= \nabla \left( {{X_t} - {X_{t - 1}}} \right) \\
+   &amp;= \left( {{X_t} - {X_{t - 1}}} \right) - \left( {{X_{t - 1}} - {X_{t - 2}}} \right) \\
+   &amp;= {X_t} - 2{X_{t - 1}} + {X_{t - 2}} \\ 
+\end{aligned} \]</span></p>
+<p>So, the difference operator has the following properties: <span class="math display">\[\begin{aligned}
+  {\nabla ^k}{X_t} &amp;= {\nabla ^{k - 1}} \left( {\nabla {X_t}}\right) \\
+  {\nabla ^1}{X_t} &amp;= \nabla {X_t} \\ 
+\end{aligned} \]</span></p>
+<p>Notice, within the difference operation, we are backshifting the timeseries.</p>
+<p>If we rewrite the difference operator to use the backshift operator, we receive: <span class="math display">\[\nabla {X_t} = {X_t} - {X_{t - 1}} = \left( {1 - B} \right){X_t}\]</span></p>
+<p>This holds for later incarnations as well: <span class="math display">\[\begin{aligned}
+  {\nabla ^2}{X_t} &amp;= {X_t} - 2{X_{t - 1}} + {X_{t - 2}} \\
+   &amp;= \left( {1 - B} \right)\left( {1 - B} \right){X_t} \\
+   &amp;= {\left( {1 - B} \right)^2}{X_t} \\ 
+\end{aligned} \]</span></p>
+<p>Thus, we can generalize this to: <span class="math display">\[{\nabla ^k}{X_t} = {\left( {1 - B} \right)^k}{X_t}\]</span></p>
+<div id="seasonal-differencing-operator" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> Seasonal Differencing Operator</h3>
+<p>With a slight change to the difference operator, a seasonal difference can be applied by using a backshift greater than 1:</p>
+<p><span class="math display">\[{\nabla _s}{X_t} = {X_t} - {X_{t - s}} = \left( {1 - B_s} \right){X_t}\]</span></p>
+<p>In a similar vein, the above is able to be differenced by:</p>
+<p><span class="math display">\[{\nabla ^k_s}{X_t} = {\left( {1 - B_s} \right)^k}{X_t}\]</span></p>
 </div>
-<div id="rendering-mathematical-formulae" class="section level2 unnumbered">
-<h2>Rendering Mathematical Formulae</h2>
-<p>Throughout the book, there will be mathematical symbols used to express the material. Depending on the version of the book, there are two different render engines.</p>
-<ul>
-<li>For the online version, the text uses <a href="https://www.mathjax.org/">MathJax</a> to render mathematical notation for the web. In the event the formulae does not load for a specific chapter, first try to refresh the page. 9 times out of 10 the issue is related to the software library not loading quickly.</li>
-<li>For the pdf version, the text is built using the recommended AMS LaTeX symbolic packages. As a result, there should be no issue displaying equations.</li>
-</ul>
-<p>An example of a mathematical rendering capabilities would be given as:</p>
-<p><span class="math display">\[ a^2 + b^2 = c^2 \]</span></p>
 </div>
-<div id="r-code-conventions" class="section level2 unnumbered">
-<h2>R Code Conventions</h2>
-<p>The code used throughout the book will predominately be <code>R</code> code. To obtain a copy of <a href="https://cloud.r-project.org/"><code>R</code></a>, go to the <a href="https://cloud.r-project.org/">Comprehensive R Archive Network (CRAN)</a> and download the appropriate installer for your operating system.</p>
-<p>When <code>R</code> code is displayed it will be typeset using a <code>monospace</code> font with syntax highlighting enabled to ensure the differentiation of functions, variables, and so on. For example, the following adds 1 to 1</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a =<span class="st"> </span>1L +<span class="st"> </span>1L
-a</code></pre></div>
-<p>Each code segment may contain actual output from <code>R</code>. Such output will appear in grey font prefixed by <code>##</code>. For example, the output of the above code segment would look like so:</p>
-<pre><code>## [1] 2</code></pre>
-<p>Alongside the PDF download of the book, you should find the R code used within each chapter.</p>
+<div id="linear-process" class="section level2">
+<h2><span class="header-section-number">3.3</span> Linear Process</h2>
+<div id="definition-1" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> Definition</h3>
+<p>A time series, <span class="math inline">\((X_t)\)</span>, is defined to be a linear process if it can be expressed as a linear combination of white noise by:</p>
+<p><span class="math display">\[{X_t} = \mu + \sum\limits_{j =  - \infty }^\infty  {{\psi _j}{W_{t - j}}} \]</span></p>
+<p>where <span class="math inline">\(W_t \sim WN(0, \sigma^2)\)</span> and <span class="math inline">\(\sum\limits_{i = - \infty }^\infty {\left| {{\psi _i}} \right|} &lt; \infty\)</span>. Note, the later assumption is required to ensure that the series has a limit. Furthermore, the set of coefficients <span class="math display">\[{\{ {\psi _i}\} _{i =  - \infty , \cdots ,\infty }}\]</span> can be viewed as linear filter. These coefficients do not have to be all equal nor symmetric as later examples will show. Generally, the properties of a linear process related to mean and variance are given by:</p>
+<p><span class="math display">\[\begin{aligned}
+\mu_{X} &amp;= \mu \\
+\gamma_{X}(h) &amp;= \sigma _W^2\sum\limits_{j =  - \infty }^\infty  {{\psi _j}{\psi _{h + j}}}
+\end{aligned}\]</span></p>
+<p>The latter is derived from</p>
+<p><span class="math display">\[\begin{aligned}
+  \gamma \left( h \right) &amp;= Cov\left( {{x_t},{x_{t + h}}} \right) \\
+   &amp;= Cov\left( {\mu  + \sum\limits_{j =  - \infty }^\infty  {{\psi _j}{w_{t - j}}} ,\mu  + \sum\limits_{j =  - \infty }^\infty  {{\psi _j}{w_{t + h - j}}} } \right) \\
+   &amp;= Cov\left( {\sum\limits_{j =  - \infty }^\infty  {{\psi _j}{w_{t - j}}} ,\sum\limits_{j =  - \infty }^\infty  {{\psi _j}{w_{t + h - j}}} } \right) \\
+   &amp;= \sum\limits_{j =  - \infty }^\infty  {{\psi _j}{\psi _{j + h}}Cov\left( {{w_{t - j}},{w_{t - j}}} \right)}  \\
+   &amp;= \sigma _w^2\sum\limits_{j =  - \infty }^\infty  {{\psi _j}{\psi _{j + h}}}  \\ 
+\end{aligned} \]</span></p>
+<p>Within the above derivation, the key is to realize that <span class="math inline">\(Cov\left( {{w_{t - j}},{w_{t + h - j}}} \right) = 0\)</span> if <span class="math inline">\(t - j \ne t + h - j\)</span>.</p>
+<p>Lastly, one of the better formalities of a linear process is that it is able to be represented in a simplified form under the <strong>backshift operator</strong>:</p>
+<p><span class="math display">\[{X_t} = \psi \left( B \right){W_t}\]</span></p>
 </div>
-<div id="license" class="section level2 unnumbered">
-<h2>License</h2>
-<div class="figure">
-<img src="images/license/cc.png" alt="This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License." />
-<p class="caption">This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
+<div id="example-white-noise" class="section level3">
+<h3><span class="header-section-number">3.3.2</span> Example: White Noise</h3>
+<p>The white noise process <span class="math inline">\(\left\{X_t\right\}\)</span>, defined in <a href="introduction.html#wn">1.3.1</a>, can be expressed as a linear process under:</p>
+<p><span class="math display">\[\psi _j = \begin{cases}
+      \frac{1}{{2q + 1}} , &amp;\mbox{ if } -q \le j \le q\\
+      0 , &amp;\mbox{ if } |j| &gt; q
+\end{cases}.\]</span></p>
+<p>and <span class="math inline">\(\mu = 0\)</span>.</p>
+<p>Therefore, <span class="math inline">\(\left\{X_t\right\} \sim WN(0, \sigma^2_W)\)</span></p>
 </div>
+<div id="example-moving-average-order-1" class="section level3">
+<h3><span class="header-section-number">3.3.3</span> Example: Moving Average Order 1</h3>
+<p>Similarly, consider <span class="math inline">\(\left\{X_t\right\}\)</span> to be a MA(1) process, given by <a href="introduction.html#ma1">1.3.4</a>. The process can be expressed linearly under:</p>
+<p><span class="math display">\[\psi _j = \begin{cases}
+      1, &amp;\mbox{ if } j = 0\\
+      \theta , &amp;\mbox{ if } j = 1 \\
+      0, &amp;\mbox{ if } j \ge 2
+\end{cases}.\]</span></p>
+<p>and <span class="math inline">\(\mu = 0\)</span>.</p>
+<p>Thus, we have: <span class="math inline">\(X_t = W_t + \theta W_{t-1}\)</span></p>
+</div>
+<div id="example-symmetric-moving-average" class="section level3">
+<h3><span class="header-section-number">3.3.4</span> Example: Symmetric Moving Average</h3>
+<p>Consider a symmetric moving average given by:</p>
+<p><span class="math display">\[{X_t} = \frac{1}{{2q + 1}}\sum\limits_{j =  - q}^q {{W_{t + j}}} \]</span></p>
+<p>Thus, <span class="math inline">\(\left\{X_t\right\}\)</span> is defined for <span class="math inline">\(q + 1 \le t \le n-q\)</span>. The above process would be a linear process since:</p>
+<p><span class="math display">\[\psi _j = \begin{cases}
+      \frac{1}{{2q + 1}} , &amp;\mbox{ if } -q \le j \le q\\
+      0 , &amp;\mbox{ if } |j| &gt; q
+\end{cases}.\]</span></p>
+<p>and <span class="math inline">\(\mu = 0\)</span>.</p>
+<p>In practice, if <span class="math inline">\(q = 1\)</span>, we would have:</p>
+<p><span class="math display">\[{X_t} = \frac{1}{3}\left( {{W_{t - 1}} + {W_t} + {W_{t + 1}}} \right)\]</span></p>
+</div>
+<div id="example-autoregressive-process-of-order-1" class="section level3">
+<h3><span class="header-section-number">3.3.5</span> Example: Autoregressive Process of Order 1</h3>
+<p>A more intensive application of a linear process is <span class="math inline">\(\left\{X_t\right\}\)</span> as an AR1 process, defined in <a href="introduction.html#ar1">1.3.3</a>. The intensity comes from the necessity to define the weights with respect to the time lag.</p>
+<p><span class="math display">\[\psi _j = \begin{cases}
+      \phi^j , &amp;\mbox{ if } j \ge 0\\
+      0 , &amp;\mbox{ if } j &lt; 0
+\end{cases}.\]</span></p>
+<p>and <span class="math inline">\(\mu = 0\)</span>.</p>
+<p>Under the condition that <span class="math inline">\(\left| \phi \right| &lt; 1\)</span> the process can be considered to be the traditional <span class="math inline">\(X_t = \phi X_{t-1} + W_t\)</span>. Furthermore, the process can also be considered to be an MA(<span class="math inline">\(\infty\)</span>)!</p>
 
 </div>
+</div>
+</div>
+
+
+
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="introduction.html" class="navigation navigation-next navigation-unique" aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="autocorrelation-and-stationarity.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="appendixa.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -323,7 +394,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/SMAC-Group/TTS/edit/master/index.Rmd",
+"link": "https://github.com/SMAC-Group/TTS/edit/master/03-linear-processes.Rmd",
 "text": null
 },
 "download": null,
