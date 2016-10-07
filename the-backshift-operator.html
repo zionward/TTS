@@ -39,8 +39,8 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="portmanteau-test.html">
-<link rel="next" href="the-backshift-operator.html">
+<link rel="prev" href="linear-processes.html">
+<link rel="next" href="differencing-operator.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -230,16 +230,33 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="linear-processes" class="section level1">
-<h1><span class="header-section-number">Chapter 3</span> Linear Processes</h1> 
+<div id="the-backshift-operator" class="section level2">
+<h2><span class="header-section-number">3.1</span> The Backshift Operator</h2>
+<div id="definition" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> Definition</h3>
+<p>The <strong>Backshift Operator</strong> is helpful when manipulating time series. When we backshift, we are changing the indices of the time series. e.g. <span class="math inline">\(t \rightarrow t-1\)</span>. The operator is defined as:</p>
+<p><span class="math display">\[B{X_t} = {X_{t - 1}}\]</span></p>
+<p>Backshifting on a constant, <span class="math inline">\(c\)</span>, results in:</p>
+<p><span class="math display">\[Bc = c\]</span></p>
+<p>If we were to repeatedly apply the backshift operator, we would receive:</p>
+<p><span class="math display">\[\begin{aligned}
+  {B^2}{X_t} &amp;= B\left( {B{X_t}} \right) \\
+   &amp;= B\left( {{X_{t - 1}}} \right) \\
+   &amp;= {X_{t - 2}} \\ 
+\end{aligned}\]</span></p>
+<p>We can generalize this behavior as:</p>
+<p><span class="math display">\[{B^k}{X_t} = {X_{t - k}}\]</span></p>
+<p>The backshift operator is helpful for later decompositions in addition to making differencing operations more straightforward.</p>
+<p>The notation for the backshift operator changes depending on the author’s preferences. An alternative way to denote a backshift operation given by <span class="math inline">\(B\)</span> is to use the lag operator <span class="math inline">\(L\)</span>. The same conventions as discussed above apply equally to the lag operator.</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="portmanteau-test.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="the-backshift-operator.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="linear-processes.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="differencing-operator.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>

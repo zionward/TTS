@@ -39,8 +39,8 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="portmanteau-test.html">
-<link rel="next" href="the-backshift-operator.html">
+<link rel="prev" href="bibliographic-note.html">
+<link rel="next" href="r-code-conventions.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -230,16 +230,23 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="linear-processes" class="section level1">
-<h1><span class="header-section-number">Chapter 3</span> Linear Processes</h1> 
+<div id="rendering-mathematical-formulae" class="section level2 unnumbered">
+<h2>Rendering Mathematical Formulae</h2>
+<p>Throughout the book, there will be mathematical symbols used to express the material. Depending on the version of the book, there are two different render engines.</p>
+<ul>
+<li>For the online version, the text uses <a href="https://www.mathjax.org/">MathJax</a> to render mathematical notation for the web. In the event the formulae does not load for a specific chapter, first try to refresh the page. 9 times out of 10 the issue is related to the software library not loading quickly.</li>
+<li>For the pdf version, the text is built using the recommended AMS LaTeX symbolic packages. As a result, there should be no issue displaying equations.</li>
+</ul>
+<p>An example of a mathematical rendering capabilities would be given as:</p>
+<p><span class="math display">\[ a^2 + b^2 = c^2 \]</span></p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="portmanteau-test.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="the-backshift-operator.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="bibliographic-note.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="r-code-conventions.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -266,7 +273,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/SMAC-Group/TTS/edit/master/03-linear-processes.Rmd",
+"link": "https://github.com/SMAC-Group/TTS/edit/master/index.Rmd",
 "text": "Edit"
 },
 "download": ["tts.pdf", "tts.epub", "tts.mobi"],

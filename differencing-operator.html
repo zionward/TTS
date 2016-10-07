@@ -39,8 +39,8 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="portmanteau-test.html">
-<link rel="next" href="the-backshift-operator.html">
+<link rel="prev" href="the-backshift-operator.html">
+<link rel="next" href="linear-process.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -230,16 +230,44 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="linear-processes" class="section level1">
-<h1><span class="header-section-number">Chapter 3</span> Linear Processes</h1> 
+<div id="differencing-operator" class="section level2">
+<h2><span class="header-section-number">3.2</span> Differencing Operator</h2>
+<p><em>Definition:</em> <strong>Differencing Operator</strong></p>
+<p>The <strong>Differencing Operator</strong> is defined as the gradient symbol applied to a time series: <span class="math display">\[\nabla {X_t} = {X_t} - {X_{t - 1}}\]</span></p>
+<p>The differencing operator is helpful when trying to remove trend from the data. Many make an analogy between this operator and taking a first derivative of a function.</p>
+<p>We can take higher moments of differences by: <span class="math display">\[\begin{aligned}
+  {\nabla ^2}{X_t} &amp;= \nabla \left( {\nabla {X_t}} \right) \\
+   &amp;= \nabla \left( {{X_t} - {X_{t - 1}}} \right) \\
+   &amp;= \left( {{X_t} - {X_{t - 1}}} \right) - \left( {{X_{t - 1}} - {X_{t - 2}}} \right) \\
+   &amp;= {X_t} - 2{X_{t - 1}} + {X_{t - 2}} \\ 
+\end{aligned} \]</span></p>
+<p>So, the difference operator has the following properties: <span class="math display">\[\begin{aligned}
+  {\nabla ^k}{X_t} &amp;= {\nabla ^{k - 1}} \left( {\nabla {X_t}}\right) \\
+  {\nabla ^1}{X_t} &amp;= \nabla {X_t} \\ 
+\end{aligned} \]</span></p>
+<p>Notice, within the difference operation, we are backshifting the timeseries.</p>
+<p>If we rewrite the difference operator to use the backshift operator, we receive: <span class="math display">\[\nabla {X_t} = {X_t} - {X_{t - 1}} = \left( {1 - B} \right){X_t}\]</span></p>
+<p>This holds for later incarnations as well: <span class="math display">\[\begin{aligned}
+  {\nabla ^2}{X_t} &amp;= {X_t} - 2{X_{t - 1}} + {X_{t - 2}} \\
+   &amp;= \left( {1 - B} \right)\left( {1 - B} \right){X_t} \\
+   &amp;= {\left( {1 - B} \right)^2}{X_t} \\ 
+\end{aligned} \]</span></p>
+<p>Thus, we can generalize this to: <span class="math display">\[{\nabla ^k}{X_t} = {\left( {1 - B} \right)^k}{X_t}\]</span></p>
+<div id="seasonal-differencing-operator" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> Seasonal Differencing Operator</h3>
+<p>With a slight change to the difference operator, a seasonal difference can be applied by using a backshift greater than 1:</p>
+<p><span class="math display">\[{\nabla _s}{X_t} = {X_t} - {X_{t - s}} = \left( {1 - B_s} \right){X_t}\]</span></p>
+<p>In a similar vein, the above is able to be differenced by:</p>
+<p><span class="math display">\[{\nabla ^k_s}{X_t} = {\left( {1 - B_s} \right)^k}{X_t}\]</span></p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="portmanteau-test.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="the-backshift-operator.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="the-backshift-operator.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="linear-process.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>

@@ -39,8 +39,8 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="portmanteau-test.html">
-<link rel="next" href="the-backshift-operator.html">
+<link rel="prev" href="joint-stationarity.html">
+<link rel="next" href="linear-processes.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -230,16 +230,109 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="linear-processes" class="section level1">
-<h1><span class="header-section-number">Chapter 3</span> Linear Processes</h1> 
+<div id="portmanteau-test" class="section level2">
+<h2><span class="header-section-number">2.5</span> Portmanteau test</h2>
+<p>In this section we give a brief introduction to Portmanteau tests used in time series analysis. In linear regression, we always need to do diagnostic test for residuals after building our model, to check whether our assumptions are satisfied. If there is no evidence to reject any of the assumptions, we can say that the linear model we built is adequate. Otherwise, the linear models are not adequate, some modifications or transformations need to be done either for the previous model or for the data. This rule also applies to time series modeling. In time series analysis, a wide variety of Portmanteau tests can be used to check the white noise residuals assumption. We will introduce two of them as follows, which are based on the ACF of residuals, in order to illustrate some of ideas of this kind of tests.</p>
+<p>Dating back to 1970, Box and Pierce proposed the well-known Box-Pierce test statistic as the following form:</p>
+<p><span class="math display">\[Q_{BP} = n\sum_{h =1}^m \hat{\rho}_h^2,\]</span></p>
+<p>where the empirical autocorrelation of residuals at lag <span class="math inline">\(h\)</span> is defined as <span class="math inline">\(\hat{\rho}_h = \frac{\hat{\gamma}(h)}{\hat{\gamma}(0)}\)</span>. It is obvious that under alternative hypothesis, <span class="math inline">\(\hat{\rho}_h\)</span> would be deviate from <span class="math inline">\(0\)</span>, thus a large <span class="math inline">\(Q_{BP}\)</span> gives us the evidence to reject the null. And under null hypothesis that the residuals are white noise (or equivalently the time series are adequate), it can be shown that when <span class="math inline">\(n \to \infty\)</span>, we have</p>
+<p><span class="math display">\[Q_{BP} \overset{\mathcal{D}}{\to} \chi^2_{m - m^{\prime}},\]</span> where <span class="math inline">\(m^{\prime}\)</span> is the number of parameters in the time series model.</p>
+<p>Then on 1978, Ljung and Box improved Box-Pierce test by standardizing each <span class="math inline">\(\hat{\rho}_h\)</span> by its asymptotic variance. The Ljung and Box test statistic is</p>
+<p><span class="math display">\[Q_{LB} = n\sum_{h =1}^m \frac{n+2}{n-h}\hat{\rho}_h^2.\]</span></p>
+<p>It can also be shown that <span class="math inline">\(Q_{LB} \overset{\mathcal{D}}{\to} \chi^2_{m - m^{\prime}}\)</span> under the null. However, compared to <span class="math inline">\(Q_{BP}\)</span>, the distribution of <span class="math inline">\(Q_{BP}\)</span> under the null is closer to <span class="math inline">\(\chi^2_{m - m^{\prime}}\)</span>, when <span class="math inline">\(n\)</span> is finite.</p>
+<p>In the above two examples, the test statistic contains a user specified parameter <span class="math inline">\(m\)</span>. And for different <span class="math inline">\(m\)</span>, the power of the test would be different. Thus many work has been done to either select the optimal <span class="math inline">\(m\)</span>, or propose a new test statistic without user specified parameters. Moreover, testing white noise can also be done by checking PACF, or by checking the spectral density in the frequency domain. Therefore these lead to many different Portmanteau tests.</p>
+<p>Take for an example the following use of a Portmanteau test to show the distribution of test statistics under the null:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gmwm)
+
+<span class="co"># set seed</span>
+<span class="kw">set.seed</span>(<span class="dv">1345</span>)
+
+<span class="co"># Specify models</span>
+model =<span class="st"> </span><span class="kw">WN</span>(<span class="dt">sigma2 =</span> <span class="dv">1</span>) <span class="co"># WN</span>
+
+B =<span class="st"> </span><span class="dv">1000</span> <span class="co"># number of parametric bootstrap</span>
+BP.obs =<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, B)
+LB.obs =<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, B)
+
+for (j in <span class="kw">seq_len</span>(B)){
+  x =<span class="st"> </span><span class="kw">gen.gts</span>(model, <span class="dt">N =</span> <span class="dv">1000</span>)
+  BP.obs[j] =<span class="st"> </span><span class="kw">Box.test</span>(x, <span class="dt">lag =</span> <span class="dv">10</span>, <span class="st">&quot;Box-Pierce&quot;</span>, <span class="dt">fitdf =</span> <span class="dv">0</span>)$statistic
+  LB.obs[j] =<span class="st"> </span><span class="kw">Box.test</span>(x, <span class="dt">lag =</span> <span class="dv">10</span>, <span class="st">&quot;Ljung-Box&quot;</span>, <span class="dt">fitdf =</span> <span class="dv">0</span>)$statistic
+}
+
+sim_results =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sim =</span> <span class="kw">c</span>(BP.obs, LB.obs),
+                         <span class="dt">simtype =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;Box-Pierce&quot;</span>,B), <span class="kw">rep</span>(<span class="st">&quot;Ljung-Box&quot;</span>,B)))
+
+<span class="kw">ggplot</span>(<span class="dt">data =</span> sim_results, <span class="kw">aes</span>(<span class="dt">x =</span> sim)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y =</span> ..density.., <span class="dt">fill =</span> simtype),
+                 <span class="dt">binwidth =</span> <span class="dv">1</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) +
+<span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dchisq, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">df =</span> <span class="dv">10</span>)) +
+<span class="st">  </span><span class="kw">facet_wrap</span>( ~<span class="st"> </span>simtype) +<span class="st"> </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="fl">0.12</span>) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">fill =</span> <span class="st">&quot;Statistic&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Histogram of the Observed Test Statistics&quot;</span>,
+       <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;Observed Test Statistic&quot;</span>)</code></pre></div>
+<p><img src="tts_files/figure-html/dist_null_portmanteau-1.png" width="672" /></p>
+<p>From the histogram, we can see that under the null the distribution of both BP and LB are close to Chi-square distribution, but LP is slightly better.</p>
+<p>To show the distribution of P-values under different alternatives and show that the test depends on specified <span class="math inline">\(m\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># set seed</span>
+<span class="kw">set.seed</span>(<span class="dv">1234</span>)
+
+<span class="co"># Specify models</span>
+model1 =<span class="st"> </span><span class="kw">WN</span>(<span class="dt">sigma2 =</span> <span class="dv">1</span>)                         <span class="co"># WN</span>
+model2 =<span class="st"> </span><span class="kw">AR</span>(<span class="dt">phi =</span> <span class="fl">0.3</span>, <span class="dt">sigma2 =</span> <span class="dv">1</span>)              <span class="co"># AR(1)</span>
+model3 =<span class="st"> </span><span class="kw">AR</span>(<span class="dt">phi =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">0</span>,<span class="dv">9</span>), <span class="fl">0.3</span>), <span class="dt">sigma2 =</span> <span class="dv">1</span>) <span class="co"># seasonal AR(10)</span>
+
+B =<span class="st"> </span><span class="dv">1000</span> <span class="co"># number of parametric bootstrap</span>
+LB.pvalue =<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> B, <span class="dt">ncol =</span> <span class="dv">6</span>)
+
+for (i in <span class="dv">1</span>:<span class="dv">3</span>){
+  for (j in <span class="kw">seq_len</span>(B)){
+    x =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">get</span>(<span class="kw">paste0</span>(<span class="st">&quot;model&quot;</span>, i)), <span class="dt">N =</span> <span class="dv">1000</span>)
+    LB.pvalue[j,<span class="dv">2</span>*i<span class="dv">-1</span>] =<span class="st"> </span><span class="kw">Box.test</span>(x, <span class="dt">lag =</span> <span class="dv">1</span>, <span class="st">&quot;Ljung-Box&quot;</span>, <span class="dt">fitdf =</span> <span class="dv">0</span>)$p.value
+    LB.pvalue[j,<span class="dv">2</span>*i] =<span class="st"> </span><span class="kw">Box.test</span>(x, <span class="dt">lag =</span> <span class="dv">10</span>, <span class="st">&quot;Ljung-Box&quot;</span>, <span class="dt">fitdf =</span> <span class="dv">0</span>)$p.value
+  }
+}
+
+para_1 =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">lag =</span> <span class="dv">1</span>, LB.pvalue[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>)])
+para_2 =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">lag =</span> <span class="dv">2</span>, LB.pvalue[,<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>)])
+para =<span class="st"> </span><span class="kw">rbind</span>(para_1, para_2)
+
+<span class="kw">colnames</span>(para)[<span class="dv">2</span>:<span class="dv">4</span>] =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;WN&quot;</span>, <span class="st">&quot;AR(1)&quot;</span>, <span class="st">&quot;Seasonal AR(10)&quot;</span>)
+
+<span class="kw">library</span>(<span class="st">&quot;reshape2&quot;</span>)
+para.melt =<span class="st"> </span><span class="kw">melt</span>(para, <span class="dt">id.vars =</span> <span class="st">&quot;lag&quot;</span>)
+
+<span class="kw">ggplot</span>(<span class="dt">data =</span> para.melt, <span class="kw">aes</span>(<span class="dt">x=</span>variable, <span class="dt">y=</span>value)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">fill=</span><span class="kw">factor</span>(lag))) +<span class="st"> </span><span class="kw">facet_wrap</span>( ~<span class="st"> </span>variable, <span class="dt">scales=</span><span class="st">&quot;free&quot;</span>) +
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Simulated P-value&quot;</span>) +
+<span class="st">  </span><span class="kw">scale_fill_hue</span>(<span class="dt">name=</span><span class="st">&quot;Specified m&quot;</span>, <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>) , <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;m=1&quot;</span>, <span class="st">&quot;m=10&quot;</span>))</code></pre></div>
+<p><img src="tts_files/figure-html/alternatives_port-1.png" width="672" /></p>
+<!--
+## Exercises
+
+1. Given three random variables $X_1$, $X_2$, and $X_3$ such that $\mathbb{\mu}  = \left[ {\begin{array}{*{20}{c}} 1 \\ 0 \\ { - 2} \end{array}} \right]$ and $\mathbb{\Sigma} = \left[ {\begin{array}{*{20}{c}} 2&0&{ - 1} \\ 0&3&{0.5} \\ { - 1}&{0.5}&1 \end{array}} \right]$ compute:
+    - $\e{X_1 + X_3}$
+    - $\e{3X_1 - X_2 + 4X_3}$
+    - $\var(X_2 - X_3)$
+    - $\var(X_2 + X_3)$
+    - $\cov(4X_2 + X_1, 3X_1 - 2X_3)$
+    - $\corr(X_3 + X_2, 2X_2 - 3X_1)$
+1. Consider the time series of ${X_t} = {X_{t - 1}} + {W_t}$, where $W_t \sim N(0,\sigma ^2)$ and ${X_0} = 0$. Let $\bar X = \frac{1}{n}\sum\limits_{i = 1}^n {{X_i}}$. Derive the general form for $\var(\bar X)$. (Hint: $\sum\limits_{i = 1}^n {{i^2}}  = \frac{{n\left( {n + 1} \right)\left( {2n + 1} \right)}}{6}$)
+1. For each of the following first construct an example and then show that it has the correct properties:
+    - $(X_t)$ with constant mean but has a variance that is a function of time.
+    - $(W_t)$ white noise process that is not strongly stationary.
+    - $(Z_t)$ a stationary process that has an autocovariance function whose lag does not go to zero as $h > 0$.
+    - $(V_t)$ that is nonstationary with an autocovariance function that depends on the lag as $h > 0$.
+-->
+
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="portmanteau-test.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="the-backshift-operator.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="joint-stationarity.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="linear-processes.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -266,7 +359,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/SMAC-Group/TTS/edit/master/03-linear-processes.Rmd",
+"link": "https://github.com/SMAC-Group/TTS/edit/master/02-stationarity.Rmd",
 "text": "Edit"
 },
 "download": ["tts.pdf", "tts.epub", "tts.mobi"],

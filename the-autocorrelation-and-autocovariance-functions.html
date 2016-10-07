@@ -39,8 +39,8 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="portmanteau-test.html">
-<link rel="next" href="the-backshift-operator.html">
+<link rel="prev" href="autocorrelation-and-stationarity.html">
+<link rel="next" href="stationarity.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -230,16 +230,121 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="linear-processes" class="section level1">
-<h1><span class="header-section-number">Chapter 3</span> Linear Processes</h1> 
+<div id="the-autocorrelation-and-autocovariance-functions" class="section level2">
+<h2><span class="header-section-number">2.1</span> The Autocorrelation and Autocovariance Functions</h2>
+
+<div class="definition">
+<p><span id="def:acvf" class="definition"><strong>Definition 2.1 </strong></span>The <em>autocovariance function</em> of a series <span class="math inline">\((X_t)\)</span> is defined as</p>
+<span class="math display">\[{\gamma_x}\left( {t,t+h} \right) = \cov \left( {{X_t},{X_{t+h}}} \right),\]</span>
+</div>
+<p></p>
+<p>where the definition of covariance is given by:</p>
+<p><span class="math display">\[
+  \cov \left( {{X_t},{X_{t+h}}} \right) = \mathbb{E}\left[ {{X_t}{X_{t+h}}} \right] - \mathbb{E}\left[ {{X_t}} \right]\mathbb{E}\left[ {{X_{t+h}}} \right].
+ \]</span></p>
+<p>Similarly, the above expectations are defined to be:</p>
+<p><span class="math display">\[\begin{aligned}
+  \mathbb{E}\left[ {{X_t}} \right] &amp;= \int\limits_{ - \infty }^\infty  {x \cdot {f_t}\left( x \right)dx},  \\
+  \mathbb{E}\left[ {{X_t}{X_{t+h}}} \right] &amp;= \int\limits_{ - \infty }^\infty  {\int\limits_{ - \infty }^\infty  {{x_1}{x_2} \cdot f_{t,t+h}\left( {{x_1},{x_2}} \right)d{x_1}d{x_2}} } ,
+\end{aligned} \]</span></p>
+<p>where <span class="math inline">\({f_t}\left( x \right)\)</span> and <span class="math inline">\(f_{t,t+h}\left( {{x_1},{x_2}} \right)\)</span> denote, respectively, the density of <span class="math inline">\(X_t\)</span> and the joint density of the pair <span class="math inline">\((X_t, X_{t+h})\)</span>. Since we generally consider stochastic processes with constant zero mean we often have</p>
+<p><span class="math display">\[{\gamma_x}\left( {t,t+h} \right) = \mathbb{E}\left[X_t X_{t+h} \right]. \]</span></p>
+<p>In addition, we normally drop the subscript referring to the time series (i.e. <span class="math inline">\(x\)</span> in this case) if it is clear from the context which time series the autocovariance refers to. For example, we generally use <span class="math inline">\({\gamma}\left( {t,t+h} \right)\)</span> instead of <span class="math inline">\({\gamma_x}\left( {t,t+h} \right)\)</span>. Moreover, the notation is even further simplified when the covariance of <span class="math inline">\(X_t\)</span> and <span class="math inline">\(X_{t+h}\)</span> is the same as that of <span class="math inline">\(X_{t+j}\)</span> and <span class="math inline">\(X_{t+h+j}\)</span> (for all <span class="math inline">\(j\)</span>), i.e. the covariance depends only on the time between observations and not on the specific time <span class="math inline">\(t\)</span>. This is an important property called <em>stationarity</em>, which will be discuss in the next section. In this case, we simply use to following notation: <span class="math display">\[\gamma \left( {h} \right) = \cov \left( X_t , X_{t+h} \right). \]</span></p>
+<p>This notation will generally be used throughout the text and implicitly assume certain properties (i.e. stationarity) on the process <span class="math inline">\((X_t)\)</span>. Several remarks can be made on the autocovariance:</p>
+<ol style="list-style-type: decimal">
+<li>The autocovariance function is <em>symmetric</em>. That is, <span class="math inline">\({\gamma}\left( {h} \right) = {\gamma}\left( -h \right)\)</span> since <span class="math inline">\(\cov \left( {{X_t},{X_{t+h}}} \right) = \cov \left( X_{t+h},X_{t} \right)\)</span>.</li>
+<li>The autocovariance function “contains” the variance of the process as <span class="math inline">\(\var \left( X_{t} \right) = {\gamma}\left( 0 \right)\)</span>.</li>
+<li>We have that <span class="math inline">\(|\gamma(h)| \leq \gamma(0)\)</span> for all <span class="math inline">\(h\)</span>. The proof of this inequality is direct and follows from the Cauchy-Schwarz inequality, i.e. <span class="math display">\[ \begin{aligned}
+\left(|\gamma(h)| \right)^2 &amp;= \gamma(h)^2 = \left(\mathbb{E}\left[\left(X_t - \mathbb{E}[X_t] \right)\left(X_{t+h} - \mathbb{E}[X_{t+h}] \right)\right]\right)^2\\
+&amp;\leq \mathbb{E}\left[\left(X_t - \mathbb{E}[X_t] \right)^2 \right] \mathbb{E}\left[\left(X_{t+h} - \mathbb{E}[X_{t+h}] \right)^2 \right] =  \gamma(0)^2. 
+\end{aligned}
+\]</span></li>
+<li>Just as any covariance, <span class="math inline">\({\gamma}\left( {h} \right)\)</span> is “scale dependent” since <span class="math inline">\({\gamma}\left( {h} \right) \in \real\)</span>, or <span class="math inline">\(-\infty \le {\gamma}\left( {h} \right) \le +\infty\)</span>. We therefore have:
+<ul>
+<li>if <span class="math inline">\(\left| {\gamma}\left( {h} \right) \right|\)</span> is “close” to zero, then <span class="math inline">\(X_t\)</span> and <span class="math inline">\(X_{t+h}\)</span> are “weakly” (linearly) dependent;</li>
+<li>if <span class="math inline">\(\left| {\gamma}\left( {h} \right) \right|\)</span> is “far” from zero, then the two random variable present a “strong” (linear) dependence. However it is generally difficult to asses what “close” and “far” from zero means in this case.</li>
+</ul></li>
+<li><span class="math inline">\({\gamma}\left( {h} \right)=0\)</span> does not imply that <span class="math inline">\(X_t\)</span> and <span class="math inline">\(X_{t+h}\)</span> are independent but simply <span class="math inline">\(X_t\)</span> and <span class="math inline">\(X_{t+h}\)</span> are uncorrelated. The independence is only implied by <span class="math inline">\({\gamma}\left( {h} \right)=0\)</span> in the jointly Gaussian case.</li>
+</ol>
+<p>As hinted in the introduction, an important related statistic is the correlation of <span class="math inline">\(X_t\)</span> with <span class="math inline">\(X_{t+h}\)</span> or <em>autocorrelation</em>, which is defined as</p>
+<p><span class="math display">\[\rho \left(  h \right) = \corr\left( {{X_t},{X_{t + h}}} \right) = \frac{{\cov\left( {{X_t},{X_{t + h}}} \right)}}{{{\sigma _{{X_t}}}{\sigma _{{X_{t + h}}}}}} = \frac{\gamma(h) }{\gamma(0)}.\]</span></p>
+<p>Similarly to <span class="math inline">\(\gamma(h)\)</span>, it is important to note that the above notation implies that the autocorrelation function is only a function of the lag <span class="math inline">\(h\)</span> between observations. Thus, autocovariances and autocorrelations are one possible way to describe the joint distribution of a time series. Indeed, the correlation of <span class="math inline">\(X_t\)</span> with <span class="math inline">\(X_{t+1}\)</span> is an obvious measure of how <em>persistent</em> a time series is.</p>
+<p>Remember that just as with any correlation:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(\rho \left( h \right)\)</span> is “scale free” so it is much easier to interpret than <span class="math inline">\(\gamma(h)\)</span>.</li>
+<li><span class="math inline">\(|\rho \left( h \right)| \leq 1\)</span> since <span class="math inline">\(|\gamma(h)| \leq \gamma(0)\)</span>.</li>
+<li><strong>Causation and correlation are two very different things!</strong></li>
+</ol>
+<div id="a-fundamental-representation" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> A Fundamental Representation</h3>
+<p>Autocovariances and autocorrelations also turn out to be very useful tools as they are one of the <em>fundamental representations</em> of time series. Indeed, if we consider a zero mean normally distributed process, it is clear that its joint distribution is fully characterized by the autocovariances <span class="math inline">\(\mathbb{E}[X_t X_{t+h}]\)</span> (since the joint probability density only depends of these covariances). Once we know the autocovariances we know <em>everything</em> there is to know about the process and therefore: <em>if two processes have the same autocovariance function, then they are the same process.</em></p>
+</div>
+<div id="admissible-autocorrelation-functions" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> Admissible Autocorrelation Functions</h3>
+<p>Since the autocorrelation is related to a fundamental representation of time series, it implies that one might be able to define a stochastic process by picking a set of autocorrelation values (assuming for example that <span class="math inline">\(\var(X_t) = 1\)</span>). However, it turns out that not every collection of numbers, say <span class="math inline">\(\{\rho_1, \rho_2, ...\}\)</span>, can represent the autocorrelation of a process. Indeed, two conditions are required to ensure the validity of an autocorrelation sequence:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(\operatorname{max}_j \; | \rho_j| \leq 1\)</span>.</li>
+<li><span class="math inline">\(\var \left[\sum_{j = 0}^\infty \alpha_j X_{t-j} \right] \geq 0 \;\)</span> for all <span class="math inline">\(\{\alpha_0, \alpha_1, ...\}\)</span>.</li>
+</ol>
+<p>The first condition is obvious and simply reflects the fact that <span class="math inline">\(|\rho \left( h \right)| \leq 1\)</span> but the second is far more difficult to verify. To further our understanding of the latter we let <span class="math inline">\(\alpha_j = 0\)</span> for <span class="math inline">\(j &gt; 1\)</span>, then condition 2 implies that</p>
+<p><span class="math display">\[\var \left[ \alpha_0 X_{t} + \alpha_1 X_{t-1}  \right] = \gamma_0 \begin{bmatrix}
+  \alpha_0 &amp; \alpha_1
+ \end{bmatrix}   \begin{bmatrix}
+  1 &amp; \rho_1\\
+  \rho_1 &amp; 1
+ \end{bmatrix} \begin{bmatrix}
+  \alpha_0 \\
+  \alpha_1
+ \end{bmatrix} \geq 0. \]</span></p>
+<p>Thus, the matrix</p>
+<p><span class="math display">\[ \boldsymbol{A}_1 = \begin{bmatrix}
+  1 &amp; \rho_1\\
+  \rho_1 &amp; 1
+ \end{bmatrix} \]</span></p>
+<p>must be positive semi-definite. Taking the determinant we have</p>
+<p><span class="math display">\[\operatorname{det} \left(\boldsymbol{A}_1\right) = 1 - \rho_1^2 \]</span></p>
+<p>implying that the condition <span class="math inline">\(|\rho_1| \leq 1\)</span> must be respected. Now, let <span class="math inline">\(\alpha_j = 0\)</span> for <span class="math inline">\(j &gt; 2\)</span>, then we must verify that:</p>
+<p><span class="math display">\[\var \left[ \alpha_0 X_{t} + \alpha_1 X_{t-1}  + \alpha_2 X_{t-2} \right] = \gamma_0 \begin{bmatrix}
+  \alpha_0 &amp; \alpha_1 &amp;\alpha_2
+ \end{bmatrix}   \begin{bmatrix}
+  1 &amp; \rho_1 &amp; \rho_2\\
+  \rho_1 &amp; 1 &amp; \rho_1 \\
+  \rho_2 &amp; \rho_1 &amp; 1
+ \end{bmatrix} \begin{bmatrix}
+  \alpha_0 \\
+  \alpha_1 \\
+  \alpha_2
+ \end{bmatrix} \geq 0. \]</span></p>
+<p>Again, this implies that the matrix</p>
+<p><span class="math display">\[ \boldsymbol{A}_2 = \begin{bmatrix}
+  1 &amp; \rho_1 &amp; \rho_2\\
+  \rho_1 &amp; 1 &amp; \rho_1 \\
+  \rho_2 &amp; \rho_1 &amp; 1
+ \end{bmatrix} \]</span></p>
+<p>must be positive semi-definite and it is easy to verify that</p>
+<p><span class="math display">\[\operatorname{det} \left(\boldsymbol{A}_2\right) = \left(1 - \rho_2 \right)\left(- 2 \rho_1^2 + \rho_2 + 1\right). \]</span></p>
+<p>Thus, this implies that</p>
+<p><span class="math display">\[\begin{aligned} &amp;- 2 \rho_1^2 + \rho_2 + 1 \geq 0 \Rightarrow 1 \geq \rho_2 \geq 2 \rho_1^2 - 1 \\
+&amp;\Rightarrow 1 - \rho_1^2 \geq \rho_2 - \rho_1^2 \geq -(1 - \rho_1^2)\\
+&amp;\Rightarrow 1 \geq \frac{\rho_2 - \rho_1^2 }{1 - \rho_1^2} \geq -1.
+\end{aligned}\]</span></p>
+<p>Therefore, <span class="math inline">\(\rho_1\)</span> and <span class="math inline">\(\rho_2\)</span> must lie in a parabolic shaped region defined by the above inequalities as illustrated in Figure <a href="the-autocorrelation-and-autocovariance-functions.html#fig:admissibility">2.2</a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:admissibility"></span>
+<img src="tts_files/figure-html/admissibility-1.png" alt="Admissible autocorrelation functions" width="672" />
+<p class="caption">
+Figure 2.2: Admissible autocorrelation functions
+</p>
+</div>
+<p>From our derivation it is clear that the restrictions on the autocorrelation are very complicated thereby justifying the need for other forms of fundamental representation which we will explore later in this text. Before moving on to the estimation of the autocorrelation and autocovariance functions, we must first discuss the stationarity of <span class="math inline">\((X_t)\)</span>, which will provide a convenient framework in which <span class="math inline">\(\gamma(h)\)</span> and <span class="math inline">\(\rho(h)\)</span> can be used (rather that <span class="math inline">\(\gamma(t,t+h)\)</span> for example) and (easily) estimated.</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="portmanteau-test.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="the-backshift-operator.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="autocorrelation-and-stationarity.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="stationarity.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -266,7 +371,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/SMAC-Group/TTS/edit/master/03-linear-processes.Rmd",
+"link": "https://github.com/SMAC-Group/TTS/edit/master/02-stationarity.Rmd",
 "text": "Edit"
 },
 "download": ["tts.pdf", "tts.epub", "tts.mobi"],

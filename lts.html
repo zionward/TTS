@@ -39,8 +39,8 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="portmanteau-test.html">
-<link rel="next" href="the-backshift-operator.html">
+<link rel="prev" href="basic-time-series-models.html">
+<link rel="next" href="autocorrelation-and-stationarity.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -230,16 +230,47 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="linear-processes" class="section level1">
-<h1><span class="header-section-number">Chapter 3</span> Linear Processes</h1> 
+<div id="lts" class="section level2">
+<h2><span class="header-section-number">1.4</span> Composite Stochastic Processes</h2>
+<p>A composite stochastic process can be defined as the sum of underlying (or latent) stochastic processes. In this text, we will use the term <em>latent time series</em> as a synomym for composite stochastic processes. A simple example of such a process is given by</p>
+<p><span class="math display">\[\begin{aligned}
+Y_t &amp;= Y_{t-1} + W_t + \delta\\
+X_t &amp;= Y_t + Z_t,
+\end{aligned}\]</span></p>
+<p>where <span class="math inline">\(W_t\)</span> and <span class="math inline">\(Z_t\)</span> are two independent Gaussian white noise processes. This model is often used as a first tool to approximate the number of individuals in the context ecological population dynamics. For example, suppose we want to study the population of Chamois in the Swiss Alps. Let <span class="math inline">\(Y_t\)</span> denote the “true” number of individuals in this population at time <span class="math inline">\(t\)</span>. It is reasonable that <span class="math inline">\(Y_t\)</span> is (approximately) the population at the previous time <span class="math inline">\(t-1\)</span> (e.g the previous year) plus a random variation and a drift. This random variation is due to the natural randomness in ecological population dynamics and reflects the changes in the number of predators, in the aboundance of food or in the weather conditions. On the other hand, the drift is often of particular interest for ecologists as it can be used to determine the “long” term trends of the population (e.g. is the population increasing, stable or decreasing). Of course, <span class="math inline">\(Y_t\)</span> (the number of individauls) is typically unknown and we observe a noisy version of it, denoted as <span class="math inline">\(X_t\)</span>. This process corresponds to the true population plus a measurement error since some individuals may not be observed while others may have been counted several times. Interestingly, this process can clearly be expressed as a <em>latent time series model</em> (or composite stochastic process) as follows:</p>
+<p><span class="math display">\[\begin{aligned}
+R_t &amp;= R_{t-1} + W_t \\
+S_t &amp;= \delta t \\
+X_t &amp;= R_t + S_t + Z_t,
+\end{aligned}\]</span></p>
+<p>where <span class="math inline">\(R_t\)</span>, <span class="math inline">\(S_t\)</span> and <span class="math inline">\(Z_t\)</span> denote, respectively, a random walk, a drift and a white noise. The code below can be used to simulate such data:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n =<span class="st"> </span><span class="dv">1000</span>                                <span class="co"># process length</span>
+delta =<span class="st"> </span><span class="fl">0.005</span>                           <span class="co"># delta parameter (drift)</span>
+sigma2 =<span class="st"> </span><span class="dv">10</span>                             <span class="co"># variance parameter (white noise)</span>
+gamma2 =<span class="st"> </span><span class="fl">0.1</span>                            <span class="co"># innovation variance (random walk)</span>
+model =<span class="st"> </span><span class="kw">WN</span>(<span class="dt">sigma2 =</span> sigma2) +<span class="st"> </span><span class="kw">RW</span>(<span class="dt">gamma2 =</span> gamma2) +<span class="st"> </span><span class="kw">DR</span>(<span class="dt">omega =</span> delta)
+Xt =<span class="st"> </span><span class="kw">gen.lts</span>(model, <span class="dt">N =</span> n)
+<span class="kw">plot</span>(Xt)</code></pre></div>
+<p><img src="tts_files/figure-html/example_composite-1.png" width="672" /></p>
+<p>In the above graph, the first three plots represent the latent (unobserved) processes (i.e. white noise, random walk and drift) and the last one represents the sum of the three (i.e. <span class="math inline">\((X_t)\)</span>).</p>
+<p>Let us consider a real example where these latent processes are useful to describe (and predict) the behavior of economic variables such as Personal Saving Rates (PSR). A process that is used for these settings is the “random-walk-plus-noise” model, meaning that the data can be explained by a random walk process in addition to which we observe some other process (e.g. a white noise model, an autoregressive model such as an AR(1), etc.). The PSR taken from the Federal Reserve of St. Louis from January 1, 1959, to May 1, 2015, is presented in the following plot:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Saving Rates</span>
+<span class="kw">data</span>(<span class="st">&quot;savingrt&quot;</span>, <span class="dt">package=</span><span class="st">&quot;smacdata&quot;</span>)
+
+<span class="co"># Plot time series</span>
+<span class="kw">autoplot</span>(savingrt) +<span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;US Personal Saving Rates (%)&quot;</span>)</code></pre></div>
+<p><img src="tts_files/figure-html/example_PSR-1.png" width="672" /></p>
+<p>It can be observed that the mean of the process seems to vary over time, suggesting that a random walk can indeed be considered as a possible model to explain this data. In addition, aside from some “spikes” and occasional sudden changes, the observations appear to gradually change from one time point to the other, suggesting that some other form of dependence between them could exist.</p>
+
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="portmanteau-test.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="the-backshift-operator.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="basic-time-series-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="autocorrelation-and-stationarity.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -266,7 +297,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/SMAC-Group/TTS/edit/master/03-linear-processes.Rmd",
+"link": "https://github.com/SMAC-Group/TTS/edit/master/01-intro.Rmd",
 "text": "Edit"
 },
 "download": ["tts.pdf", "tts.epub", "tts.mobi"],

@@ -5,27 +5,28 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Time Series is Great!</title>
+  <title>A Tour of Time Series Analysis with R</title>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-  <meta name="description" content="Time Series is Great!">
-  <meta name="generator" content="bookdown 0.0.75 and GitBook 2.6.7">
+  <meta name="description" content="A Tour of Time Series Analysis with R">
+  <meta name="generator" content="bookdown 0.1.16 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Time Series is Great!" />
+  <meta property="og:title" content="A Tour of Time Series Analysis with R" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="https://coatless.github.io/timeseriesisgreat/" />
+  <meta property="og:url" content="https://tts.smac-group.com/" />
   
   
-  <meta name="github-repo" content="coatless/timeseriesisgreat" />
+  <meta name="github-repo" content="SMAC-Group/TTS" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Time Series is Great!" />
+  <meta name="twitter:title" content="A Tour of Time Series Analysis with R" />
   
   
   
 
-<meta name="author" content="James Balamuta">
+<meta name="author" content="James Balamuta, Stéphane Guerrier, Roberto Molinari and Haotian Xu">
 
-<meta name="date" content="2016-07-07">
+  
+<meta name="date" content="2016-10-07">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -38,8 +39,8 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="stationarity.html">
-
+<link rel="prev" href="estimation-of-moments-of-stationary-processes.html">
+<link rel="next" href="portmanteau-test.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -54,6 +55,49 @@ MathJax.Hub.Config({
 
 
 
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { extensions: ["AMSmath.js"], 
+         equationNumbers: { autoNumber: "AMS" },
+         Macros: {
+          notimplies: "\\nRightarrow",
+          real: "\\mathbb{R}",
+          integers: "\\mathbb{Z}",
+          natural: "\\mathbb{N}",
+          rational: "\\mathbb{Q}",
+          irrational: "\\mathbb{P}",
+          ind: "\\boldsymbol{1}",
+          normal: "\\mathcal{N}",
+          0: "\\boldsymbol{0}",
+          e: ["\\mathbb{E} [#1]",1],
+          I: "\\boldsymbol{\\mathbf{I}}",
+          S: "\\boldsymbol{S}",
+          y: "\\boldsymbol{y}",
+          X: "\\boldsymbol{X}",
+          C: "\\text{C}",
+          btheta: "\\boldsymbol{\\theta}",
+          epsilon: "\\varepsilon",
+          bbeta: "\\boldsymbol{\\beta}", 
+          bepsilon: "\\boldsymbol{\\varepsilon}", 
+          norm: "\\mathcal{N}",
+          KL: "\\text{KL}",
+          AIC: "\\text{AIC}", 
+          BIC: "\\text{BIC}", 
+          mean: ["\\operatorname{mean}"],
+          var: ["\\operatorname{var}"],
+          tr: ["\\operatorname{tr}"],
+          cov: ["\\operatorname{cov}"],
+          corr: ["\\operatorname{corr}"],
+          argmax: ["\\operatorname{argmax}"],
+          argmin: ["\\operatorname{argmin}"],
+          card: ["\\operatorname{card}"],
+          diag: ["\\operatorname{diag}"],
+          rank: ["\\operatorname{rank}"],
+          length: ["\\operatorname{length}"]
+    }
+  }
+});
+</script>
 
 
 <style type="text/css">
@@ -94,7 +138,7 @@ code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* Com
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
-<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="styling/style.css" type="text/css" />
 </head>
 
 <body>
@@ -106,52 +150,68 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">Time Series is Great!</a></li>
+<li><a href="./">A Tour of Time Series Analysis with R</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#a-foreword"><i class="fa fa-check"></i><b>1.1</b> A foreword</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#notation"><i class="fa fa-check"></i><b>1.2</b> Notation</a></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#r-code"><i class="fa fa-check"></i><b>1.3</b> R Code</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="contributing.html"><a href="contributing.html"><i class="fa fa-check"></i>Contributing</a></li>
+<li class="chapter" data-level="" data-path="bibliographic-note.html"><a href="bibliographic-note.html"><i class="fa fa-check"></i>Bibliographic Note</a></li>
+<li class="chapter" data-level="" data-path="rendering-mathematical-formulae.html"><a href="rendering-mathematical-formulae.html"><i class="fa fa-check"></i>Rendering Mathematical Formulae</a></li>
+<li class="chapter" data-level="" data-path="r-code-conventions.html"><a href="r-code-conventions.html"><i class="fa fa-check"></i>R Code Conventions</a></li>
+<li class="chapter" data-level="" data-path="license.html"><a href="license.html"><i class="fa fa-check"></i>License</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="the-world-of-time-series.html"><a href="the-world-of-time-series.html"><i class="fa fa-check"></i><b>2</b> The World of Time Series</a><ul>
-<li class="chapter" data-level="2.1" data-path="the-world-of-time-series.html"><a href="the-world-of-time-series.html#objective-of-time-series"><i class="fa fa-check"></i><b>2.1</b> Objective of Time Series</a></li>
-<li class="chapter" data-level="2.2" data-path="the-world-of-time-series.html"><a href="the-world-of-time-series.html#what-is-a-time-series-and-can-i-eat-it"><i class="fa fa-check"></i><b>2.2</b> What is a Time Series and can I eat it?</a></li>
-<li class="chapter" data-level="2.3" data-path="the-world-of-time-series.html"><a href="the-world-of-time-series.html#exploratory-data-analysis-eda-for-time-series"><i class="fa fa-check"></i><b>2.3</b> Exploratory Data Analysis (EDA) for Time Series</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="the-world-of-time-series.html"><a href="the-world-of-time-series.html#identifying-trends"><i class="fa fa-check"></i><b>2.3.1</b> Identifying Trends</a></li>
-<li class="chapter" data-level="2.3.2" data-path="the-world-of-time-series.html"><a href="the-world-of-time-series.html#noticing-changes-in-time-and-outliers"><i class="fa fa-check"></i><b>2.3.2</b> Noticing changes in time and outliers</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="time-series.html"><a href="time-series.html"><i class="fa fa-check"></i><b>1.1</b> Time Series</a></li>
+<li class="chapter" data-level="1.2" data-path="eda.html"><a href="eda.html"><i class="fa fa-check"></i><b>1.2</b> Exploratory Data Analysis for Time Series</a></li>
+<li class="chapter" data-level="1.3" data-path="basic-time-series-models.html"><a href="basic-time-series-models.html"><i class="fa fa-check"></i><b>1.3</b> Basic Time Series Models</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="basic-time-series-models.html"><a href="basic-time-series-models.html#wn"><i class="fa fa-check"></i><b>1.3.1</b> White noise processes</a></li>
+<li class="chapter" data-level="1.3.2" data-path="basic-time-series-models.html"><a href="basic-time-series-models.html#rw"><i class="fa fa-check"></i><b>1.3.2</b> Random Walk Processes</a></li>
+<li class="chapter" data-level="1.3.3" data-path="basic-time-series-models.html"><a href="basic-time-series-models.html#ar1"><i class="fa fa-check"></i><b>1.3.3</b> Autoregressive Process of Order 1</a></li>
+<li class="chapter" data-level="1.3.4" data-path="basic-time-series-models.html"><a href="basic-time-series-models.html#ma1"><i class="fa fa-check"></i><b>1.3.4</b> Moving Average Process of Order 1</a></li>
+<li class="chapter" data-level="1.3.5" data-path="basic-time-series-models.html"><a href="basic-time-series-models.html#drift"><i class="fa fa-check"></i><b>1.3.5</b> Linear Drift</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="lts.html"><a href="lts.html"><i class="fa fa-check"></i><b>1.4</b> Composite Stochastic Processes</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html"><i class="fa fa-check"></i><b>2</b> Autocorrelation and Stationarity</a><ul>
+<li class="chapter" data-level="2.1" data-path="the-autocorrelation-and-autocovariance-functions.html"><a href="the-autocorrelation-and-autocovariance-functions.html"><i class="fa fa-check"></i><b>2.1</b> The Autocorrelation and Autocovariance Functions</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="the-autocorrelation-and-autocovariance-functions.html"><a href="the-autocorrelation-and-autocovariance-functions.html#a-fundamental-representation"><i class="fa fa-check"></i><b>2.1.1</b> A Fundamental Representation</a></li>
+<li class="chapter" data-level="2.1.2" data-path="the-autocorrelation-and-autocovariance-functions.html"><a href="the-autocorrelation-and-autocovariance-functions.html#admissible-autocorrelation-functions"><i class="fa fa-check"></i><b>2.1.2</b> Admissible Autocorrelation Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="stationarity.html"><a href="stationarity.html"><i class="fa fa-check"></i><b>2.2</b> Stationarity</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="stationarity.html"><a href="stationarity.html#definitions"><i class="fa fa-check"></i><b>2.2.1</b> Definitions</a></li>
+<li class="chapter" data-level="2.2.2" data-path="stationarity.html"><a href="stationarity.html#assessing-weak-stationarity-of-time-series-models"><i class="fa fa-check"></i><b>2.2.2</b> Assessing Weak Stationarity of Time Series Models</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="estimation-of-moments-of-stationary-processes.html"><a href="estimation-of-moments-of-stationary-processes.html"><i class="fa fa-check"></i><b>2.3</b> Estimation of Moments of Stationary Processes</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="estimation-of-moments-of-stationary-processes.html"><a href="estimation-of-moments-of-stationary-processes.html#estimation-of-the-mean-function"><i class="fa fa-check"></i><b>2.3.1</b> Estimation of the Mean Function</a></li>
+<li class="chapter" data-level="2.3.2" data-path="estimation-of-moments-of-stationary-processes.html"><a href="estimation-of-moments-of-stationary-processes.html#sample-autocovariance-and-autocorrelation-functions"><i class="fa fa-check"></i><b>2.3.2</b> Sample Autocovariance and Autocorrelation Functions</a></li>
+<li class="chapter" data-level="2.3.3" data-path="estimation-of-moments-of-stationary-processes.html"><a href="estimation-of-moments-of-stationary-processes.html#robustness-issues"><i class="fa fa-check"></i><b>2.3.3</b> Robustness Issues</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="joint-stationarity.html"><a href="joint-stationarity.html"><i class="fa fa-check"></i><b>2.4</b> Joint Stationarity</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="joint-stationarity.html"><a href="joint-stationarity.html#sample-cross-covariance-and-cross-correlation-functions"><i class="fa fa-check"></i><b>2.4.1</b> Sample Cross-Covariance and Cross-Correlation Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="portmanteau-test.html"><a href="portmanteau-test.html"><i class="fa fa-check"></i><b>2.5</b> Portmanteau test</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="linear-processes.html"><a href="linear-processes.html"><i class="fa fa-check"></i><b>3</b> Linear Processes</a><ul>
+<li class="chapter" data-level="3.1" data-path="the-backshift-operator.html"><a href="the-backshift-operator.html"><i class="fa fa-check"></i><b>3.1</b> The Backshift Operator</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="the-backshift-operator.html"><a href="the-backshift-operator.html#definition"><i class="fa fa-check"></i><b>3.1.1</b> Definition</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="differencing-operator.html"><a href="differencing-operator.html"><i class="fa fa-check"></i><b>3.2</b> Differencing Operator</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="differencing-operator.html"><a href="differencing-operator.html#seasonal-differencing-operator"><i class="fa fa-check"></i><b>3.2.1</b> Seasonal Differencing Operator</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="linear-process.html"><a href="linear-process.html"><i class="fa fa-check"></i><b>3.3</b> Linear Process</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="linear-process.html"><a href="linear-process.html#definition-1"><i class="fa fa-check"></i><b>3.3.1</b> Definition</a></li>
+<li class="chapter" data-level="3.3.2" data-path="linear-process.html"><a href="linear-process.html#example-white-noise"><i class="fa fa-check"></i><b>3.3.2</b> Example: White Noise</a></li>
+<li class="chapter" data-level="3.3.3" data-path="linear-process.html"><a href="linear-process.html#example-moving-average-order-1"><i class="fa fa-check"></i><b>3.3.3</b> Example: Moving Average Order 1</a></li>
+<li class="chapter" data-level="3.3.4" data-path="linear-process.html"><a href="linear-process.html#example-symmetric-moving-average"><i class="fa fa-check"></i><b>3.3.4</b> Example: Symmetric Moving Average</a></li>
+<li class="chapter" data-level="3.3.5" data-path="linear-process.html"><a href="linear-process.html#example-autoregressive-process-of-order-1"><i class="fa fa-check"></i><b>3.3.5</b> Example: Autoregressive Process of Order 1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="basic-models.html"><a href="basic-models.html"><i class="fa fa-check"></i><b>3</b> Basic Models</a><ul>
-<li class="chapter" data-level="3.1" data-path="basic-models.html"><a href="basic-models.html#white-noise"><i class="fa fa-check"></i><b>3.1</b> White Noise</a></li>
-<li class="chapter" data-level="3.2" data-path="basic-models.html"><a href="basic-models.html#moving-average-process-of-order-q-1-a.k.a-ma1"><i class="fa fa-check"></i><b>3.2</b> Moving Average Process of Order q = 1 a.k.a MA(1)</a></li>
-<li class="chapter" data-level="3.3" data-path="basic-models.html"><a href="basic-models.html#drift"><i class="fa fa-check"></i><b>3.3</b> Drift</a></li>
-<li class="chapter" data-level="3.4" data-path="basic-models.html"><a href="basic-models.html#random-walk"><i class="fa fa-check"></i><b>3.4</b> Random Walk</a></li>
-<li class="chapter" data-level="3.5" data-path="basic-models.html"><a href="basic-models.html#random-walk-with-drift"><i class="fa fa-check"></i><b>3.5</b> Random Walk with Drift</a></li>
-<li class="chapter" data-level="3.6" data-path="basic-models.html"><a href="basic-models.html#autoregressive-process-of-order-p-1-a.k.a-ar1"><i class="fa fa-check"></i><b>3.6</b> Autoregressive Process of Order p = 1 a.k.a AR(1)</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="dependency.html"><a href="dependency.html"><i class="fa fa-check"></i><b>4</b> Dependency</a><ul>
-<li class="chapter" data-level="4.1" data-path="dependency.html"><a href="dependency.html#measuring-linear-dependence"><i class="fa fa-check"></i><b>4.1</b> Measuring (Linear) Dependence</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="dependency.html"><a href="dependency.html#autocovariance-function"><i class="fa fa-check"></i><b>4.1.1</b> Autocovariance Function</a></li>
-<li class="chapter" data-level="4.1.2" data-path="dependency.html"><a href="dependency.html#autocorrelation-function-acf"><i class="fa fa-check"></i><b>4.1.2</b> Autocorrelation Function (ACF)</a></li>
-<li class="chapter" data-level="4.1.3" data-path="dependency.html"><a href="dependency.html#cross-dependency-functions"><i class="fa fa-check"></i><b>4.1.3</b> Cross dependency functions</a></li>
-<li class="chapter" data-level="4.1.4" data-path="dependency.html"><a href="dependency.html#sample-autocovariance-and-autocorrelation-functions"><i class="fa fa-check"></i><b>4.1.4</b> Sample Autocovariance and Autocorrelation Functions</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="stationarity.html"><a href="stationarity.html"><i class="fa fa-check"></i><b>5</b> Stationarity</a><ul>
-<li class="chapter" data-level="5.1" data-path="stationarity.html"><a href="stationarity.html#weak-stationarity"><i class="fa fa-check"></i><b>5.1</b> Weak Stationarity</a></li>
-<li class="chapter" data-level="5.2" data-path="stationarity.html"><a href="stationarity.html#strong-stationarity"><i class="fa fa-check"></i><b>5.2</b> Strong Stationarity</a></li>
-<li class="chapter" data-level="5.3" data-path="stationarity.html"><a href="stationarity.html#is-it-weakly-stationary"><i class="fa fa-check"></i><b>5.3</b> Is it weakly stationary?</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="stationarity.html"><a href="stationarity.html#is-a-random-walk-weakly-stationary"><i class="fa fa-check"></i><b>5.3.1</b> Is a random walk weakly stationary?</a></li>
-<li class="chapter" data-level="5.3.2" data-path="stationarity.html"><a href="stationarity.html#is-an-ma1-stationary"><i class="fa fa-check"></i><b>5.3.2</b> Is an MA(1) Stationary?</a></li>
-<li class="chapter" data-level="5.3.3" data-path="stationarity.html"><a href="stationarity.html#is-an-ar1-stationary"><i class="fa fa-check"></i><b>5.3.3</b> Is an AR(1) Stationary?</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="joint-stationarity.html"><a href="joint-stationarity.html"><i class="fa fa-check"></i><b>6</b> Joint Stationarity</a><ul>
-<li class="chapter" data-level="6.1" data-path="joint-stationarity.html"><a href="joint-stationarity.html#the-backshift-operator-and-differencing-operations"><i class="fa fa-check"></i><b>6.1</b> The Backshift Operator and Differencing Operations</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="appendixa.html"><a href="appendixa.html"><i class="fa fa-check"></i><b>A</b> Proofs</a><ul>
+<li class="chapter" data-level="A.1" data-path="proof-of-theorem-1.html"><a href="proof-of-theorem-1.html"><i class="fa fa-check"></i><b>A.1</b> Proof of Theorem 1</a></li>
 </ul></li>
 <li class="divider"></li>
-<li><a href="https://github.com/coatless/timeseriesisgreat" target="blank">&copy; 2016 James Balamuta</a></li>
+<li><a href="https://github.com/SMAC-Group/TTS" target="blank">&copy; 2016 Balamuta, Guerrier, Molinari, Xu</a></li>
 
 </ul>
 
@@ -162,7 +222,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Time Series is Great!</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Tour of Time Series Analysis with R</a>
           </h1>
         </div>
 
@@ -170,51 +230,86 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="joint-stationarity" class="section level1">
-<h1><span class="header-section-number">Chapter 6</span> Joint Stationarity</h1>
-<p>Two time series, say <span class="math inline">\(\left(X_t \right)\)</span> and <span class="math inline">\(\left(Y_t\right)\)</span>, are said to be jointly stationary if they are each stationary, and the cross-covariance function</p>
-<p><span class="math display">\[{\gamma _{XY}}\left( {t,t + h} \right) = Cov\left( {{X_t},{Y_{t + h}}} \right) = {\gamma _{XY}}\left( h \right)\]</span></p>
-<p>is a function only of lag <span class="math inline">\(h\)</span>.</p>
-<p>The cross-correlation function for jointly stationary times can be expressed as:</p>
-<p><span class="math display">\[{\rho _{XY}}\left( {t,t + h} \right) = \frac{{{\gamma _{XY}}\left( {t,t + h} \right)}}{{{\sigma _{{X_t}}}{\sigma _{{Y_{t + h}}}}}} = \frac{{{\gamma _{XY}}\left( h \right)}}{{{\sigma _{{X_t}}}{\sigma _{{Y_{t + h}}}}}} = {\rho _{XY}}\left( h \right)\]</span></p>
-<div id="the-backshift-operator-and-differencing-operations" class="section level2">
-<h2><span class="header-section-number">6.1</span> The Backshift Operator and Differencing Operations</h2>
-<p><em>Definition:</em> <strong>Backshift Operator</strong></p>
-<p>The <strong>Backshift Operator</strong> is helpful when manipulating time series. When we backshift, we are changing the indices of the time series. e.g. <span class="math inline">\(t \rightarrow t-1\)</span>. The operator is defined as:</p>
-<p><span class="math display">\[B{x_t} = {x_{t - 1}}\]</span></p>
-<p>If we were to repeatedly apply the backshift operator, we would receive:</p>
-<p><span class="math display">\[\begin{aligned}
-  {B^2}{x_t} &amp;= B\left( {B{x_t}} \right) \\
-   &amp;= B\left( {{x_{t - 1}}} \right) \\
-   &amp;= {x_{t - 2}} \\ 
-\end{aligned}\]</span></p>
-<p>We can generalize this behavior as: <span class="math display">\[{B^k}{x_t} = {x_{t - k}}\]</span></p>
-<p>The backshift operator is helpful for later decompositions in addition to making differencing operations more straightforward.</p>
-<p><em>Definition:</em> <strong>Differencing Operator</strong></p>
-<p>The <strong>Differencing Operator</strong> is defined as the gradient symbol applied to a time series: <span class="math display">\[\nabla {x_t} = {x_t} - {x_{t - 1}}\]</span></p>
-<p>The differencing operator is helpful when trying to remove trend from the data.</p>
-<p>We can take higher moments of differences by: <span class="math display">\[\begin{aligned}
-  {\nabla ^2}{x_t} &amp;= \nabla \left( {\nabla {x_t}} \right) \\
-   &amp;= \nabla \left( {{x_t} - {x_{t - 1}}} \right) \\
-   &amp;= \left( {{x_t} - {x_{t - 1}}} \right) - \left( {{x_{t - 1}} - {x_{t - 2}}} \right) \\
-   &amp;= {x_t} - 2{x_{t - 1}} + {x_{t - 2}} \\ 
-\end{aligned} \]</span></p>
-<p>So, the difference operator has the following properties: <span class="math display">\[\begin{aligned}
-  {\nabla ^k}{x_t} &amp;= {\nabla ^{k - 1}} \left( {\nabla {x_t}}\right) \hfill \\
-  {\nabla ^1}{x_t} &amp;= \nabla {x_t} \hfill \\ 
-\end{aligned} \]</span></p>
-<p>Notice, within the difference operation, we are backshifting the timeseries.</p>
-<p>If we rewrite the difference operator to use the backshift operator, we receive: <span class="math display">\[\nabla {x_t} = {x_t} - {x_{t - 1}} = \left( {1 - B} \right){x_t}\]</span></p>
-<p>This holds for later incarnations as well: <span class="math display">\[\begin{aligned}
-  {\nabla ^2}{x_t} &amp;= {x_t} - 2{x_{t - 1}} + {x_{t - 2}} \hfill \\
-   &amp;= \left( {1 - B} \right)\left( {1 - B} \right){x_t} \hfill \\
-   &amp;= {\left( {1 - B} \right)^2}{x_t} \hfill \\ 
-\end{aligned} \]</span></p>
-<p>Thus, we can generalize this to: <span class="math display">\[{\nabla ^k}{x_t} = {\left( {1 - B} \right)^k}{x_t}\]</span></p>
+<div id="joint-stationarity" class="section level2">
+<h2><span class="header-section-number">2.4</span> Joint Stationarity</h2>
+<p>The notion of joint stationarity implies that the time series under investigation is bivariate in nature, e.g. <span class="math inline">\(\left(X_t \right)\)</span> and <span class="math inline">\(\left(Y_t\right)\)</span> are two distinct time series with matching time points. In order to fulfill bivariate stationarity, both processes must be considered to be weakly stationary (constant mean and autocovariance depends on lag <span class="math inline">\(h\)</span>) as well as a cross-covariance function depend only on lag <span class="math inline">\(h\)</span>. The ideas discussed next can extended beyond the bivariate case to a general multivariate setting.</p>
 
-<div id="refs" class="references">
-
+<div class="definition">
+<p><span id="def:crosscov" class="definition"><strong>Definition 2.4 </strong></span>The <strong>cross-covariance</strong> function of two jointly stationary processes <span class="math inline">\(\left\{X_t\right\}\)</span> and <span class="math inline">\(\left\{Y_t\right\}\)</span> is given by:</p>
+<span class="math display">\[{\gamma _{XY}}\left( {t + h,t} \right) = \cov\left( {{X_{t+h}},{Y_{t}}} \right) =
+\e{\left( {{X_{t + h}} - {\mu _X}} \right)\left( {{Y_t} - {\mu _Y}} \right)} = {\gamma _{XY}}\left( h \right)\]</span>
 </div>
+<p></p>
+<p>Unlike the symmetry found in the autocovariance function of a stationary process <span class="math inline">\(\left\{X_t\right\}\)</span>, e.g. <span class="math inline">\(\gamma_X(h) = \gamma_X(-h)\)</span>, the cross-covariance function is only equal when <span class="math inline">\(\gamma_{XY}(h) = \gamma_{YX}(-h)\)</span>. Notice the switch in indices and negative lag change.</p>
+
+<div class="definition">
+<p><span id="def:crosscorr" class="definition"><strong>Definition 2.5 </strong></span>The <em>cross-correlation</em> function for two jointly stationary time series <span class="math inline">\(\left\{X_t\right\}\)</span> and <span class="math inline">\(\left\{Y_t\right\}\)</span> can be expressed as:</p>
+<span class="math display">\[{\rho _{XY}}\left( {t+h,t} \right) = \frac{{{\gamma _{XY}}\left( {t + h,t} \right)}}{{\sqrt {{\gamma _X}\left( 0 \right)} \sqrt {{\gamma _Y}\left( 0 \right)} }} = \frac{{{\gamma _{XY}}\left( h \right)}}{{{\sigma _{{X_{t+h}}}}{\sigma _{{Y_{t}}}}}} = {\rho _{XY}}\left( h \right)\]</span>
+</div>
+<p></p>
+<p>Due to the previously discussed symmetry regarding the cross-covariance function, note that the cross-correlation function also only has equality when <span class="math inline">\(\rho_{XY}(h) = \rho_{YX}(-h)\)</span>. Thus, note that <span class="math inline">\(\rho_{XY}(h) \neq \rho_{XY}(-h)\)</span>.</p>
+
+<div class="example">
+<p><span id="ex:ccfjs" class="example"><strong>Example 2.9 </strong></span>Consider two time series processes given by:</p>
+<p><span class="math display">\[\begin{aligned}
+  {X_t} &amp;= {W_t} - {W_{t-1}} \\
+  {Y_t} &amp;= {W_t} + {W_{t-1}} \\ 
+\end{aligned} \]</span></p>
+<p>where <span class="math inline">\(W_t \sim WN(0, \sigma^2_W)\)</span>.</p>
+<p>First check to see if <span class="math inline">\(\left\{X_t\right\}\)</span> and <span class="math inline">\(\left\{Y_t\right\}\)</span> are weakly stationary.</p>
+<p>The means of both time series are evident to be <span class="math display">\[\begin{aligned}
+  E\left[ {{X_t}} \right] &amp;= E\left[ {{Y_t}} \right] = 0 \\
+\end{aligned} \]</span></p>
+<p>The autocovariance for <span class="math inline">\(\left\{X_t\right\}\)</span> is given as:</p>
+<p><span class="math display">\[\begin{aligned}
+  {\gamma _X}\left( h \right) &amp;= \cov \left( {{X_{t + h}},{X_t}} \right) \\
+   &amp;= \cov \left( {{W_{t + h}} - {W_{t + h - 1}},{W_t} - {W_{t - 1}}} \right) \\
+   &amp;= {1_{\left\{ {h = 0} \right\}}}2{\sigma ^2} + {1_{\left\{ {h =  - 1} \right\}}}{-\sigma ^2} + {1_{\left\{ {h = 1} \right\}}}{-\sigma ^2} \\
+   &amp;= \begin{cases}
+   2\sigma^2_W, &amp;\text{if} h = 0 \\
+   -\sigma^2_W, &amp;\text{if} \left|h\right| = 1 \\
+   0, &amp;\text{if} \left|h\right| \ge 1 
+   \end{cases} 
+\end{aligned} \]</span></p>
+<p>Similarly, the autocovariance for <span class="math inline">\(\left\{Y_t\right\}\)</span> is calculated to be:</p>
+<p><span class="math display">\[\begin{aligned}
+  {\gamma _Y}\left( h \right) &amp;= \cov \left( {{Y_{t + h}},{Y_t}} \right) \\
+   &amp;= \cov \left( {{W_{t + h}} + {W_{t + h - 1}},{W_t} + {W_{t - 1}}} \right) \\
+   &amp;= {1_{\left\{ {h = 0} \right\}}}2{\sigma ^2} + {1_{\left\{ {h =  - 1} \right\}}}{\sigma ^2} + {1_{\left\{ {h = 1} \right\}}}{\sigma ^2} \\ 
+   &amp;= \begin{cases}
+   2\sigma^2_W, &amp;\text{if} h = 0 \\
+   \sigma^2_W, &amp;\text{if} \left|h\right| = 1 \\
+   0, &amp;\text{if} \left|h\right| \ge 1 
+   \end{cases} 
+\end{aligned} \]</span></p>
+<p>Next, the cross-covariance for <span class="math inline">\(\left\{X_t\right\}\)</span> and <span class="math inline">\(\left\{Y_t\right\}\)</span>:</p>
+<p><span class="math display">\[\begin{aligned}
+{\gamma _{XY}}\left( h \right) &amp;= \cov \left( {{X_{t + h}},{Y_t}} \right) \\
+   &amp;= \cov \left( {{W_{t + h}} - {W_{t + h - 1}},{W_t} + {W_{t-1}}} \right)  \\ 
+   &amp;= \begin{cases}
+   0, &amp;\text{if } h = 0 \\
+   -\sigma^2_W, &amp;\text{if } h = 1 \\
+   \sigma^2_W, &amp;\text{if } h = -1 \\
+    0, &amp;\text{if } h \ge 2
+   \end{cases}
+\end{aligned}\]</span></p>
+<p>Therefore, based on obtain the weak stationarity for each process and obtain a cross-covariance function that only depends on the lag <span class="math inline">\(h\)</span>, the process is joint stationary.</p>
+<p>Furthermore, we also have the cross-correlation function as:</p>
+<span class="math display">\[{\rho _{XY}}\left( {{X_{t + h}},{Y_t}} \right) = \frac{{{\gamma _{XY}}\left( h \right)}}{{{\sigma _X}{\sigma _Y}}} = \frac{{{\gamma _{XY}}\left( h \right)}}{{\sqrt {{\gamma _x}\left( 0 \right)} \sqrt {{\gamma _y}\left( 0 \right)} }} = \frac{{{\gamma _{XY}}\left( h \right)}}{{{\gamma _X}\left( 0 \right)}} = \begin{cases}
+   0, &amp;\text{if } h = 0 \\
+   -\frac{1}{2}, &amp;\text{if } h = 1 \\
+   \frac{1}{2}, &amp;\text{if } h = -1 \\
+    0, &amp;\text{if } h \ge 2
+   \end{cases}\]</span>
+</div>
+<p></p>
+<div id="sample-cross-covariance-and-cross-correlation-functions" class="section level3">
+<h3><span class="header-section-number">2.4.1</span> Sample Cross-Covariance and Cross-Correlation Functions</h3>
+<p>A natural estimator of the <em>cross-covariance function</em> is given by:</p>
+<p><span class="math display">\[{{\hat \gamma }_{XY}}\left( h \right) = \frac{1}{T}\sum\limits_{t = 1}^{T - h} {\left( {{X_{t + h}} - \bar X} \right)\left( {{Y_t} - \bar Y} \right)} \]</span></p>
+<p>With this in mind, the “plug-in” estimator for the <em>cross-correlation function</em> follows:</p>
+<p><span class="math display">\[{{\hat \rho }_{XY}}\left( h \right) = \frac{{{{\hat \gamma }_{XY}}\left( h \right)}}{{\sqrt {{{\hat \gamma }_X}\left( 0 \right)} \sqrt {{{\hat \gamma }_Y}\left( 0 \right)} }}\]</span></p>
+<p>Both of the above estimators are again only symmetric under the above index and lag transformation.</p>
 </div>
 </div>
             </section>
@@ -222,8 +317,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="stationarity.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="estimation-of-moments-of-stationary-processes.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="portmanteau-test.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -250,10 +345,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/coatless/timeseriesisgreat/edit/master/04-stationarity.Rmd",
-"text": null
+"link": "https://github.com/SMAC-Group/TTS/edit/master/02-stationarity.Rmd",
+"text": "Edit"
 },
-"download": null,
+"download": ["tts.pdf", "tts.epub", "tts.mobi"],
 "toc": {
 "collapse": "subsection"
 }
