@@ -195,7 +195,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.1" data-path="linear-processes.html"><a href="linear-processes.html"><i class="fa fa-check"></i><b>3.1</b> Linear Processes</a></li>
 <li class="chapter" data-level="3.2" data-path="linear-operators.html"><a href="linear-operators.html"><i class="fa fa-check"></i><b>3.2</b> Linear Operators</a></li>
 <li class="chapter" data-level="3.3" data-path="autoregressive-models.html"><a href="autoregressive-models.html"><i class="fa fa-check"></i><b>3.3</b> Autoregressive Models</a><ul>
-<li class="chapter" data-level="3.3.1" data-path="autoregressive-models.html"><a href="autoregressive-models.html#properties-of-arp-models"><i class="fa fa-check"></i><b>3.3.1</b> Properties of AR(p) models</a></li>
+<li class="chapter" data-level="3.3.1" data-path="autoregressive-models.html"><a href="autoregressive-models.html#properties-of-arp-models"><i class="fa fa-check"></i><b>3.3.1</b> Properties of AR(<span class="math inline">\(p\)</span>) models</a></li>
 </ul></li>
 <li class="chapter" data-level="3.4" data-path="estimation-of-arp-models.html"><a href="estimation-of-arp-models.html"><i class="fa fa-check"></i><b>3.4</b> Estimation of AR(p) models</a></li>
 </ul></li>
@@ -228,7 +228,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>The class of autoregressive models is based on the idea that previous values in the time series are needed to explain current values in the series. For this class of models, we assume that the <span class="math inline">\(p\)</span> previous observations are needed for this purpose and we therefore denote this class as AR(<span class="math inline">\(p\)</span>). In the previous chapter, the model we introduced was an AR(1) in which only the immediately previous observation is needed to explain the following one and therefore represents a particular model which is part of the more general class of AR(p) models.</p>
 
 <div class="definition">
-<span id="def:ar_p" class="definition"><strong>(#def:ar_p) (Autoregressive Models of Order P) </strong></span>The AR(p) models can be formally represented as follows <span class="math display">\[{X_t} = {\phi_1}{X_{t - 1}} + ... + {\phi_p}{X_{t - p}} + {W_t},\]</span> where <span class="math inline">\(|\phi_p| \geq 0\)</span> and <span class="math inline">\(W_t\)</span> is a (Gaussian) white noise process with variance <span class="math inline">\(\sigma^2\)</span>.
+<span id="def:ar_p" class="definition"><strong>(#def:ar_p) (Autoregressive Models of Order <span class="math inline">\(p\)</span>) </strong></span>The AR(p) models can be formally represented as follows <span class="math display">\[{X_t} = {\phi_1}{X_{t - 1}} + ... + {\phi_p}{X_{t - p}} + {W_t},\]</span> where <span class="math inline">\(|\phi_p| \geq 0\)</span> and <span class="math inline">\(W_t\)</span> is a (Gaussian) white noise process with variance <span class="math inline">\(\sigma^2\)</span>.
 </div>
 <p></p>
 <p>In general, we will assume that the expectation of the process <span class="math inline">\(({X_t})\)</span>, as well as that of the following ones in this chapter, is zero. The reason for this simplification is that if <span class="math inline">\(\mathbb{E} [ X_t ] = \mu\)</span>, we can define an AR process <em>around</em> <span class="math inline">\(\mu\)</span> as follows:</p>
@@ -257,20 +257,33 @@ which is a linear process and therefore is stationary. Unfortunately, such a mod
 </div>
 <p></p>
 <div id="properties-of-arp-models" class="section level3">
-<h3><span class="header-section-number">3.3.1</span> Properties of AR(p) models</h3>
-<p>In this section we will describe the main property of the AR(p) model which has already been introduced in the previous paragraphs and therefore let us now introduce the property of causality in a more formal manner.</p>
-<strong>Definition:</strong> An AR(p) model is <em>causal</em>, if the time series <span class="math inline">\(\{ X_t \}_{-\infty}^{\infty}\)</span> can be written as a one-sided linear process:
+<h3><span class="header-section-number">3.3.1</span> Properties of AR(<span class="math inline">\(p\)</span>) models</h3>
+<p>In this section we discuss the main properties of AR(<span class="math inline">\(p\)</span>) processes. We first consider the causality of these models which has already been introduced in the previous paragraphs and then discuss the autocorrelation (and partial autocorrelation) of AR(<span class="math inline">\(p\)</span>) models.</p>
+<div id="causality" class="section level4">
+<h4><span class="header-section-number">3.3.1.1</span> Causality</h4>
+<p>In the previous section we already introduced the idea of causal time series model and therefore let us now introduce this concept in a more formal manner.</p>
+
+<div class="definition">
+<span id="def:causal_ar" class="definition"><strong>(#def:causal_ar) (Causality of AR models) </strong></span> An AR(p) model is said to be <em>causal</em>, if the time series <span class="math inline">\(\{ X_t \}_{-\infty}^{\infty}\)</span> can be written as a one-sided linear process:
 \begin{equation}
     X_t = \sum_{j = 0}^{\infty} \psi_j W_{t-j} = \frac{1}{\phi(B)} W_t = \psi(B) W_t,
 (\#eq:causal)
 \end{equation}
-<p>where <span class="math inline">\(\phi(B) = \sum_{j = 0}^{\infty} \phi_j B^j\)</span>, and <span class="math inline">\(\sum_{j=0}^{\infty}|\phi_j| &lt; \infty\)</span>; we set <span class="math inline">\(\phi_0 = 1\)</span>.</p>
-<p>As discussed earlier this condition implies that only the past values of the time series can explain the future values of it, and not viceversa. However, it might be difficult and not obvious to show the causality of an AR(p) process by using the above definitions directly, thus the following properties are useful in practice.</p>
-<strong>Property: Causality</strong> If an AR(p) model is causal, then the coefficients of the one-sided linear process given in (<a href="#eq:causal">(<strong>??</strong>)</a>) can be obtained by solving
+where <span class="math inline">\(\phi(B) = \sum_{j = 0}^{\infty} \phi_j B^j\)</span>, <span class="math inline">\(\sum_{j=0}^{\infty}|\phi_j| &lt; \infty\)</span> and <span class="math inline">\(\phi_0 = 1\)</span>.
+</div>
+<p></p>
+<p>As discussed earlier this condition implies that only the past values of the time series can explain the future values of it, and not viceversa. As discussed in the previous section, linear processes are (weakly) stationarity processes and therefore causality directely implies (weak) stationarity. However, it might be difficult and not obvious to show the causality of AR(<span class="math inline">\(p\)</span>) processes by using the above definitions directly, thus the following property is particulary useful in practice.</p>
+
+<div class="theorem">
+<span id="thm:thm_causal_ar" class="theorem"><strong>(#thm:thm_causal_ar) (Causality of AR models) </strong></span>If an AR(p) model is causal if and only if <span class="math inline">\(\phi(z) = 0\)</span> for <span class="math inline">\(|z| \leq 1\)</span>. Then, the coefficients of the one-sided linear process given in <a href="#eq:causal">(<strong>??</strong>)</a> can be obtained by solving
 \begin{equation*}
     \psi(z) = \frac{1}{\sum_{j=0}^{\infty} \phi_j z^j} = \frac{1}{\phi(z)}, \mbox{ } |z| \leq 1.
 \end{equation*}
-<p>It can be seen how there is no solution to the above equation if <span class="math inline">\(\phi(z) = 0\)</span> and therefore an AR(p) is causal if and only if <span class="math inline">\(\phi(z) \neq 0\)</span>. A condition for this to be respected is for the roots of <span class="math inline">\(\phi(z) = 0\)</span> to lie outside the unit circle.</p>
+</div>
+<p></p>
+<p>The proof of this result is omitted but can (for example) be found in Appendix B of <span class="citation">(<span class="citeproc-not-found" data-reference-id="shumway2011time"><strong>???</strong></span>)</span>. Moreover, it can be seen how there is no solution to the above equation if <span class="math inline">\(\phi(z) = 0\)</span> for <span class="math inline">\(|z| \leq 1\)</span> and therefore an AR(<span class="math inline">\(p\)</span>) is causal if and only if <span class="math inline">\(\phi(z) \neq 0\)</span> for <span class="math inline">\(|z| \leq 1\)</span>. A condition for this to be respected is for the roots of <span class="math inline">\(\phi(z) = 0\)</span> to lie <em>outside the unit circle</em>.</p>
+<p>Before further discussing the properties of AR(<span class="math inline">\(p\)</span>) models we consider the following two examples which discuss the causality (and stationarity) of an AR(2).</p>
+</div>
 </div>
 </div>
             </section>
