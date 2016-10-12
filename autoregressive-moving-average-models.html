@@ -39,8 +39,8 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="license.html">
-<link rel="next" href="time-series.html">
+<link rel="prev" href="portmanteau-test.html">
+<link rel="next" href="linear-processes.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -223,36 +223,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
-<!--
-> "One damned thing after another." ~ R. A. Fisher
->
--->
-<blockquote>
-<p><em>Prévoir consiste à projeter dans l’avenir ce qu’on a perçu dans le passé.</em> Henri Bergson</p>
-</blockquote>
-<!--
->
-> *Hâtons-nous; le temps fuit, et nous entraîne avec soi : le moment où je parle est déjà loin de moi*. Nicolas Boileau
->
--->
-<p>After reading this chapter you will be able to:</p>
-<ul>
-<li>Describe what a <em>time series</em> is.</li>
-<li>Perform exploratory data analysis on time series data.</li>
-<li>Evaluate different characteristics of a time series.</li>
-<li>Classify basic time series models through equations and plots.</li>
-<li>Manipulate a time series equation using <em>backsubstitution</em>.</li>
-</ul> 
+<div id="autoregressive-moving-average-models" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Autoregressive Moving Average Models</h1>
+<p>In this chapter we introduce a class of time series models that is flexible and among the most commonly used to describe stationary time series. This class is represented by the AutoRegressive Moving Average (ARMA) models which combine and include the AutoRegressive (AR) and Moving Average (MA) models seen in the previous chapter. We first discuss AR and MA models in further detail before introducing the general ARMA class. The importance of the latter class of models resides in its flexibility as well as its capacity of describing (or closely approximating) the features of stationary time series. The autoregressive parts of these models describe how consecutive observations in time influence each other while the moving average parts capture some possible unobserved shocks thereby allowing to model different phenomena going from biology to finance.</p>
+<p>To introduce and explain this class of models, this chapter is organized in the following manner. First of all we will discuss the class of linear processes of which the ARMA models are part of. We will then proceed to a detailed description of AR models in which we review their definition, explain their properties, introduce the main estimation methods for their parameters and highlight the diagnostic tools which can help understand if the estimated models appear to be appropriate or sufficient to well describe the observed time series. Once this is done, we will then use most of the results given for AR models to further desribe and discuss MA models, for which we underline the property of invertibility, and finally the ARMA models. Indeed, the properties and estimation methods for the latter class are directly inherited from the discussions on AR and MA models.</p> 
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="license.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="time-series.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="portmanteau-test.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="linear-processes.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -279,7 +261,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/SMAC-Group/TTS/edit/master/01-intro.Rmd",
+"link": "https://github.com/SMAC-Group/TTS/edit/master/03-arma.Rmd",
 "text": "Edit"
 },
 "download": ["tts.pdf", "tts.epub", "tts.mobi"],

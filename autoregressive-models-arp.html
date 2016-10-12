@@ -39,8 +39,8 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="license.html">
-<link rel="next" href="time-series.html">
+<link rel="prev" href="linear-operators.html">
+<link rel="next" href="estimation-of-arp-models.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -223,36 +223,59 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
-<!--
-> "One damned thing after another." ~ R. A. Fisher
->
--->
-<blockquote>
-<p><em>Prévoir consiste à projeter dans l’avenir ce qu’on a perçu dans le passé.</em> Henri Bergson</p>
-</blockquote>
-<!--
->
-> *Hâtons-nous; le temps fuit, et nous entraîne avec soi : le moment où je parle est déjà loin de moi*. Nicolas Boileau
->
--->
-<p>After reading this chapter you will be able to:</p>
-<ul>
-<li>Describe what a <em>time series</em> is.</li>
-<li>Perform exploratory data analysis on time series data.</li>
-<li>Evaluate different characteristics of a time series.</li>
-<li>Classify basic time series models through equations and plots.</li>
-<li>Manipulate a time series equation using <em>backsubstitution</em>.</li>
-</ul> 
+<div id="autoregressive-models-arp" class="section level2">
+<h2><span class="header-section-number">3.3</span> Autoregressive Models (AR(p))</h2>
+<p>The class of autoregressive models is based on the idea that previous values in the time series are needed to explain current values in the series. For this class of models, we assume that the <span class="math inline">\(p\)</span> previous observations are needed for this purpose and we therefore denote this class as AR(<span class="math inline">\(p\)</span>). In the previous chapter, the model we introduced was an AR(1) in which only the immediately previous observation is needed to explain the following one and therefore represents a particular model which is part of the more general class of AR(p) models.</p>
+
+<div class="definition">
+<span id="def:ar_p" class="definition"><strong>(#def:ar_p)</strong></span>The AR(p) models can be formally represented as follows <span class="math display">\[{X_t} = {\phi_1}{X_{t - 1}} + ... + {\phi_p}{X_{t - p}} + {W_t},\]</span> where <span class="math inline">\(\min_{i = 1, ..., p} \; |\phi_i| \geq 0\)</span> and <span class="math inline">\(W_t\)</span> is a (Gaussian) white noise process with variance <span class="math inline">\(\sigma^2\)</span>.
+</div>
+<p></p>
+<p>In general, we will assume that the expectation of the process <span class="math inline">\(({X_t})\)</span>, as well as that of the following ones in this chapter, is zero. The reason for this simplification is that if <span class="math inline">\(\mathbb{E} [ X_t ] = \mu\)</span>, we can define an AR process <em>around</em> <span class="math inline">\(\mu\)</span> as follows:</p>
+<p><span class="math display">\[X_t - \mu = \sum_{i = 1}^p \left(\phi_i X_{t-i} - \mu \right) + W_t,\]</span></p>
+<p>which is equivalent to</p>
+<p><span class="math display">\[X_t  = \mu^{\star} +  \sum_{i = 1}^p \phi_i X_{t-i}  + W_t,\]</span></p>
+<p>where <span class="math inline">\(\mu^{\star} = \mu (1 - \sum_{i = 1}^p \phi_i)\)</span>. Therefore, to simplify the notation we will generally consider only zero mean processes, since adding means (as well as other deterministic trends) is easy.</p>
+<p>A useful way of representing AR processes is through the backshift operator introduced in the previous section and is as follows</p>
+<p><span class="math display">\[\begin{aligned}
+  {X_t} &amp;= {\phi_1}{X_{t - 1}} + ... + {\phi_p}{y_{t - p}} + {w_t} \\
+   &amp;= {\phi_1}B{X_t} + ... + {\phi_p}B^p{X_t} + {W_t} \\
+   &amp;= ({\phi_1}B + ... + {\phi_p}B^p){X_t} + {W_t} \\ 
+\end{aligned},\]</span></p>
+<p>which finally yields</p>
+<p><span class="math display">\[(1 - {\phi _1}B - ... - {\phi_p}B^p){X_t} = {W_t},\]</span></p>
+<p>which, in abbreviated form, can be expressed as</p>
+<p><span class="math display">\[\phi(B){X_t} = W_t.\]</span></p>
+<p>We will see that <span class="math inline">\(\phi(B)\)</span> is important to establish the stationarity of these processes and is called the <em>autoregressive</em> operator. Moreover, this quantity is closely related to another important property of AR processes called <em>causality</em>. Before formally defining this new property, we consider the following example, which provides an intuitive illustration of its importance.</p>
+<p><strong>Example:</strong> Consider a classical AR(1) model with <span class="math inline">\(|\phi| &gt; 1\)</span>. Such a model could be expressed as</p>
+<p><span class="math display">\[X_t = \phi^{-1} X_{t+1} - \phi^{-1} W_t = \phi^{-k} X_{t+k} - \sum_{i = 1}^{k-1} \phi^{-i} W_{t+i}.\]</span></p>
+<p>Since <span class="math inline">\(|\phi| &gt; 1\)</span>, we obtain</p>
+<p><span class="math display">\[X_t = - \sum_{i = 1}^{\infty} \phi^{-j} W_{t-j},\]</span></p>
+<p>which is a linear process and therefore is stationary. Unfortunately, such a model is useless because we need the future to predict the future and such processes are called non-causal.</p>
+<div id="properties-of-arp-models" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> Properties of AR(p) models</h3>
+<p>In this section we will describe the main property of the AR(p) model which has already been introduced in the previous paragraphs and therefore let us now introduce the property of causality in a more formal manner.</p>
+<strong>Definition:</strong> An AR(p) model is <em>causal</em>, if the time series <span class="math inline">\(\{ X_t \}_{-\infty}^{\infty}\)</span> can be written as a one-sided linear process:
+\begin{equation}
+    X_t = \sum_{j = 0}^{\infty} \psi_j W_{t-j} = \frac{1}{\phi(B)} W_t = \psi(B) W_t,
+(\#eq:causal)
+\end{equation}
+<p>where <span class="math inline">\(\phi(B) = \sum_{j = 0}^{\infty} \phi_j B^j\)</span>, and <span class="math inline">\(\sum_{j=0}^{\infty}|\phi_j| &lt; \infty\)</span>; we set <span class="math inline">\(\phi_0 = 1\)</span>.</p>
+<p>As discussed earlier this condition implies that only the past values of the time series can explain the future values of it, and not viceversa. However, it might be difficult and not obvious to show the causality of an AR(p) process by using the above definitions directly, thus the following properties are useful in practice.</p>
+<strong>Property: Causality</strong> If an AR(p) model is causal, then the coefficients of the one-sided linear process given in (<a href="#eq:causal">(<strong>??</strong>)</a>) can be obtained by solving
+\begin{equation*}
+    \psi(z) = \frac{1}{\sum_{j=0}^{\infty} \phi_j z^j} = \frac{1}{\phi(z)}, \mbox{ } |z| \leq 1.
+\end{equation*}
+<p>It can be seen how there is no solution to the above equation if <span class="math inline">\(\phi(z) = 0\)</span> and therefore an AR(p) is causal if and only if <span class="math inline">\(\phi(z) \neq 0\)</span>. A condition for this to be respected is for the roots of <span class="math inline">\(\phi(z) = 0\)</span> to lie outside the unit circle.</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="license.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="time-series.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="linear-operators.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="estimation-of-arp-models.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -279,7 +302,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/SMAC-Group/TTS/edit/master/01-intro.Rmd",
+"link": "https://github.com/SMAC-Group/TTS/edit/master/03-arma.Rmd",
 "text": "Edit"
 },
 "download": ["tts.pdf", "tts.epub", "tts.mobi"],
