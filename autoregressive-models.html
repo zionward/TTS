@@ -26,7 +26,7 @@
 <meta name="author" content="James Balamuta, Stéphane Guerrier, Roberto Molinari and Haotian Xu">
 
   
-<meta name="date" content="2016-10-12">
+<meta name="date" content="2016-10-14">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -40,7 +40,7 @@ MathJax.Hub.Config({
   
   
 <link rel="prev" href="linear-operators.html">
-<link rel="next" href="estimation-of-arp-models.html">
+<link rel="next" href="appendixa.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -195,9 +195,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.1" data-path="linear-processes.html"><a href="linear-processes.html"><i class="fa fa-check"></i><b>3.1</b> Linear Processes</a></li>
 <li class="chapter" data-level="3.2" data-path="linear-operators.html"><a href="linear-operators.html"><i class="fa fa-check"></i><b>3.2</b> Linear Operators</a></li>
 <li class="chapter" data-level="3.3" data-path="autoregressive-models.html"><a href="autoregressive-models.html"><i class="fa fa-check"></i><b>3.3</b> Autoregressive Models</a><ul>
-<li class="chapter" data-level="3.3.1" data-path="autoregressive-models.html"><a href="autoregressive-models.html#properties-of-arp-models"><i class="fa fa-check"></i><b>3.3.1</b> Properties of AR(<span class="math inline">\(p\)</span>) models</a></li>
+<li class="chapter" data-level="3.3.1" data-path="autoregressive-models.html"><a href="autoregressive-models.html#properties-of-ar-models"><i class="fa fa-check"></i><b>3.3.1</b> Properties of AR models</a></li>
+<li class="chapter" data-level="3.3.2" data-path="autoregressive-models.html"><a href="autoregressive-models.html#estimation-of-arp-models"><i class="fa fa-check"></i><b>3.3.2</b> Estimation of AR(<span class="math inline">\(p\)</span>) models</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="estimation-of-arp-models.html"><a href="estimation-of-arp-models.html"><i class="fa fa-check"></i><b>3.4</b> Estimation of AR(p) models</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="appendixa.html"><a href="appendixa.html"><i class="fa fa-check"></i><b>A</b> Proofs</a><ul>
@@ -228,7 +228,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>The class of autoregressive models is based on the idea that previous values in the time series are needed to explain current values in the series. For this class of models, we assume that the <span class="math inline">\(p\)</span> previous observations are needed for this purpose and we therefore denote this class as AR(<span class="math inline">\(p\)</span>). In the previous chapter, the model we introduced was an AR(1) in which only the immediately previous observation is needed to explain the following one and therefore represents a particular model which is part of the more general class of AR(p) models.</p>
 
 <div class="definition">
-<span id="def:ar_p" class="definition"><strong>(#def:ar_p) (Autoregressive Models of Order <span class="math inline">\(p\)</span>) </strong></span>The AR(p) models can be formally represented as follows <span class="math display">\[{X_t} = {\phi_1}{X_{t - 1}} + ... + {\phi_p}{X_{t - p}} + {W_t},\]</span> where <span class="math inline">\(|\phi_p| \geq 0\)</span> and <span class="math inline">\(W_t\)</span> is a (Gaussian) white noise process with variance <span class="math inline">\(\sigma^2\)</span>.
+<span id="def:arp" class="definition"><strong>Definition 3.2  (Autoregressive Models of Order <span class="math inline">\(p\)</span>) </strong></span>The AR(p) models can be formally represented as follows <span class="math display">\[{X_t} = {\phi_1}{X_{t - 1}} + ... + {\phi_p}{X_{t - p}} + {W_t},\]</span> where <span class="math inline">\(|\phi_p| \geq 0\)</span> and <span class="math inline">\(W_t\)</span> is a (Gaussian) white noise process with variance <span class="math inline">\(\sigma^2\)</span>.
 </div>
 <p></p>
 <p>In general, we will assume that the expectation of the process <span class="math inline">\(({X_t})\)</span>, as well as that of the following ones in this chapter, is zero. The reason for this simplification is that if <span class="math inline">\(\mathbb{E} [ X_t ] = \mu\)</span>, we can define an AR process <em>around</em> <span class="math inline">\(\mu\)</span> as follows:</p>
@@ -256,15 +256,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 which is a linear process and therefore is stationary. Unfortunately, such a model is useless because we need the future to predict the future and such processes are called non-causal.
 </div>
 <p></p>
-<div id="properties-of-arp-models" class="section level3">
-<h3><span class="header-section-number">3.3.1</span> Properties of AR(<span class="math inline">\(p\)</span>) models</h3>
+<div id="properties-of-ar-models" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> Properties of AR models</h3>
 <p>In this section we discuss the main properties of AR(<span class="math inline">\(p\)</span>) processes. We first consider the causality of these models which has already been introduced in the previous paragraphs and then discuss the autocorrelation (and partial autocorrelation) of AR(<span class="math inline">\(p\)</span>) models.</p>
 <div id="causality" class="section level4">
 <h4><span class="header-section-number">3.3.1.1</span> Causality</h4>
 <p>In the previous section we already introduced the idea of causal time series model and therefore let us now introduce this concept in a more formal manner.</p>
 
 <div class="definition">
-<span id="def:causal_ar" class="definition"><strong>(#def:causal_ar) (Causality of AR models) </strong></span> An AR(p) model is said to be <em>causal</em>, if the time series <span class="math inline">\(\{ X_t \}_{-\infty}^{\infty}\)</span> can be written as a one-sided linear process:
+<span id="def:causalar" class="definition"><strong>Definition 3.3  (Causality of AR models) </strong></span> An AR(p) model is said to be <em>causal</em>, if the time series <span class="math inline">\(\{ X_t \}_{-\infty}^{\infty}\)</span> can be written as a one-sided linear process:
 \begin{equation}
     X_t = \sum_{j = 0}^{\infty} \psi_j W_{t-j} = \frac{1}{\phi(B)} W_t = \psi(B) W_t,
 (\#eq:causal)
@@ -275,7 +275,7 @@ where <span class="math inline">\(\phi(B) = \sum_{j = 0}^{\infty} \phi_j B^j\)</
 <p>As discussed earlier this condition implies that only the past values of the time series can explain the future values of it, and not viceversa. As discussed in the previous section, linear processes are (weakly) stationarity processes and therefore causality directely implies (weak) stationarity. However, it might be difficult and not obvious to show the causality of AR(<span class="math inline">\(p\)</span>) processes by using the above definitions directly, thus the following property is particulary useful in practice.</p>
 
 <div class="theorem">
-<span id="thm:thm_causal_ar" class="theorem"><strong>(#thm:thm_causal_ar) (Causality of AR models) </strong></span>If an AR(p) model is causal if and only if <span class="math inline">\(\phi(z) = 0\)</span> for <span class="math inline">\(|z| \leq 1\)</span>. Then, the coefficients of the one-sided linear process given in <a href="#eq:causal">(<strong>??</strong>)</a> can be obtained by solving
+<span id="thm:theocausalar" class="theorem"><strong>Theorem 3.1  (Causality of AR models) </strong></span>If an AR(p) model is causal if and only if <span class="math inline">\(\phi(z) = 0\)</span> for <span class="math inline">\(|z| \leq 1\)</span>. Then, the coefficients of the one-sided linear process given in <a href="#eq:causal">(<strong>??</strong>)</a> can be obtained by solving
 \begin{equation*}
     \psi(z) = \frac{1}{\sum_{j=0}^{\infty} \phi_j z^j} = \frac{1}{\phi(z)}, \mbox{ } |z| \leq 1.
 \end{equation*}
@@ -283,16 +283,253 @@ where <span class="math inline">\(\phi(B) = \sum_{j = 0}^{\infty} \phi_j B^j\)</
 <p></p>
 <p>The proof of this result is omitted but can (for example) be found in Appendix B of <span class="citation">(<span class="citeproc-not-found" data-reference-id="shumway2011time"><strong>???</strong></span>)</span>. Moreover, it can be seen how there is no solution to the above equation if <span class="math inline">\(\phi(z) = 0\)</span> for <span class="math inline">\(|z| \leq 1\)</span> and therefore an AR(<span class="math inline">\(p\)</span>) is causal if and only if <span class="math inline">\(\phi(z) \neq 0\)</span> for <span class="math inline">\(|z| \leq 1\)</span>. A condition for this to be respected is for the roots of <span class="math inline">\(\phi(z) = 0\)</span> to lie <em>outside the unit circle</em>.</p>
 <p>Before further discussing the properties of AR(<span class="math inline">\(p\)</span>) models we consider the following two examples which discuss the causality (and stationarity) of an AR(2).</p>
+
+<div class="example">
+<p><span id="ex:ex1causality" class="example"><strong>Example 3.6  (Transforming an AR(2) into a linear process) </strong></span> Given the following AR(2) <span class="math inline">\(X_t = 1.3X_{t-1} - 0.4X_{t-2} + W_t\)</span> one could wonder if this process can be written as a one-sided linear process as in Definition <span class="citation">(<span class="citeproc-not-found" data-reference-id="causalar"><strong>???</strong></span>)</span>. This can be done using the following approach:</p>
+<p><em>Step 1:</em> The AR operator of this model can be expressed as:</p>
+<p><span class="math display">\[\phi(z) = 1 - 1.3z + 0.4z^2 = (1 - 0.5z)(1 - 0.8z) ,\]</span></p>
+<p>and has roots <span class="math inline">\(2 &gt; 1\)</span> and <span class="math inline">\(1.25 &gt; 1\)</span>. Thus, we should be able to covert it into linear process.</p>
+<p><em>Step 2:</em> From Theorem <span class="citation">(<span class="citeproc-not-found" data-reference-id="theocausalar"><strong>???</strong></span>)</span> we know that if AR process has roots that lie outside the unit circle, we can write <span class="math inline">\(X_t = \phi^{-1}(B)W_t\)</span> and “inverse” the autoregressive operator <span class="math inline">\(\phi(B)\)</span> as follows:</p>
+<p><span class="math display">\[\phi^{-1}(z) = \frac{1}{(1 - 0.5z)(1 - 0.8z)} = \frac{c_1}{(1 - 0.5z)} + \frac{c_2}{(1 - 0.8z)} = \frac{C_2(1 - 0.5z) + C_1(1 - 0.8z)}{(1 - 0.5z)(1 - 0.8z)} ,\]</span></p>
+<p>since we can think of the above equation is valid for any <span class="math inline">\(z\)</span>, we will solve the following system of equations to get <span class="math inline">\(c_1\)</span> and <span class="math inline">\(c_2\)</span>,</p>
+<p><span class="math display">\[\begin{cases}
+        c_1 + c_2 &amp;= 1\\
+        -0.5 c_2 - 0.8 c_1 &amp;= 0
+\end{cases}
+\implies 
+\begin{cases}
+        c_1 &amp;= -\frac{5}{3}\\
+        2_2 &amp;= \frac{8}{3},
+\end{cases}
+\]</span></p>
+<p>and, we obtain</p>
+<p><span class="math display">\[\phi^{-1}(z) = \frac{-5}{3(1 - 0.5z)} + \frac{8}{3(1 - 0.8z)} .\]</span></p>
+<p><em>Step 3:</em> Using Geometric series, i.e. <span class="math inline">\(a \sum_{k = 0}^{\infty}r^k = \frac{a}{1-r}, \mbox{ if } |r| &lt; 1\)</span>, we have</p>
+<p><span class="math display">\[\begin{cases}
+      \frac{-5}{3(1 - 0.5z)} &amp;= \frac{-5}{3} \sum_{j = 0}^{\infty}0.5^jz^j , \mbox{ if } |z| &lt; 2\\
+      \frac{8}{3(1 - 0.8z)} &amp;= \frac{8}{3} \sum_{j = 0}^{\infty}0.8^jz^j , \mbox{ if } |z| &lt; 1.25.
+\end{cases}\]</span></p>
+<p>This allows to expressed <span class="math inline">\(\phi^{-1}(z)\)</span> as</p>
+<p><span class="math display">\[\phi^{-1}(z) = \sum_{j = 0}^{\infty} \left[ \frac{-5}{3} (0.5)^j + \frac{8}{3} (0.8)^j \right] z^j, \mbox{ if } |z| &lt; 1.25 .\]</span></p>
+<em>Step 4:</em> Finally, we obtain <span class="math display">\[X_t = \phi^{-1}(B)W_t = \sum_{j = 0}^{\infty} \left[ \frac{-5}{3} (0.5)^j + \frac{8}{3} (0.8)^j \right] B^j W_t = \sum_{j = 0}^{\infty} \left[ \frac{-5}{3} (0.5)^j + \frac{8}{3} (0.8)^j \right] W_{t-j},
+\]</span> which verifies that the AR(2) is causal (and stationary).
+</div>
+<p></p>
+
+<div class="example">
+<p><span id="ex:ex2causality" class="example"><strong>Example 3.7  (Causal conditions for an AR(2) processes) </strong></span>We already know that an AR(1) is causal with the simple condition <span class="math inline">\(|\phi_1| &lt; 1\)</span>. It could seem natural to believe that an AR(2) should be causal (implies stationary) with the conditon: <span class="math inline">\(|\phi_i| &lt; 1, \, i = 1,2\)</span>, however, this is not the case. Indeed, an AR(2) can be expressed as</p>
+<p><span class="math display">\[X_t = \phi_1 X_{t-1} + \phi_2 X_{t-2} + W_t = \phi_1 B X_t + \phi_2 B^2 X_t + W_t,\]</span></p>
+<p>corresponding to the following autoregressive operator:</p>
+<p><span class="math display">\[\phi(z) = 1 - \phi_1 z - \phi_2 z^2.\]</span></p>
+<p>Therefore, the process is causal when the roots of <span class="math inline">\(\phi(z)\)</span> lies outside of the unit circle. Letting <span class="math inline">\(z_1\)</span> and <span class="math inline">\(z_2\)</span> denote those roots, we impose the following constraints to ensure the causality of the model:</p>
+<p><span class="math display">\[\begin{aligned}
+|z_1| &amp;&gt; 1, \;\;\;\; \text{where} \;\; &amp;z_1 = \frac{\phi_1 + \sqrt{\phi_1^2 + 4\phi_2}}{-2 \phi_2},\\
+|z_2| &amp;&gt; 1, \;\;\;\; \text{where} \;\; &amp;z_2 = \frac{\phi_1 - \sqrt{\phi_1^2 + 4\phi_2}}{-2 \phi_2},
+\end{aligned}\]</span> note that <span class="math inline">\(z_1\)</span> and <span class="math inline">\(z_2\)</span> can be complex values.</p>
+<p>Thus we can represent <span class="math inline">\(\phi_1\)</span> and <span class="math inline">\(\phi_2\)</span> by <span class="math inline">\(z_1\)</span> and <span class="math inline">\(z_2\)</span>, <span class="math display">\[\begin{aligned}
+\phi_1 = (z_1^{-1} + z_2^{-1}),\\
+\phi_2 = -(z_1 z_2)^{-1}.
+\end{aligned}\]</span></p>
+<p>Moreover we have the following equivalent condition for causality:</p>
+<p><span class="math display">\[\begin{cases}
+        |z_1| &amp;&gt; 1\\
+        |z_2| &amp;&gt; 1,
+\end{cases}\]</span> if and only if <span class="math display">\[\begin{cases}
+        \phi_1 + \phi_2 &amp;&lt; 1\\
+        \phi_2 - \phi_1 &amp;&lt; 1\\
+        |\phi_2| &amp;&lt; 1.
+\end{cases}\]</span></p>
+<p>We can show “<em>if</em>”</p>
+<p><span class="math inline">\(\phi_1 + \phi_2 = \frac{1}{z_1} + \frac{1}{z_2} - \frac{1}{z_1z_2} = \frac{1}{z_1}\left( 1 - \frac{1}{z_2} \right) + \frac{1}{z_2} &lt; 1 - \frac{1}{z_2} + \frac{1}{z_2} = 1\)</span>, (since <span class="math inline">\(\left( 1 - \frac{1}{z_2} \right) &gt; 0\)</span>)</p>
+<p><span class="math inline">\(\phi_2 - \phi_1 = - \frac{1}{z_1z_2} - \frac{1}{z_1} - \frac{1}{z_2} = - \frac{1}{z_1}\left( \frac{1}{z_2} + 1 \right) - \frac{1}{z_2} &lt; \frac{1}{z_2} + 1 - \frac{1}{z_2} = 1\)</span>, (since <span class="math inline">\(\left( \frac{1}{z_2} + 1 \right) &gt; 0\)</span>)</p>
+<p><span class="math inline">\(|\phi_2| = \frac{1}{|z_1||z_2|} &lt; 1\)</span>.</p>
+<p>We can also show “<em>only if</em>”</p>
+<p>Since <span class="math inline">\(z_1 = \frac{\phi_1 + \sqrt{\phi_1^2 + 4\phi_2}}{-2 \phi_2}\)</span> and <span class="math inline">\(\phi_2-1 &lt; \phi_1 &lt; 1-\phi_2\)</span>, then <span class="math inline">\(z_1^2 = \frac{\left(\phi_1 + \sqrt{\phi_1^2 + 4\phi_2}\right)^2}{4 \phi_2^2} &lt; \frac{\left((1-\phi_2) + \sqrt{(1-\phi_2)^2 + 4\phi_2}\right)^2}{4 \phi_2^2} = \frac{4}{4 \phi_2^2} \leq 1\)</span>.</p>
+<p>Since <span class="math inline">\(z_2 = \frac{\phi_1 - \sqrt{\phi_1^2 + 4\phi_2}}{-2 \phi_2}\)</span> and <span class="math inline">\(\phi_2-1 &lt; \phi_1 &lt; 1-\phi_2\)</span>, then <span class="math inline">\(z_2^2 = \frac{\left(\phi_1 - \sqrt{\phi_1^2 + 4\phi_2}\right)^2}{4 \phi_2^2} &lt; \frac{\left((\phi_2-1) + \sqrt{(\phi_2-1)^2 + 4\phi_2}\right)^2}{4 \phi_2^2} = \frac{4 \phi_2^2}{4 \phi_2^2} = 1\)</span>.</p>
+<p>Finally, the causal region of an AR(2) is depicted on the figure below.</p>
+</div>
+<p> <img src="tts_files/figure-html/causalAR2-1.png" width="672" /></p>
+</div>
+<div id="autocorrelation" class="section level4">
+<h4><span class="header-section-number">3.3.1.2</span> Autocorrelation</h4>
+<p>In this section we discuss the autocorrelation of (causal) AR(<span class="math inline">\(p\)</span>) processes. Before considering the general case of an AR(<span class="math inline">\(p\)</span>), we revisit Example <span class="citation">(<span class="citeproc-not-found" data-reference-id="ref"><strong>???</strong></span>)</span>(ex1causality) and derive the ACF of the AR(2) model presented in this example.</p>
+
+<div class="example">
+<p><span id="ex:ar2acf" class="example"><strong>Example 3.8  (Autocorrelation of an AR(2)) </strong></span>Considering the same model as in Example <span class="citation">(<span class="citeproc-not-found" data-reference-id="ref"><strong>???</strong></span>)</span>(ex1causality), i.e. <span class="math inline">\(X_t = 1.3X_{t-1} - 0.4X_{t-2} + W_t\)</span>, we can derive the ACF using the following steps:</p>
+<p><em>Step 1:</em> Find the homogeneous difference equation with respect to the ACF <span class="math inline">\(\rho(h)\)</span>, which in this case is given by: <span class="math display">\[\rho(h) - 1.3\rho(h-1) + 0.4\rho(h-2) = 0, \mbox{ } h = 1,2,...\]</span> and the initial conditions are <span class="math inline">\(\rho(0) = 1\)</span> and <span class="math inline">\(\rho(-1) = \frac{13}{14}\)</span>.</p>
+<p><em>Step 2:</em> Using the results of Example <span class="citation">(<span class="citeproc-not-found" data-reference-id="ref"><strong>???</strong></span>)</span>(ex1causality), we have: <span class="math display">\[\phi(z) = 1 - 1.3z + 0.4z^2 = (1 - 0.5z)(1 - 0.8z) ,\]</span> and the roots of this equation are given by <span class="math inline">\(z_1 = 2 &gt; 1\)</span> and <span class="math inline">\(z_2 = 1.25 &gt; 1\)</span>. Moreover, since <span class="math inline">\(z_1\)</span> and <span class="math inline">\(z_2\)</span> are real and distinct, we obtain: <span class="math display">\[\rho(h) = c_1 z_1^{-h} + c_2 z_2^{-h}.\]</span></p>
+<em>Step 3:</em> Solve <span class="math inline">\(c_1\)</span> and <span class="math inline">\(c_2\)</span> based on two initial conditions found in Step 1, i.e. <span class="math display">\[\begin{cases}
+      \rho(0) = c_1 + c_2 = 1\\
+      \rho(-1) = 2c_1 + 1.25c_2 = \frac{13}{14},
+\end{cases},\]</span> implying that <span class="math inline">\(c_1 = -\frac{3}{7}\)</span> and <span class="math inline">\(c_2 = \frac{10}{7}\)</span>. The ACF for this model is therefore given by <span class="math display">\[\rho(h) = -\frac{3}{7}2^{-h} + \frac{10}{7}\left(\frac{5}{4}\right)^{-h} .\]</span>
+</div>
+<p></p>
+<p>EXAMPLE MISSING HERE! TO DO</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(exts)
+<span class="kw">library</span>(gridExtra)
+
+<span class="co"># Define models</span>
+m1 =<span class="st"> </span><span class="kw">AR</span>(<span class="dt">phi =</span> <span class="kw">c</span>(<span class="fl">1.3</span>, -<span class="fl">0.4</span>))
+m2 =<span class="st"> </span><span class="kw">AR</span>(<span class="dt">phi =</span> <span class="kw">c</span>(<span class="dv">1</span>, -<span class="dv">1</span>/<span class="dv">4</span>))
+m3 =<span class="st"> </span><span class="kw">AR</span>(<span class="dt">phi =</span> <span class="kw">c</span>(<span class="dv">1</span>/<span class="dv">2</span>, -<span class="dv">1</span>/<span class="dv">2</span>))
+
+<span class="co"># Theoretical ACF</span>
+acf1 =<span class="st"> </span><span class="kw">theo_acf</span>(m1)
+acf2 =<span class="st"> </span><span class="kw">theo_acf</span>(m2)
+acf3 =<span class="st"> </span><span class="kw">theo_acf</span>(m3)
+
+<span class="co"># Plot ACFs</span>
+a1 =<span class="st"> </span><span class="kw">autoplot</span>(acf1)
+a2 =<span class="st"> </span><span class="kw">autoplot</span>(acf2)
+a3 =<span class="st"> </span><span class="kw">autoplot</span>(acf3)
+<span class="kw">grid.arrange</span>(a1, a2, a3, <span class="dt">nrow =</span> <span class="dv">1</span>)</code></pre></div>
+<p><img src="tts_files/figure-html/ACFAR2eg-1.png" width="864" /></p>
+<p>Next we present an example to show how to derive the ACF for general causal AR(p) model. It is much more complicated than what we did for AR(2).</p>
+
+<div class="example">
+<p><span id="ex:arpacf" class="example"><strong>Example 3.9  (Autocorrelation of an AR(<span class="math inline">\(p\)</span>)) </strong></span>Recall that the AR(<span class="math inline">\(p\)</span>) models can be formally represented as follows <span class="math display">\[{X_t} = {\phi_1}{X_{t - 1}} + ... + {\phi_p}{X_{t - p}} + {W_t},\]</span> where <span class="math inline">\(W_t\)</span> is a (Gaussian) white noise process with variance <span class="math inline">\(\sigma^2\)</span>.</p>
+<p>There are two ways to derive the ACF for general AR(p) models.</p>
+<p>For the first method, since we assume our AR(p) model is causal, we can write it as a one-sided linear process: <span class="math inline">\(X_t = \sum_{j = 0}^{\infty} \psi_j W_{t-j}\)</span>, then the autocovariance function <span class="math inline">\(\gamma(h) = cov(X_{t+h},X_t) = \sigma^2 \sum_{j=0}^{\infty} \psi_j \psi_{j+h}\)</span>, for <span class="math inline">\(h \geq 0\)</span>. The difficulty of this method is to solve the <span class="math inline">\(\psi\)</span>-weights. Treating AR(p) as a special case of ARMA(p,q), we can let the MA polynomials <span class="math inline">\(\theta(z) = 1\)</span> and solve the <span class="math inline">\(\psi\)</span>-weights by matching the coefficients in <span class="math inline">\(\phi(z)\psi(z) = \theta(z)\)</span>.</p>
+<p>For the second method, we can also use the procedure we used for AR(2). That is finding a homogeneous difference equation with respect to ACF <span class="math inline">\(\rho(h)\)</span>, and solve it directly. To do so we need following steps.</p>
+<p>Step 1. Find the homogeneous difference equation with repsect to the ACF <span class="math inline">\(\rho(h)\)</span>.</p>
+<p>Firstly verify whether our model is causal. If it is then we have, <span class="math display">\[\rho(h) - \phi_1\rho(h-1) - \cdots - \phi_p\rho(h-p) = 0, \mbox{ } h \geq p. \]</span></p>
+<p>Step 2. Solve the roots of the associated AR polynomials.</p>
+<p>The polynomials can be written as: <span class="math display">\[\phi(z) = 1 - \phi_1z - \cdots - \phi_pz^p .\]</span></p>
+<p>Suppose the polynomials have <span class="math inline">\(r\)</span> distinct roots, and let <span class="math inline">\(m_j\)</span> denoted the number of replicates of <span class="math inline">\(z_j\)</span>, such that <span class="math inline">\(m_1 +m_2 + \cdots +m_r = p\)</span>.</p>
+<p>Then the general solution of the homogeneous difference equation is <span class="math display">\[\rho(h) = z_1^{-h}P_1(h) + z_2^{-h}P_2(h) + \cdots + z_r^{-h}P_r(h), \mbox{ } h \geq p,\]</span> where <span class="math inline">\(P_j(h)\)</span> is the polynomial in <span class="math inline">\(h\)</span> of degree <span class="math inline">\(m_j - 1\)</span>.</p>
+<p>Step 3. Solve every <span class="math inline">\(P_j(h)\)</span> based on <span class="math inline">\(p\)</span> given initial conditions on <span class="math inline">\(\rho(h)\)</span>.</p>
+<p><strong>Remark</strong> Since the AR(p) model is causal, the roots we obtained in step 2 should be outside of the unit circle (i.e. <span class="math inline">\(|z_i| &gt; 1\)</span>, for <span class="math inline">\(i = 1, \cdots, r\)</span>). Then the absolute value of the general solution <span class="math display">\[|\rho(h)| = \left|\frac{P_1(h)}{z_1^{h}} + \frac{P_2(h)}{z_2^{h}} + \cdots + \frac{P_r(h)}{z_r^{h}}\right| \leq \left|\frac{P_1(h)}{z_1^{h}}\right| + \left| \frac{P_2(h)}{z_2^{h}}\right| + \dots + \left|\frac{P_r(h)}{z_r^{h}}\right| \leq \frac{r \left|P_r(h)\right|}{\min_{j = 1, \dots, r} \left|z_j \right|^{h}},\]</span></p>
+from the right hand side of the last inequality, we can find the rate of convergence would be dominated by <span class="math inline">\(\frac{1}{\min_{j = 1, \dots, r} \left|z_j \right|^{h}}\)</span>. Thus the ACF <span class="math inline">\(\rho(h)\)</span> will goes to zero exponentially as <span class="math inline">\(h \to \infty\)</span>.
+</div>
+<p></p>
+</div>
+<div id="partial-autocorrelation-of-ar-models" class="section level4">
+<h4><span class="header-section-number">3.3.1.3</span> Partial autocorrelation of AR models</h4>
+
+<div class="definition">
+<span id="def:pacf" class="definition"><strong>Definition 3.4  (Partial autocorrelation) </strong></span>For a stationary process, <span class="math inline">\(X_t\)</span>, the Partial AutoCorrelation Function (PACF) can be denoted as <span class="math inline">\(\phi_{hh}\)</span>, for <span class="math inline">\(h = 1, 2, \dots,\)</span> which are <span class="math display">\[\phi_{11} = \corr(X_{t+1}, X_t) = \rho(1),\]</span> and <span class="math display">\[\phi_{hh} = \corr(X_{t+h} - \hat{X}_{t+h}, X_t - \hat{X}_t), \mbox{ } h \geq 2.\]</span>
+</div>
+<p></p>
+<p><strong>Remark</strong> From the above defination we can think of the partial correlation <span class="math inline">\(\phi_{hh}\)</span> as the correlation between the residual of <span class="math inline">\(X_{t+h}\)</span> after removing its best linear predictor on the vector space spanned by <span class="math inline">\(\{ X_{t+1}, \dots, X_{t+h-1} \}\)</span> and the residual of <span class="math inline">\(X_t\)</span> after reomving its best linear predictor on the same vector space. Similar to the linear regression, after projecting the residuals should be independ with the vector space spanned by <span class="math inline">\(\{ X_{t+1}, \dots, X_{t+h-1} \}\)</span>.</p>
+<p>We will discuss about the best linear predictor in the section Forecasing, here we just mention how to obtain the best linear predictor. Given a time serie <span class="math inline">\(X_1, X_2, \dots, X_t\)</span> with zero mean, the best linear predictor of <span class="math inline">\(X_{t+h}\)</span> can be written as <span class="math inline">\(\hat{X}_{t+h} = \sum_{j=1}^t \alpha_j X_j\)</span> such than it satisfies the prediction equations: <span class="math display">\[ \mathbb{E}(X_{t+h} - \hat{X}_{t+h}) = 0, \]</span> and <span class="math display">\[ \mathbb{E} [(X_{t+h} - \hat{X}_{t+h})X_j ] = 0, \mbox{ for } i = 1, \dots, t.\]</span> According to the projection theorem, we can show that satisfying the prediction equations is equivalent to minimizing the mean square error <span class="math inline">\(\mathbb{E}(X_{t+h} - \hat{X}_{t+h})\)</span>. Thus we have two equivalent to obtain the best linear predictor.</p>
+<p><strong>Example: PACF of AR(1)</strong> Consider a casual AR(1) model <span class="math inline">\({X_t} = \phi {X_{t - 1}} + {W_t},\)</span> We have, <span class="math display">\[\phi_{11} = \corr(X_{t+1}, X_t) = \rho(1) = \phi,\]</span> and <span class="math display">\[\phi_{22} = \corr(X_{t+2} - \hat{X}_{t+2}, X_t - \hat{X}_t),\]</span> Next, we find <span class="math inline">\(\hat{X}_t\)</span> and <span class="math inline">\(\hat{X}_{t+2}\)</span>. Since <span class="math inline">\(X_{t+1}\)</span> is the only random between <span class="math inline">\(X_t\)</span> and <span class="math inline">\(X_{t+2}\)</span>, <span class="math inline">\(\hat{X}_t\)</span> and <span class="math inline">\(\hat{X}_{t+2}\)</span> are the best linear predictors on the vector space spaned by <span class="math inline">\(X_t\)</span>, we can obtain them by minimizing the MSE. <span class="math display">\[\mathbb{E}(X_{t+2} - \hat{X}_{t+2})^2 = \mathbb{E}(X_{t+2} - \beta_1 X_{t+1})^2 = \gamma(0) - 2\beta_1 \gamma(1) + \beta_1^2 \gamma(0),\]</span> Then by minimizing the MSE, we have <span class="math inline">\(\beta_1 = \frac{\gamma(1)}{\gamma(0)} = \phi\)</span>.</p>
+<p>Similarily, by minimizing <span class="math display">\[\mathbb{E}(X_{t} - \hat{X}_{t})^2 = \mathbb{E}(X_{t} - \beta_2 X_{t+1})^2 = \gamma(0) - 2\beta_2 \gamma(1) + \beta_2^2 \gamma(0),\]</span> we have <span class="math inline">\(\beta_2 = \frac{\gamma(1)}{\gamma(0)} = \phi\)</span>.</p>
+<p>Or equivalently we can use the prediction equations. Thus we have <span class="math display">\[\mathbb{E}[(X_{t+2} - \hat{X}_{t+2})X_{t+1}] = \mathbb{E}[(X_{t+2}X_{t+1} - \beta_1 X_{t+1}^2)] = \gamma(1) - \beta_1 \gamma(0) = 0,\]</span> and <span class="math display">\[\mathbb{E}[(X_{t} - \hat{X}_{t})X_{t+1}] = \mathbb{E}[(X_{t}X_{t+1} - \beta_2 X_{t+1}^2)] = \gamma(1) - \beta_2 \gamma(0) = 0,\]</span> Thus we can get the same solutions.</p>
+<p>Therefore, <span class="math display">\[\phi_{22} = \corr(X_{t+2} - \phi X_{t+1}, X_t - \phi X_{t+1}) = \corr(W_{t+2}, X_t - \phi X_{t+1}) = 0,\]</span> note that the last equation is based on casuality.</p>
+<p><strong>Example: PACF of AR(p)</strong> In this example we would like to show that the PACF characterize the order of AR(p) models. That is when <span class="math inline">\(h &gt; p\)</span>, the PACF <span class="math inline">\(\phi_{hh} = 0\)</span>. Suppose a causal AR(p) model, <span class="math inline">\(X_{t+h} = \sum_{j=1}^p \phi_j X_{t+h-j} + W_{t+h}\)</span>, we want to calculate <span class="math inline">\(\phi_{hh}\)</span>.</p>
+<p>The best linear predictor of <span class="math inline">\(X_{t+h}\)</span> is <span class="math display">\[\hat{X}_{t+h} = \mathbb{E}\left[X_{t+h}|X_t, \dots, X_{t+h-1}\right] = \mathbb{E}\left[\sum_{j=1}^p \phi_j X_{t+h-j} + W_{t+h}|X_t, \dots, X_{t+h-1}\right] = \sum_{j=1}^p \mathbb{E}\left[\phi_j X_{t+h-j}|X_t, \dots, X_{t+h-1}\right] = \sum_{j=1}^p \phi_j X_{t+h-j}.\]</span> Thus when <span class="math inline">\(h &gt; p\)</span>, <span class="math display">\[ \phi_{hh} = corr(X_{t+h} - \hat{X}_{t+h}, X_t - \hat{X}_t) = corr(W_{t+h}, X_t - \hat{X}_t) = 0. \]</span></p>
+</div>
+</div>
+<div id="estimation-of-arp-models" class="section level3">
+<h3><span class="header-section-number">3.3.2</span> Estimation of AR(<span class="math inline">\(p\)</span>) models</h3>
+<p>Given the above defined properties of the AR(<span class="math inline">\(p\)</span>) models, we will now discuss how these models can be estimated, more specifically how the <span class="math inline">\(p+1\)</span> parameters can be obtained from an observed time series. Indeed, a reliable estimation of these models is necessary in order to intepret and describe different natural phenomena and/or forecast possible future values of the time series.</p>
+A first approach builds upon the earlier definition of the AR(p) as being a linear process. Recall that
+\begin{equation}
+    X_t = \sum_{j = 1}^{p} \phi_j X_{t-j}
+\end{equation}
+which delivers the following autocovariance function
+\begin{equation}
+    \gamma(h) = cov(X_{t+h}, X_t) = cov(\sum_{j = 1}^{p} \phi_j X_{t-j}, X_t) = \sum_{j = 1}^{p} \phi_j \gamma(h-j), \mbox{ } h \geq 0.
+\end{equation}
+Rearranging the above expressions we obtain the following general equations
+\begin{equation}
+    \gamma(h) - \sum_{j = 1}^{p} \phi_j \gamma(h-j) = 0, \mbox{ } h \geq 1
+\end{equation}
+and, recalling that <span class="math inline">\(\gamma(h) = \gamma(-h)\)</span>,
+\begin{equation}
+    \gamma(0) - \sum_{j = 1}^{p} \phi_j \gamma(j) = \sigma_w^2.
+\end{equation}
+<p>We can now define the Yule-Walker equations.</p>
+<strong>Definition:</strong> The Yule-Walker equations are given by
+\begin{equation}
+    \gamma(h) = \phi_1 \gamma(h-1) + ... + \phi_p \gamma(h-p), \mbox{ } h = 1,...,p
+\end{equation}
+and
+\begin{equation}
+    \sigma_w^2 = \gamma(0) - \phi_1 \gamma(1) - ... - \phi_p \gamma(p).
+\end{equation}
+which in matrix notation can be defined as follows
+\begin{equation}
+    \Gamma_p \mathbf{\phi} = \mathbf{\gamma}_p \text{and} \sigma_w^2 = \gamma(0) - \mathbf{\phi}&#39;\mathbf{\gamma}_p
+\end{equation}
+<p>where <span class="math inline">\(\Gamma_p\)</span> is the <span class="math inline">\(p\times p\)</span> matrix containing the autocovariances <span class="math inline">\(\gamma(k-j), j,k = 1, ...,p\)</span> while <span class="math inline">\(\mathbf{\phi} = (\phi_1,...,\phi_p)&#39;\)</span> and <span class="math inline">\(\mathbf{\gamma}_p = (\gamma(1),...,\gamma(p))&#39;\)</span> are <span class="math inline">\(p\times 1\)</span> vectors.</p>
+Considering the Yule-Walker equations, it is possible to use a method of moments approach and simply replace the theoretical quantities given in the previous definition with their empirical (estimated) counterparts that we saw in the previous chapter. This gives us the following Yule-Walker estimators
+\begin{equation}
+    \hat{\mathbf{\phi}} = \hat{\Gamma}_p^{-1}\hat{\mathbf{\gamma}}_p \text{and} \hat{\sigma}_w^2 = \hat{\gamma}(0) - \hat{\mathbf{\gamma}}_p&#39;\hat{\Gamma}_p^{-1}\hat{\mathbf{\gamma}}_p
+\end{equation}
+<p>These estimators have the following asymptotic properties.</p>
+<p><strong>Property: Consistency and Asymptotic Normality of Yule-Walker estimators</strong> The Yule-Walker estimators for a causal AR(p) model have the following asymptotic properties:</p>
+\begin{equation*}
+\sqrt{T}(\hat{\mathbf{\phi}}- \mathbf{\phi}) \xrightarrow{\mathcal{D}} \mathcal{N}(\mathbf{0},\sigma_w^2\Gamma_p^{-1}) \text{and} \hat{\sigma}_w^2 \xrightarrow{\mathcal{P}} \sigma_w^2 .
+\end{equation*}
+Therefore the Yule-Walker estimators have an asymptotically normal distribution and the estimator of the innovation variance is consistent. Moreover, these estimators are also optimal for AR(p) models, meaning that they are also efficient. However, there exists another method which allows to achieve this efficiency also for general ARMA models and this is the maximum likelihood method. Considering an AR(1) model as an example, and assuming without loss of generality that the expectation is zero, we have the following representation of the AR(1) model
+\begin{equation*}
+X_t = \phi X_{t-1} + w_t
+\end{equation*}
+where <span class="math inline">\(|\phi|&lt;1\)</span> and <span class="math inline">\(w_t \overset{iid}{\sim} \mathcal{N}(0,\sigma_w^2)\)</span>. Supposing we have observations issued from this model <span class="math inline">\((x_t)_{t=1,...,T}\)</span>, then the likelihood function for this setting is given by
+\begin{equation*}
+L(\phi,\sigma_w^2) = f(\phi,\sigma_w^2|x_1,...,x_T)
+\end{equation*}
+which, for an AR(1) model, can be rewritten as follows
+\begin{equation*}
+L(\phi,\sigma_w^2) = f(x_1)f(x_2|x_1)\cdot \cdot \cdot f(x_T|x_{T-1}).
+\end{equation*}
+If we define <span class="math inline">\(\Omega_t^p\)</span> as the information contained in the previous <span class="math inline">\(p\)</span> observations to time <span class="math inline">\(t\)</span>, the above can be generalized for an AR(p) model as follows
+\begin{equation*}
+L(\phi,\sigma_w^2) = f(x_1,...,x_p)f(x_{p+1}|\Omega_{p+1}^p)\cdot \cdot \cdot f(x_T|\Omega_{T-1}^p)
+\end{equation*}
+where <span class="math inline">\(f(x_1,...,x_p)\)</span> is the joint probability distribution of the first <span class="math inline">\(p\)</span> observations. A discussion on how to find <span class="math inline">\(f(x_1,...,x_p)\)</span> will be presented in the following paragraphs based on the approach to find <span class="math inline">\(f(x_1)\)</span> in the AR(1) likelihood. Going back to the latter, we know that <span class="math inline">\(x_t|x_{t-1} \sim \mathcal{N}(\phi x_{t-1},\sigma_w^2)\)</span> and therefore we have that
+\begin{equation*}
+f(x_t|x_{t-1}) = f_w(x_t - \phi x_{t-1})
+\end{equation*}
+where <span class="math inline">\(f_w(\cdot)\)</span> is the distribution of <span class="math inline">\(w_t\)</span>. This rearranges the likelihood function as follows
+\begin{equation*}
+L(\phi,\sigma_w^2) = f(x_1)\prod_{t=2}^T f_w(x_t - \phi x_{t-1})
+\end{equation*}
+where <span class="math inline">\(f(x_1)\)</span> can be found through the causal representation
+\begin{equation*}
+x_1 = \sum_{j=0}^{\infty} \phi^j w_{1-j} 
+\end{equation*}
+which implies that <span class="math inline">\(x_1\)</span> follows a normal distribution with zero expectation and a variance given by <span class="math inline">\(\frac{\sigma_w^2}{(1-\phi^2)}\)</span>. Based on this, the likelihood function of an AR(1) finally becomes
+\begin{equation*}
+L(\phi,\sigma_w^2) = (2\pi \sigma_w^2)^{-\frac{n}{2}} (1 - \phi)^2 \exp \left(-\frac{S(\phi)}{2 \sigma_w^2}\right)
+\end{equation*}
+with <span class="math inline">\(S(\phi) = (1-\phi)^2 x_1^2 + \sum_{t=2}^T (x_t -\phi x_{t-1})^2\)</span>. Once the derivative of the logarithm of the likelihood is taken, the minimization of the negative of this function is usually done numerically. However, if we condition on the initial values, the AR(p) models are linear and, for example, we can then define the conditional likelihood of an AR(1) as
+\begin{equation*}
+L(\phi,\sigma_w^2|x_1) = (2\pi \sigma_w^2)^{-\frac{n-1}{2}} \exp \left(-\frac{S_c(\phi)}{2 \sigma_w^2}\right)
+\end{equation*}
+where
+\begin{equation*}
+S_c(\phi) = \sum_{t=2}^T (x_t -\phi x_{t-1})^2 .
+\end{equation*}
+The latter is called the conditional sum of squares and <span class="math inline">\(\phi\)</span> can be estimated as a straightforward linear regression problem. Once an estimate <span class="math inline">\(\hat{\phi}\)</span> is obtained, this can be used to obtain the conditional maximum likelihood estimate of <span class="math inline">\(\sigma_w^2\)</span>
+\begin{equation*}
+\hat{\sigma}_w^2 = \frac{S_c(\hat{\phi})}{(n-1)} .
+\end{equation*}
+The estimation methods presented so far are standard ones for these kind of models. Nevertheless, if the data suffers from some form of contamination, these methods can become highly biased. For this reason, some robust estimators are available to limit this problematic if there are indeed outliers in the observed time series. A first solution is given by the estimator proposed in Kunsch (1984) who underlines that the MLE score function of an AR(p) is given by
+\begin{equation*}
+ \kappa(\mathbf{\theta}|x_j,...x_{j+p}) = \frac{\partial}{\partial \mathbf{\theta}} (x_{j+p} - \sum_{k=1}^p \phi_k x_{j+p-k})^2
+\end{equation*}
+which delivers the estimating equation
+\begin{equation*}
+\sum_{j=1}^{n-p} \kappa (\mathbf{\theta}|x_j,...x_{j+p}) = 0 .
+\end{equation*}
+<p>The score function</p>
+
 </div>
 </div>
 </div>
+
+
+
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
 <a href="linear-operators.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="estimation-of-arp-models.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="appendixa.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
