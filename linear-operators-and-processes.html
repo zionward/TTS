@@ -260,7 +260,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>The notation for the backshift operator changes depending on the author’s preferences. An alternative way to denote a backshift operation given by <span class="math inline">\(B\)</span> is to use the lag operator <span class="math inline">\(L\)</span>. The same conventions as discussed above apply equally to the lag operator.</p>
 
 <div class="example">
-<span id="ex:backshiftseasons" class="example"><strong>Example 3.1  (Backshifting with respect to seasonality) </strong></span>If the backshift operator is raised to a higher power, say <span class="math inline">\(k = 12\)</span>, then this leads to allowing the exploration of seasonality. Specifically, in the case of monthly data, <span class="math inline">\(B^12 X_t = X_{t-12}\)</span> would provide a way to look at the data that occurred one year prior.
+<span id="ex:backshiftseasons" class="example"><strong>Example 3.1  (Backshifting with respect to seasonality) </strong></span>If the backshift operator is raised to a higher power, say <span class="math inline">\(k = 12\)</span>, then this leads to allowing the exploration of seasonality. Specifically, in the case of monthly data, <span class="math inline">\(B^{12} X_t = X_{t-12}\)</span> would provide a way to look at the data that occurred one year prior.
 </div>
 <p></p>
 </div>
@@ -330,7 +330,7 @@ Figure 3.1: Processing a signal
 <p>Thus, just as before, there does exist a solution for an AR(1) when <span class="math inline">\(\left|\phi\right| &lt; 1\)</span>. However, there is a specific name for a process that is able to be written in the above form.</p>
 
 <div class="definition">
-<p><span id="def:lp" class="definition"><strong>Definition 3.5  (Linear Process) </strong></span>A time series, <span class="math inline">\((X_t)\)</span>, is defined to be a linear process if it can be expressed as a linear combination of white noise by:</p>
+<p><span id="def:lp" class="definition"><strong>Definition 3.5  (Linear Process) </strong></span>A time series, <span class="math inline">\(\left\{X_t\right\}\)</span>, is defined to be a linear process if it can be expressed as a linear combination of white noise by:</p>
 <p><span class="math display">\[{X_t} = \mu + \sum\limits_{j =  - \infty }^\infty  {{\psi _j}{W_{t - j}}} \]</span></p>
 where <span class="math inline">\(W_t \sim WN(0, \sigma^2)\)</span> and <span class="math inline">\(\sum\limits_{j = - \infty }^\infty {\left| {{\psi _j}} \right|} &lt; \infty\)</span>.
 </div>
