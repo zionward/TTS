@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>A Tour of Time Series Analysis with R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="A Tour of Time Series Analysis with R">
+  <meta name="generator" content="bookdown 0.1.16 and GitBook 2.6.7">
+
+  <meta property="og:title" content="A Tour of Time Series Analysis with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://tts.smac-group.com/" />
+  
+  
+  <meta name="github-repo" content="SMAC-Group/TTS" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Tour of Time Series Analysis with R" />
+  
+  
+  
+
+<meta name="author" content="James Balamuta, Stéphane Guerrier, Roberto Molinari and Haotian Xu">
+
+  
+<meta name="date" content="2016-10-17">
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="the-autocorrelation-and-autocovariance-functions.html">
+<link rel="next" href="estimation-of-moments-of-stationary-processes.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { extensions: ["AMSmath.js"], 
+         equationNumbers: { autoNumber: "AMS" },
+         Macros: {
+          notimplies: "\\nRightarrow",
+          real: "\\mathbb{R}",
+          integers: "\\mathbb{Z}",
+          natural: "\\mathbb{N}",
+          rational: "\\mathbb{Q}",
+          irrational: "\\mathbb{P}",
+          ind: "\\boldsymbol{1}",
+          normal: "\\mathcal{N}",
+          0: "\\boldsymbol{0}",
+          e: ["\\mathbb{E} [#1]",1],
+          I: "\\boldsymbol{\\mathbf{I}}",
+          S: "\\boldsymbol{S}",
+          y: "\\boldsymbol{y}",
+          X: "\\boldsymbol{X}",
+          C: "\\text{C}",
+          btheta: "\\boldsymbol{\\theta}",
+          epsilon: "\\varepsilon",
+          bbeta: "\\boldsymbol{\\beta}", 
+          bepsilon: "\\boldsymbol{\\varepsilon}", 
+          norm: "\\mathcal{N}",
+          KL: "\\text{KL}",
+          AIC: "\\text{AIC}", 
+          BIC: "\\text{BIC}", 
+          mean: ["\\operatorname{mean}"],
+          var: ["\\operatorname{var}"],
+          tr: ["\\operatorname{tr}"],
+          cov: ["\\operatorname{cov}"],
+          corr: ["\\operatorname{corr}"],
+          argmax: ["\\operatorname{argmax}"],
+          argmin: ["\\operatorname{argmin}"],
+          card: ["\\operatorname{card}"],
+          diag: ["\\operatorname{diag}"],
+          rank: ["\\operatorname{rank}"],
+          length: ["\\operatorname{length}"]
+    }
+  }
+});
+</script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="styling/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Tour of Time Series Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="contributing.html"><a href="contributing.html"><i class="fa fa-check"></i>Contributing</a></li>
+<li class="chapter" data-level="" data-path="bibliographic-note.html"><a href="bibliographic-note.html"><i class="fa fa-check"></i>Bibliographic Note</a></li>
+<li class="chapter" data-level="" data-path="rendering-mathematical-formulae.html"><a href="rendering-mathematical-formulae.html"><i class="fa fa-check"></i>Rendering Mathematical Formulae</a></li>
+<li class="chapter" data-level="" data-path="r-code-conventions.html"><a href="r-code-conventions.html"><i class="fa fa-check"></i>R Code Conventions</a></li>
+<li class="chapter" data-level="" data-path="license.html"><a href="license.html"><i class="fa fa-check"></i>License</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="time-series.html"><a href="time-series.html"><i class="fa fa-check"></i><b>1.1</b> Time Series</a></li>
+<li class="chapter" data-level="1.2" data-path="eda.html"><a href="eda.html"><i class="fa fa-check"></i><b>1.2</b> Exploratory Data Analysis for Time Series</a></li>
+<li class="chapter" data-level="1.3" data-path="basicmodels.html"><a href="basicmodels.html"><i class="fa fa-check"></i><b>1.3</b> Basic Time Series Models</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="basicmodels.html"><a href="basicmodels.html#wn"><i class="fa fa-check"></i><b>1.3.1</b> White noise processes</a></li>
+<li class="chapter" data-level="1.3.2" data-path="basicmodels.html"><a href="basicmodels.html#rw"><i class="fa fa-check"></i><b>1.3.2</b> Random Walk Processes</a></li>
+<li class="chapter" data-level="1.3.3" data-path="basicmodels.html"><a href="basicmodels.html#ar1"><i class="fa fa-check"></i><b>1.3.3</b> Autoregressive Process of Order 1</a></li>
+<li class="chapter" data-level="1.3.4" data-path="basicmodels.html"><a href="basicmodels.html#ma1"><i class="fa fa-check"></i><b>1.3.4</b> Moving Average Process of Order 1</a></li>
+<li class="chapter" data-level="1.3.5" data-path="basicmodels.html"><a href="basicmodels.html#drift"><i class="fa fa-check"></i><b>1.3.5</b> Linear Drift</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="lts.html"><a href="lts.html"><i class="fa fa-check"></i><b>1.4</b> Composite Stochastic Processes</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="autocorrelation-and-stationarity.html"><a href="autocorrelation-and-stationarity.html"><i class="fa fa-check"></i><b>2</b> Autocorrelation and Stationarity</a><ul>
+<li class="chapter" data-level="2.1" data-path="the-autocorrelation-and-autocovariance-functions.html"><a href="the-autocorrelation-and-autocovariance-functions.html"><i class="fa fa-check"></i><b>2.1</b> The Autocorrelation and Autocovariance Functions</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="the-autocorrelation-and-autocovariance-functions.html"><a href="the-autocorrelation-and-autocovariance-functions.html#a-fundamental-representation"><i class="fa fa-check"></i><b>2.1.1</b> A Fundamental Representation</a></li>
+<li class="chapter" data-level="2.1.2" data-path="the-autocorrelation-and-autocovariance-functions.html"><a href="the-autocorrelation-and-autocovariance-functions.html#admissible-autocorrelation-functions"><i class="fa fa-check"></i><b>2.1.2</b> Admissible Autocorrelation Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="stationary.html"><a href="stationary.html"><i class="fa fa-check"></i><b>2.2</b> Stationarity</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="stationary.html"><a href="stationary.html#assessing-weak-stationarity-of-time-series-models"><i class="fa fa-check"></i><b>2.2.1</b> Assessing Weak Stationarity of Time Series Models</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="estimation-of-moments-of-stationary-processes.html"><a href="estimation-of-moments-of-stationary-processes.html"><i class="fa fa-check"></i><b>2.3</b> Estimation of Moments of Stationary Processes</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="estimation-of-moments-of-stationary-processes.html"><a href="estimation-of-moments-of-stationary-processes.html#estimation-of-the-mean-function"><i class="fa fa-check"></i><b>2.3.1</b> Estimation of the Mean Function</a></li>
+<li class="chapter" data-level="2.3.2" data-path="estimation-of-moments-of-stationary-processes.html"><a href="estimation-of-moments-of-stationary-processes.html#sample-autocovariance-and-autocorrelation-functions"><i class="fa fa-check"></i><b>2.3.2</b> Sample Autocovariance and Autocorrelation Functions</a></li>
+<li class="chapter" data-level="2.3.3" data-path="estimation-of-moments-of-stationary-processes.html"><a href="estimation-of-moments-of-stationary-processes.html#robustness-issues"><i class="fa fa-check"></i><b>2.3.3</b> Robustness Issues</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="joint-stationarity.html"><a href="joint-stationarity.html"><i class="fa fa-check"></i><b>2.4</b> Joint Stationarity</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="joint-stationarity.html"><a href="joint-stationarity.html#sample-cross-covariance-and-cross-correlation-functions"><i class="fa fa-check"></i><b>2.4.1</b> Sample Cross-Covariance and Cross-Correlation Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="portmanteau-test.html"><a href="portmanteau-test.html"><i class="fa fa-check"></i><b>2.5</b> Portmanteau test</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="autoregressive-moving-average-models.html"><a href="autoregressive-moving-average-models.html"><i class="fa fa-check"></i><b>3</b> Autoregressive Moving Average Models</a><ul>
+<li class="chapter" data-level="3.1" data-path="linear-operators-and-processes.html"><a href="linear-operators-and-processes.html"><i class="fa fa-check"></i><b>3.1</b> Linear Operators and Processes</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="linear-operators-and-processes.html"><a href="linear-operators-and-processes.html#linear-operators"><i class="fa fa-check"></i><b>3.1.1</b> Linear Operators</a></li>
+<li class="chapter" data-level="3.1.2" data-path="linear-operators-and-processes.html"><a href="linear-operators-and-processes.html#linear-processes"><i class="fa fa-check"></i><b>3.1.2</b> Linear Processes</a></li>
+<li class="chapter" data-level="3.1.3" data-path="linear-operators-and-processes.html"><a href="linear-operators-and-processes.html#examples-of-linear-processes"><i class="fa fa-check"></i><b>3.1.3</b> Examples of Linear Processes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="autoregressive-models.html"><a href="autoregressive-models.html"><i class="fa fa-check"></i><b>3.2</b> Autoregressive Models</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="autoregressive-models.html"><a href="autoregressive-models.html#properties-of-ar-models"><i class="fa fa-check"></i><b>3.2.1</b> Properties of AR models</a></li>
+<li class="chapter" data-level="3.2.2" data-path="autoregressive-models.html"><a href="autoregressive-models.html#estimation-of-arp-models"><i class="fa fa-check"></i><b>3.2.2</b> Estimation of AR(<span class="math inline">\(p\)</span>) models</a></li>
+</ul></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="appendixa.html"><a href="appendixa.html"><i class="fa fa-check"></i><b>A</b> Proofs</a><ul>
+<li class="chapter" data-level="A.1" data-path="proof-of-theorem-1.html"><a href="proof-of-theorem-1.html"><i class="fa fa-check"></i><b>A.1</b> Proof of Theorem 1</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/SMAC-Group/TTS" target="blank">&copy; 2016 Balamuta, Guerrier, Molinari, Xu</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Tour of Time Series Analysis with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="stationary" class="section level2">
+<h2><span class="header-section-number">2.2</span> Stationarity</h2>
+<p>There are two kinds of stationarity that are commonly used. They are defined as follows:</p>
+
+<div class="definition">
+<span id="def:strongstationarity" class="definition"><strong>Definition 2.2 </strong></span>A process <span class="math inline">\((X_t)\)</span> is <em>strongly stationary</em> or <em>strictly stationary</em> if the joint probability distribution of <span class="math inline">\((X_{t-h}, ..., X_t, ..., X_{t+h})\)</span> is independent of <span class="math inline">\(t\)</span> for all <span class="math inline">\(h\)</span>.
+</div>
+<p></p>
+
+<div class="definition">
+<span id="def:weakstationarity" class="definition"><strong>Definition 2.3 </strong></span>A process <span class="math inline">\((X_t)\)</span> is <em>weakly stationary</em>, <em>covariance stationary</em> or <em>second order stationary</em> if <span class="math inline">\(\mathbb{E}[X_t]\)</span>, <span class="math inline">\(\mathbb{E}[X_t^2]\)</span> are finite and <span class="math inline">\(\mathbb{E}[X_t X_{t-h}]\)</span> depends only on <span class="math inline">\(h\)</span> and not on <span class="math inline">\(t\)</span>.
+</div>
+<p></p>
+<p>These types of stationarity are <em>not equivalent</em> and the presence of one kind of stationarity does not imply the other. That is, a time series can be strongly stationary but not weakly stationary and vice versa. In some cases, a time series can be both strongly and weakly stationary and this is occurs, for example, in the (jointly) Gaussian case. Stationarity of <span class="math inline">\((X_t)\)</span> matters because <em>it provides the framework in which averaging dependent data makes sense</em> thereby allowing to easily estimate quantities such as the autocorrelation function.</p>
+<p>Several remarks and comments can be made on these definitions:</p>
+<ul>
+<li>As mentioned earlier, strong stationarity <em>does not imply</em> weak stationarity.</li>
+</ul>
+
+<div class="example">
+<span id="ex:strongnotweak" class="example"><strong>Example 2.1 </strong></span>an iid Cauchy process is strongly but not weakly stationary.
+</div>
+<p></p>
+<ul>
+<li>Weak stationarity <em>does not imply</em> strong stationarity.</li>
+</ul>
+
+<div class="example">
+<span id="ex:weaksplit" class="example"><strong>Example 2.2 </strong></span>Consider the following weak white noise process:
+\begin{equation*}
+X_t = \begin{cases}
+    U_{t}      &amp; \quad \text{if } t \in \{2k:\, k\in \mathbb{Z} \}, \\
+    V_{t}      &amp; \quad \text{if } t \in \{2k+1:\, k\in \mathbb{Z} \},\\
+  \end{cases}
+\end{equation*}
+where <span class="math inline">\({U_t} \mathop \sim \limits^{iid} N\left( {1,1} \right)\)</span> and <span class="math inline">\({V_t}\mathop \sim \limits^{iid} \mathcal{E}\left( 1 \right)\)</span> is a weakly stationary process that is <em>not</em> strongly stationary.
+</div>
+<p></p>
+<ul>
+<li>Strong stationarity combined with bounded values of <span class="math inline">\(\mathbb{E}[X_t]\)</span> and <span class="math inline">\(\mathbb{E}[X_t^2]\)</span> <em>implies</em> weak stationarity</li>
+<li>Weak stationarity combined with normality distributed processes <em>implies</em> strong stationarity.</li>
+</ul>
+<div id="assessing-weak-stationarity-of-time-series-models" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Assessing Weak Stationarity of Time Series Models</h3>
+<p>It is important to understand how to verify if a postulated model is (weakly) stationary. In order to do so, we must ensure that our model satisfies the following three properties:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(\mathbb{E}\left[X_t \right] = \mu_t = \mu &lt; \infty\)</span>,</li>
+<li><span class="math inline">\(\var\left[X_t \right] = \sigma^2_t = \sigma^2 &lt; \infty\)</span>,</li>
+<li><span class="math inline">\(\cov\left(X_t, X_{t+h} \right) = \gamma \left(h\right)\)</span>.</li>
+</ol>
+<p>In the following examples we evaluate the stationarity of the processes introduced in Section <a href="#basic-time-series-models"><strong>??</strong></a>.</p>
+
+<div class="example">
+<p><span id="ex:gwn" class="example"><strong>Example 2.3  (Gaussian White Noise) </strong></span>It is easy to verify that this process is stationary. Indeed, we have:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(\mathbb{E}\left[ {{X_t}} \right] = 0\)</span>,</li>
+<li><span class="math inline">\(\gamma(0) = \sigma^2 &lt; \infty\)</span>,<br />
+</li>
+<li><span class="math inline">\(\gamma(h) = 0\)</span> for <span class="math inline">\(|h| &gt; 0\)</span>.</li>
+</ol>
+</div>
+<p></p>
+
+<div class="example">
+<p><span id="ex:srw" class="example"><strong>Example 2.4  (Random Walk) </strong></span>To evaluate the stationarity of this process we first derive its properties:</p>
+<ol style="list-style-type: decimal">
+<li><p>We begin by calculating the expectation of the process <span class="math display">\[
+  \mathbb{E}\left[ {{X_t}} \right] = \mathbb{E}\left[ {{X_{t - 1}} + {W_t}} \right] 
+   = \mathbb{E}\left[ {\sum\limits_{i = 1}^t {{W_i}}  + {X_0}} \right] 
+   = \mathbb{E}\left[ {\sum\limits_{i = 1}^t {{W_i}} } \right] + {c} 
+   = c.  \]</span> Observe that the mean obtained is constant since it depends only on the value of the first term in the sequence.</p></li>
+<li><p>Next, after finding the mean to be constant, we calculate the variance to check stationarity: <span class="math display">\[\begin{aligned}
+  \var\left( {{X_t}} \right) &amp;= \var\left( {\sum\limits_{i = 1}^t {{W_t}}  + {X_0}} \right) 
+   = \var\left( {\sum\limits_{i = 1}^t {{W_i}} } \right) + \underbrace {\var\left( {{X_0}} \right)}_{= 0} \\
+   &amp;= \sum\limits_{i = 1}^t {\var\left( {{W_i}} \right)} 
+   = t \sigma_w^2,
+\end{aligned}\]</span> where <span class="math inline">\(\sigma_w^2 = \var(W_t)\)</span>. Therefore, the variance depends on time <span class="math inline">\(t\)</span> contradicting our second property. Moreover, we have: <span class="math display">\[\mathop {\lim }\limits_{t \to \infty } \; \var\left(X_t\right) = \infty.\]</span> This process is therefore not weakly stationary.</p></li>
+<li><p>Regarding the autocovariance of a random walk we have: <span class="math display">\[\begin{aligned}
+  \gamma \left( h \right) &amp;= \cov\left( {{X_t},{X_{t + h}}} \right) 
+   = \cov\left( {\sum\limits_{i = 1}^t {{W_i}} ,\sum\limits_{j = 1}^{t + h} {{W_j}} } \right) 
+   = \cov\left( {\sum\limits_{i = 1}^t {{W_i}} ,\sum\limits_{j = 1}^t {{W_j}} } \right)\\ 
+   &amp;= \min \left( {t,t + h} \right)\sigma _w^2
+   = \left( {t + \min \left( {0,h} \right)} \right)\sigma _w^2,
+\end{aligned} \]</span> which further illustrates the non-stationarity of this process.</p></li>
+</ol>
+<p>Moreover, the autocorrelation of this process is given by</p>
+<p><span class="math display">\[\rho (h) = \frac{t + \min \left( {0,h} \right)}{\sqrt{t}\sqrt{t+h}},\]</span></p>
+<p>implying (for a fixed <span class="math inline">\(h\)</span>) that</p>
+<span class="math display">\[\mathop {\lim }\limits_{t \to \infty } \; \rho(h) = 1.\]</span>
+</div>
+<p></p>
+<p>In the following simulated example, we illustrate the non-stationary feature of such a process:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># In this example, we simulate a large number of random walks</span>
+
+<span class="co"># Number of simulated processes</span>
+B =<span class="st"> </span><span class="dv">200</span>
+
+<span class="co"># Length of random walks</span>
+n =<span class="st"> </span><span class="dv">1000</span>
+
+<span class="co"># Output matrix</span>
+out =<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>,B,n)
+
+<span class="co"># Set seed for reproducibility</span>
+<span class="kw">set.seed</span>(<span class="dv">6182</span>)
+
+<span class="co"># Simulate Data</span>
+for (i in <span class="kw">seq_len</span>(B)){
+  <span class="co"># Simulate random walk</span>
+  Xt =<span class="st"> </span><span class="kw">gen.gts</span>(<span class="kw">RW</span>(<span class="dt">gamma=</span><span class="dv">1</span>), <span class="dt">N =</span> n)
+  
+  <span class="co"># Store process</span>
+  out[i,] =<span class="st"> </span>Xt
+}
+
+<span class="co"># Plot random walks</span>
+<span class="kw">plot</span>(<span class="ot">NA</span>, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">1</span>,n), <span class="dt">ylim =</span> <span class="kw">range</span>(out), <span class="dt">xlab =</span> <span class="st">&quot;Time&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot; &quot;</span>)
+<span class="kw">grid</span>()
+color =<span class="st"> </span><span class="kw">sample</span>(<span class="kw">topo.colors</span>(B, <span class="dt">alpha =</span> <span class="fl">0.5</span>))
+<span class="kw">grid</span>()
+for (i in <span class="kw">seq_len</span>(B)){
+  <span class="kw">lines</span>(out[i,], <span class="dt">col =</span> color[i])
+}
+
+<span class="co"># Add 95% confidence region</span>
+<span class="kw">lines</span>(<span class="dv">1</span>:n, <span class="fl">1.96</span>*<span class="kw">sqrt</span>(<span class="dv">1</span>:n), <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
+<span class="kw">lines</span>(<span class="dv">1</span>:n, -<span class="fl">1.96</span>*<span class="kw">sqrt</span>(<span class="dv">1</span>:n), <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:RWsim"></span>
+<img src="tts_files/figure-html/RWsim-1.png" alt="Two hundred simulated random walks." width="672" />
+<p class="caption">
+Figure 2.3: Two hundred simulated random walks.
+</p>
+</div>
+<p>In the plot, two hundred simulated random walks are plotted along with the theoretical 95% confidence intervals (red-dashed lines). The relationship between time and variance can clearly be observed (i.e. the variance of the process increases with the time).</p>
+
+<div class="example">
+<p><span id="ex:exma1" class="example"><strong>Example 2.5  (Moving Average of Order 1) </strong></span> Similarly to our previous examples, we attempt to verify the stationary properties for the MA(1) model defined in Section <a href="basicmodels.html#ma1">1.3.4</a>:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math display">\[ 
+  \mathbb{E}\left[ {{X_t}} \right] = \mathbb{E}\left[ {{\theta_1}{W_{t - 1}} + {W_t}} \right] 
+   = {\theta_1} \mathbb{E} \left[ {{W_{t - 1}}} \right] + \mathbb{E}\left[ {{W_t}} \right] 
+   = 0. \]</span></li>
+<li><span class="math display">\[\var \left( {{X_t}} \right) = \theta_1^2 \var \left( W_{t - 1}\right) + \var \left( W_{t}\right) = \left(1 + \theta^2 \right) \sigma^2_w.\]</span><br />
+</li>
+<li>Regarding the autocovariance, we have <span class="math display">\[\begin{aligned}
+  \cov\left( {{X_t},{X_{t + h}}} \right) &amp;= \mathbb{E}\left[ {\left( {{X_t} - \mathbb{E}\left[ {{X_t}} \right]} \right)\left( {{X_{t + h}} - \mathbb{E}\left[ {{X_{t + h}}} \right]} \right)} \right] = \mathbb{E}\left[ {{X_t}{X_{t + h}}} \right] \\
+   &amp;= \mathbb{E}\left[ {\left( {{\theta}{W_{t - 1}} + {W_t}} \right)\left( {{\theta }{W_{t + h - 1}} + {W_{t + h}}} \right)} \right] \\
+   &amp;= \mathbb{E}\left[ {\theta^2{W_{t - 1}}{W_{t + h - 1}} + \theta {W_t}{W_{t + h}} + {\theta}{W_{t - 1}}{W_{t + h}} + {W_t}{W_{t + h}}} \right]. \\
+  \end{aligned} \]</span> It is easy to see that <span class="math inline">\(\mathbb{E}\left[ {{W_t}{W_{t + h}}} \right] = {\boldsymbol{1}_{\left\{ {h = 0} \right\}}}\sigma _w^2\)</span> and therefore, we obtain <span class="math display">\[\cov \left( {{X_t},{X_{t + h}}} \right) = \left( {\theta^2{ \boldsymbol{1}_{\left\{ {h = 0} \right\}}} + {\theta}{\boldsymbol{1}_{\left\{ {h = 1} \right\}}} + {\theta}{\boldsymbol{1}_{\left\{ {h =  - 1} \right\}}} + {\boldsymbol{1}_{\left\{ {h = 0} \right\}}}} \right)\sigma _w^2\]</span> implying the following autocovariance function: <span class="math display">\[\gamma \left( h \right) = \left\{ {\begin{array}{*{20}{c}}
+  {\left( {\theta^2 + 1} \right)\sigma _w^2}&amp;{h = 0} \\ 
+  {{\theta}\sigma _w^2}&amp;{\left| h \right| = 1} \\ 
+  0&amp;{\left| h \right| &gt; 1} 
+  \end{array}} \right. .\]</span> Therefore, an MA(1) process is weakly stationary since both the mean and variance are constant over time and its covariance function is only a function of the lag <span class="math inline">\(h\)</span>. Finally, we can easily obtain the autocorrelation for this process, which is given by <span class="math display">\[\rho \left( h \right) = \left\{ {\begin{array}{*{20}{c}}
+  1&amp;{h = 0} \\ 
+  {\frac{{{\theta}\sigma _w^2}}{{\left( {\theta^2 + 1} \right)\sigma _w^2}} = \frac{{{\theta}}}{{\theta^2 + 1}}}&amp;{\left| h \right| = 1} \\ 
+  0&amp;{\left| h \right| &gt; 1} 
+\end{array}} \right. .\]</span> Interestingly, we can note that <span class="math inline">\(|\rho(1)| \leq 0.5\)</span>.</li>
+</ol>
+</div>
+<p></p>
+
+<div class="example">
+<p><span id="ex:exar1" class="example"><strong>Example 2.6  (Autoregressive of Order 1) </strong></span>As another example, we shall verify the stationary properties for the AR(1) model defined in Section <a href="basicmodels.html#ar1">1.3.3</a>.</p>
+<p>Using the <em>backsubstitution</em> technique, we can rearrange an AR(1) process so that it is written in a more compact form, i.e.</p>
+<p><span class="math display">\[\begin{aligned}
+  {X_t} &amp; =  {\phi }{X_{t - 1}} + {W_t} = \phi \left[ {\phi {X_{t - 2}} + {W_{t - 1}}} \right] + {W_t} 
+    =  {\phi ^2}{X_{t - 2}} + \phi {W_{t - 1}} + {W_t}  \\
+   &amp;  \vdots  \\
+   &amp; =  {\phi ^k}{X_{t-k}} + \sum\limits_{j = 0}^{k - 1} {{\phi ^j}{W_{t - j}}} .
+\end{aligned} \]</span></p>
+<p>By taking the limit in <span class="math inline">\(k\)</span> (which is perfectly valid as we assume <span class="math inline">\(t \in \mathbb{Z}\)</span>) and assuming <span class="math inline">\(|\phi|&lt;1\)</span>, we obtain</p>
+<p><span class="math display">\[\begin{aligned}
+  X_t = \mathop {\lim }\limits_{k \to \infty} \; {X_t}  =  \sum\limits_{j = 0}^{\infty} {{\phi ^j}{W_{t - j}}} 
+\end{aligned} \]</span></p>
+<p>and therefore such process can be interpreted as a linear combination of the white noise <span class="math inline">\((W_t)\)</span> and corresponds (as we will later on) to an MA(<span class="math inline">\(\infty\)</span>). In addition, the requirement <span class="math inline">\(\left| \phi \right| &lt; 1\)</span> turns out to be extremely useful as the above formula is related to Geometric series which would diverge if <span class="math inline">\(\phi \geq 1\)</span>. Indeed, remember that an infinite (converging) Geometric series is given by</p>
+<p><span class="math display">\[\sum\limits_{k = 0}^\infty  \, a{{r^k}}  = \frac{a}{{1 - r}}, \; {\text{ if }}\left| r \right| &lt; 1.\]</span></p>
+<!--
+The origin of the requirement comes from needing to ensure that the characteristic polynomial solution for an AR1 lies outside of the unit circle. Subsequently, stability enables the process to be stationary. If $\phi  \ge 1$, the process would not converge. Under the requirement, the process can represented as a 
+-->
+<p>With this setup, we demonstrate how crucial this property is by calculating each of the requirements of a stationary process.</p>
+<ol style="list-style-type: decimal">
+<li>First, we will check if the mean is stationary. In this case, we opt to use limits to derive the expectation <span class="math display">\[\begin{aligned}
+  \mathbb{E}\left[ {{X_t}} \right] &amp;= \mathop {\lim }\limits_{k \to \infty } \mathbb{E}\left[ {{\phi^k}{X_{t-k}} + \sum\limits_{j = 0}^{k - 1} {\phi^j{W_{t - j}}} } \right] \\
+   &amp;= \mathop {\lim }\limits_{k \to \infty } \, \underbrace {{\phi ^k}{\mathbb{E}[X_{t-k}]}}_{= 0} + \mathop {\lim }\limits_{k \to \infty } \, \sum\limits_{j = 0}^{k - 1} {\phi^j\underbrace {\mathbb{E}\left[ {{W_{t - j}}} \right]}_{ = 0}}
+   = 0.
+\end{aligned} \]</span> As expected, the mean is zero and, hence, the first criteria for weak stationarity is satisfied.</li>
+<li>Next, we opt to determine the variance of the process <span class="math display">\[\begin{aligned}
+\var\left( {{X_t}} \right) &amp;= \mathop {\lim }\limits_{k \to \infty } \var\left( {{\phi^k}{X_{t-k}} + \sum\limits_{j = 0}^{k - 1} {\phi^j{W_{t - j}}} } \right)
+   = \mathop {\lim }\limits_{k \to \infty } \sum\limits_{j = 0}^{k - 1} {\phi ^{2j} \var\left( {{W_{t - j}}} \right)}  \\
+   &amp;= \mathop {\lim }\limits_{k \to \infty } \sum\limits_{j = 0}^{k - 1} \sigma _W^2 \, {\phi ^{2j}}  =  
+  \underbrace {\frac{\sigma _W^2}{{1 - {\phi ^2}}}.}_{\begin{subarray}{l} 
+  {\text{Geom. Serie}} 
+\end{subarray}}
+\end{aligned} \]</span> Once again, the above result only holds because we are able to use the geometric series convergence as a result of <span class="math inline">\(\left| \phi \right| &lt; 1\)</span>.</li>
+<li>Finally, we consider the autocovariance of an AR(1). For <span class="math inline">\(h &gt; 0\)</span>, we have <span class="math display">\[\gamma \left( h \right) =  \cov\left( {{X_t},{X_{t + h}}} \right) = \phi \cov\left( {{X_t},{X_{t + h - 1}}} \right) = \phi \, \gamma \left( h-1 \right).\]</span> Therefore, we using the symmetry of the autocovariance we have that <span class="math display">\[\gamma \left( h \right) = \phi^{|h|} \, \gamma(0).\]</span></li>
+</ol>
+<p>Both the mean and variance do not depend on time in addition the autocovariance function can be viewed as function dependent on only lags and, thus, the AR(1) process is weakly stationary if <span class="math inline">\(\left| \phi \right| &lt; 1\)</span>. Lastly, we can obtain the autocorrelation for this process. Indeed, for <span class="math inline">\(h &gt; 0\)</span>, we have</p>
+<p><span class="math display">\[\rho \left( h \right) = \frac{{\gamma \left( h \right)}}{{\gamma \left( 0 \right)}} = \frac{{\phi \gamma \left( {h - 1} \right)}}{{\gamma \left( 0 \right)}} = \phi \rho \left( {h - 1} \right).\]</span></p>
+<p>After fully simplifying, we obtain</p>
+<p><span class="math display">\[\rho \left( h \right) = {\phi^{|h|}}.\]</span></p>
+Thus, the autocorrelation function for an AR(1) exhibits a <em>geometric decay</em>, meaning, the smaller the <span class="math inline">\(|\phi|\)</span>, the faster the autocorrelation reaches zero. If <span class="math inline">\(|\phi|\)</span> is close to 1, then the decay rate is slower.
+</div>
+<p></p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="the-autocorrelation-and-autocovariance-functions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="estimation-of-moments-of-stationary-processes.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/SMAC-Group/TTS/edit/master/02-stationarity.Rmd",
+"text": "Edit"
+},
+"download": ["tts.pdf", "tts.epub", "tts.mobi"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
