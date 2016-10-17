@@ -347,8 +347,13 @@ where <span class="math inline">\(\phi(B) = \sum_{j = 0}^{\infty} \phi_j B^j\)</
 Since <span class="math inline">\(z_2 = \frac{\phi_1 - \sqrt{\phi_1^2 + 4\phi_2}}{-2 \phi_2}\)</span> and <span class="math inline">\(\phi_2-1 &lt; \phi_1 &lt; 1-\phi_2\)</span>, then <span class="math inline">\(z_2^2 = \frac{\left(\phi_1 - \sqrt{\phi_1^2 + 4\phi_2}\right)^2}{4 \phi_2^2} &lt; \frac{\left((\phi_2-1) + \sqrt{(\phi_2-1)^2 + 4\phi_2}\right)^2}{4 \phi_2^2} = \frac{4 \phi_2^2}{4 \phi_2^2} = 1\)</span>.
 </div>
 <p></p>
-<p>Finally, the causal region of an AR(2) is depicted on the figure below.</p>
-<p><img src="tts_files/figure-html/causalAR2-1.png" width="672" /></p>
+<p>Finally, the causal region of an AR(2) is depicted in Figure <a href="autoregressive-models.html#fig:causalAR2">3.2</a>.</p>
+<div class="figure"><span id="fig:causalAR2"></span>
+<img src="tts_files/figure-html/causalAR2-1.png" alt="Causal Region for Parameters of an AR(2) Process" width="672" />
+<p class="caption">
+Figure 3.2: Causal Region for Parameters of an AR(2) Process
+</p>
+</div>
 </div>
 <div id="autocorrelation" class="section level4">
 <h4><span class="header-section-number">3.2.1.2</span> Autocorrelation</h4>
@@ -365,10 +370,14 @@ Since <span class="math inline">\(z_2 = \frac{\phi_1 - \sqrt{\phi_1^2 + 4\phi_2}
 \end{cases},\]</span> implying that <span class="math inline">\(c_1 = -\frac{3}{7}\)</span> and <span class="math inline">\(c_2 = \frac{10}{7}\)</span>. The ACF for this model is therefore given by <span class="math display">\[\rho(h) = -\frac{3}{7}2^{-h} + \frac{10}{7}\left(\frac{5}{4}\right)^{-h} .\]</span>
 </div>
 <p></p>
-<p>The graph depicts the ACF of this process:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(exts)
 <span class="kw">autoplot</span>(<span class="kw">theo_acf</span>(<span class="kw">AR</span>(<span class="dt">phi =</span> <span class="kw">c</span>(<span class="fl">1.3</span>, -<span class="fl">0.4</span>))))</code></pre></div>
-<p><img src="tts_files/figure-html/ACFAR2_cont-1.png" width="576" /></p>
+<div class="figure"><span id="fig:ACFAR2cont"></span>
+<img src="tts_files/figure-html/ACFAR2cont-1.png" alt="Depicts of the Theoretical ACF of an AR(2) Process." width="576" />
+<p class="caption">
+Figure 3.3: Depicts of the Theoretical ACF of an AR(2) Process.
+</p>
+</div>
 <p>The method used in the previous is only applicable for AR(2) with roots that are distinct and real, which is true when <span class="math inline">\(\phi_2 &gt; - \phi^1/4\)</span>. In the case where <span class="math inline">\(\phi_2 = - \phi^1/4\)</span>, the autoregressive operator has single root and <span class="math inline">\(\rho(h)\)</span> can be obtain by determining (using initial conditions) the constants <span class="math inline">\(c_1\)</span> and <span class="math inline">\(c_2\)</span> of the following expression:</p>
 <p><span class="math display">\[\rho(h) = z_1^{-h} \left(c_1 + c_2 h\right).\]</span> When <span class="math inline">\(\phi_2 &gt; - \phi^1/4\)</span> the roots are complex conjugate pairs and solution is given by:</p>
 <p><span class="math display">\[\rho(h) = c_1 |z_1|^{-h} \cos \left(h \theta + c_2\right), \]</span> where the constants depends on initial conditions, while <span class="math inline">\(\theta = \text{arg}(z_1)\)</span>.</p>
@@ -381,13 +390,19 @@ Since <span class="math inline">\(z_2 = \frac{\phi_1 - \sqrt{\phi_1^2 + 4\phi_2}
   \text{Model 2}: \;\;\; X_t &amp;= 0.5 X_{t-1} + 0.25 X_{t-2} + W_t  \\
   \text{Model 3}: \;\;\; X_t &amp;= -1.5 X_{t-1} - 0.75 X_{t-2} + W_t.
 \end{aligned} \]</span></p>
-It is easy to verify the first one has real distrinct roots, the second a unique real root while the latter has complexe roots. This is illustrated in the figure which depicts the causal region of an AR(2) that has been separated between models with real and complexe roots.
+It is easy to verify the first one has real distrinct roots, the second a unique real root while the latter has complexe roots. This is illustrated in Figure <a href="autoregressive-models.html#fig:causalAR2part2">3.4</a> which depicts the causal region of an AR(2) that has been separated between models with real and complexe roots.
 </div>
 <p></p>
 <p>Next we present an example to show how to derive the ACF for general causal AR(p) model. It is much more complicated than what we did for AR(2).</p>
-<p><img src="tts_files/figure-html/causalAR2_part2-1.png" width="672" /></p>
-<p>The ACF of these models are represented on the figure below. As expected the three models corresponds to an ACF that dampens exponentially fast but only Model 3 exhibits a sinusoidal features.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gridExtra)
+<div class="figure"><span id="fig:causalAR2part2"></span>
+<img src="tts_files/figure-html/causalAR2part2-1.png" alt="Viable Solutions of AR(p)" width="672" />
+<p class="caption">
+Figure 3.4: Viable Solutions of AR(p)
+</p>
+</div>
+<p>The ACF of these models are represented in Figure <a href="autoregressive-models.html#fig:ACFAR2eg">3.5</a>. As expected the three models corresponds to an ACF that dampens exponentially fast but only Model 3 exhibits a sinusoidal features.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;exts&quot;</span>)
+<span class="kw">library</span>(<span class="st">&quot;gridExtra&quot;</span>)
 
 <span class="co"># Define models</span>
 m1 =<span class="st"> </span><span class="kw">AR</span>(<span class="dt">phi =</span> <span class="kw">c</span>(<span class="dv">1</span>, -<span class="fl">0.25</span>))
@@ -404,7 +419,12 @@ a1 =<span class="st"> </span><span class="kw">autoplot</span>(acf1)
 a2 =<span class="st"> </span><span class="kw">autoplot</span>(acf2)
 a3 =<span class="st"> </span><span class="kw">autoplot</span>(acf3)
 <span class="kw">grid.arrange</span>(a1, a2, a3, <span class="dt">nrow =</span> <span class="dv">1</span>)</code></pre></div>
-<p><img src="tts_files/figure-html/ACFAR2eg-1.png" width="864" /></p>
+<div class="figure"><span id="fig:ACFAR2eg"></span>
+<img src="tts_files/figure-html/ACFAR2eg-1.png" alt="Theoretical Autocorrelation Graphs of with models from left to right being Model 1, Model 2, and Model 3." width="864" />
+<p class="caption">
+Figure 3.5: Theoretical Autocorrelation Graphs of with models from left to right being Model 1, Model 2, and Model 3.
+</p>
+</div>
 <p>Next, we consider the ACF for a general causal AR(<span class="math inline">\(p\)</span>) model. Unfortunately, this is far more complicated than our previous example.</p>
 
 <div class="example">
@@ -481,19 +501,19 @@ and
 \end{equation}
 which in matrix notation can be defined as follows
 \begin{equation}
-    \Gamma_p \mathbf{\phi} = \mathbf{\gamma}_p \text{and} \sigma_w^2 = \gamma(0) - \mathbf{\phi}&#39;\mathbf{\gamma}_p
+    \Gamma_p \mathbf{\phi} = \mathbf{\gamma}_p \text{ and } \sigma_w^2 = \gamma(0) - \mathbf{\phi}&#39;\mathbf{\gamma}_p
 \end{equation}
 where <span class="math inline">\(\Gamma_p\)</span> is the <span class="math inline">\(p\times p\)</span> matrix containing the autocovariances <span class="math inline">\(\gamma(k-j), j,k = 1, ...,p\)</span> while <span class="math inline">\(\mathbf{\phi} = (\phi_1,...,\phi_p)&#39;\)</span> and <span class="math inline">\(\mathbf{\gamma}_p = (\gamma(1),...,\gamma(p))&#39;\)</span> are <span class="math inline">\(p\times 1\)</span> vectors.
 </div>
 <p></p>
 Considering the Yule-Walker equations, it is possible to use a method of moments approach and simply replace the theoretical quantities given in the previous definition with their empirical (estimated) counterparts that we saw in the previous chapter. This gives us the following Yule-Walker estimators
 \begin{equation}
-    \hat{\mathbf{\phi}} = \hat{\Gamma}_p^{-1}\hat{\mathbf{\gamma}}_p \text{and} \hat{\sigma}_w^2 = \hat{\gamma}(0) - \hat{\mathbf{\gamma}}_p&#39;\hat{\Gamma}_p^{-1}\hat{\mathbf{\gamma}}_p
+    \hat{\mathbf{\phi}} = \hat{\Gamma}_p^{-1}\hat{\mathbf{\gamma}}_p \text{ and } \hat{\sigma}_w^2 = \hat{\gamma}(0) - \hat{\mathbf{\gamma}}_p&#39;\hat{\Gamma}_p^{-1}\hat{\mathbf{\gamma}}_p
 \end{equation}
 <p>These estimators have the following asymptotic properties.</p>
 <p><strong>Property: Consistency and Asymptotic Normality of Yule-Walker estimators</strong> The Yule-Walker estimators for a causal AR(p) model have the following asymptotic properties:</p>
 \begin{equation*}
-\sqrt{T}(\hat{\mathbf{\phi}}- \mathbf{\phi}) \xrightarrow{\mathcal{D}} \mathcal{N}(\mathbf{0},\sigma_w^2\Gamma_p^{-1}) \text{and} \hat{\sigma}_w^2 \xrightarrow{\mathcal{P}} \sigma_w^2 .
+\sqrt{T}(\hat{\mathbf{\phi}}- \mathbf{\phi}) \xrightarrow{\mathcal{D}} \mathcal{N}(\mathbf{0},\sigma_w^2\Gamma_p^{-1}) \text{ and } \hat{\sigma}_w^2 \xrightarrow{\mathcal{P}} \sigma_w^2 .
 \end{equation*}
 Therefore the Yule-Walker estimators have an asymptotically normal distribution and the estimator of the innovation variance is consistent. Moreover, these estimators are also optimal for AR(p) models, meaning that they are also efficient. However, there exists another method which allows to achieve this efficiency also for general ARMA models and this is the maximum likelihood method. Considering an AR(1) model as an example, and assuming without loss of generality that the expectation is zero, we have the following representation of the AR(1) model
 \begin{equation*}
