@@ -26,7 +26,7 @@
 <meta name="author" content="James Balamuta, Stéphane Guerrier, Roberto Molinari and Haotian Xu">
 
   
-<meta name="date" content="2016-10-17">
+<meta name="date" content="2016-10-20">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -197,7 +197,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.1.3" data-path="linear-operators-and-processes.html"><a href="linear-operators-and-processes.html#examples-of-linear-processes"><i class="fa fa-check"></i><b>3.1.3</b> Examples of Linear Processes</a></li>
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="autoregressive-models.html"><a href="autoregressive-models.html"><i class="fa fa-check"></i><b>3.2</b> Autoregressive Models</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="autoregressive-models.html"><a href="autoregressive-models.html#properties-of-ar-models"><i class="fa fa-check"></i><b>3.2.1</b> Properties of AR models</a></li>
+<li class="chapter" data-level="3.2.1" data-path="autoregressive-models.html"><a href="autoregressive-models.html#properties-of-arp-models"><i class="fa fa-check"></i><b>3.2.1</b> Properties of AR(p) models</a></li>
 <li class="chapter" data-level="3.2.2" data-path="autoregressive-models.html"><a href="autoregressive-models.html#estimation-of-arp-models"><i class="fa fa-check"></i><b>3.2.2</b> Estimation of AR(<span class="math inline">\(p\)</span>) models</a></li>
 </ul></li>
 </ul></li>
@@ -227,69 +227,73 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="linear-operators-and-processes" class="section level2">
 <h2><span class="header-section-number">3.1</span> Linear Operators and Processes</h2>
-<p>Within this section, the concepts of linear operators and processes will be discussed. Both concepts are critical to being able to model time series data. In fact, every time series that can be denoted as weakly stationary is either a linear process or has the ability to be after being transformed using a linear operation such as differencing deterministic components.</p>
+<p>Within this section, the concepts of linear operators and processes will be discussed thereby providing some theoretical bases to model a variety of time series data. In fact, every time series that is weakly stationary is either a linear process or can be redefined as such after being transformed using a linear operation such as, for example, removing a trend through differencing.</p>
 <div id="linear-operators" class="section level3">
 <h3><span class="header-section-number">3.1.1</span> Linear Operators</h3>
-<p>Prior to introducing linear processes, discussion must first focus upon a very useful tool: linear operators. These operators play a fundamental role in easing the manipulation of time series equations. Principally, the manipulations serve three fold: 1. converting into a linear process form, 2. differencing deterministic components, and 3. adjusting seasonal time windows.</p>
+Prior to introducing linear processes, we will first discuss the concept of linear operators that are necessary to better understand the former. These operators allow to manipulate time series in order to transform them into a form that can be represented by the models presented in the previous chapters (and the ARMA models presented further on). Generally speaking, these operators serve three main goals:
+\begin{itemize}
+  \item converting a time series into a linear process form;
+  \item differencing in order to remove deterministic components;
+  \item removing seasonal trends.
+\end{itemize}
 
 <div class="definition">
-<p><span id="def:linop" class="definition"><strong>Definition 3.1  (Linear Operator) </strong></span>A linear operator, <span class="math inline">\(L\)</span>, is an operator which satisfies the following two conditions:</p>
+<p><span id="def:linop" class="definition"><strong>Definition 3.1  (Linear Operator) </strong></span>A linear operator <span class="math inline">\(L\)</span> is an operator that satisfies the following two conditions:</p>
 <span class="math display">\[\begin{aligned}
   L\left( {{X_t} + {Y_t}} \right) &amp;= L{X_t} + L{X_t} &amp; \text{(Preserves Addition)}\\
   L\left( {\lambda  \cdot {X_t}} \right) &amp;= \lambda  \cdot \left( {L{X_t}} \right) &amp; \text{(Preserves Scalar Multiplication)} \\ 
 \end{aligned} \]</span>
 </div>
 <p></p>
-<p>Linear operators are defined to exists within a Hilbert space. As a result, these operations are mathematical very rigorous. Details on the rigor will not be invested indepth within this text and are left as an exercise better suited to Abstract Linear Algebra.</p>
+<p>Given these definitions, the following subsections will investigate some specific linear operators that are particularly suited to manipulate the time series that are treated within this chapter.</p>
 <div id="backshift-lag-operator" class="section level4">
 <h4><span class="header-section-number">3.1.1.1</span> Backshift (Lag) Operator</h4>
-<p>One of the principal uses of a linear operator within time series is the backshift operator. The backshift operator provides the ability to change the indices of the time series by one period e.g. <span class="math inline">\(t \rightarrow t-1\)</span>.</p>
+<p>The backshift operator is a linear operator which can be used to define the other operators that will be discussed in the following paragraphs. The purpose of this operator is to change the indices of the time series by one period (e.g. <span class="math inline">\(t \rightarrow t-1\)</span>) thereby shifting a variable at time <span class="math inline">\(t\)</span> to its predecessor at time <span class="math inline">\(t-1\)</span>.</p>
 
 <div class="definition">
-<p><span id="def:backshiftop" class="definition"><strong>Definition 3.2  (Backshift Operator) </strong></span>The backshift operator is defined as:</p>
-<p><span class="math display">\[B{X_t} = {X_{t - 1}}\]</span></p>
-<p>The backshift operator has the following properties:</p>
+<p><span id="def:backshiftop" class="definition"><strong>Definition 3.2  (Backshift Operator) </strong></span>The backshift operator <span class="math inline">\(B\)</span> is defined as:</p>
+<span class="math display">\[B{X_t} = {X_{t - 1}}\]</span>
+</div>
+<p></p>
+<p>Given this definition, the backshift operator has the following properties:</p>
 <ol style="list-style-type: decimal">
-<li>Multiple backshifts yield: <span class="math inline">\({B^k}{X_t} = B^{k-1} B {X_t} = B^{k-1} {X_{t-1}} = {X_{t - k}}\)</span></li>
-<li>By raising to a negative power, the backshift operator moves observations forward: <span class="math inline">\(B^{-1} = {X_{t+1}}\)</span></li>
-<li>Given a constant, <span class="math inline">\(c \in \real\)</span>: <span class="math inline">\(Bc = c\)</span></li>
+<li><span class="math inline">\({B^k}{X_t} = B^{k-1} B {X_t} = B^{k-1} {X_{t-1}} = ... = {X_{t - k}}\)</span> for <span class="math inline">\(k \in \mathbb{N}^{+}\)</span></li>
+<li><span class="math inline">\(B^{u} = {X_{t+u}}\)</span> for <span class="math inline">\(u \in \mathbb{Z}^{-}\)</span> (i.e. negative integer powers)</li>
+<li><span class="math inline">\(Bc = c\)</span> for <span class="math inline">\(c \in \real\)</span></li>
 <li><span class="math inline">\(B^0 = 1\)</span></li>
 </ol>
-</div>
-<p></p>
-<p>The notation for the backshift operator changes depending on the author’s preferences. An alternative way to denote a backshift operation given by <span class="math inline">\(B\)</span> is to use the lag operator <span class="math inline">\(L\)</span>. The same conventions as discussed above apply equally to the lag operator.</p>
+<p>Often the backshift operator may be denoted as <span class="math inline">\(L\)</span> which can be confused with the notation of the linear operator provided earlier. Therefore, in the context of this chapter (and book), please notice that <span class="math inline">\(L\)</span> will denote a general linear operator and that <span class="math inline">\(B\)</span> will instead denote the backshift operator.</p>
 
 <div class="example">
-<span id="ex:backshiftseasons" class="example"><strong>Example 3.1  (Backshifting with respect to seasonality) </strong></span>If the backshift operator is raised to a higher power, say <span class="math inline">\(k = 12\)</span>, then this leads to allowing the exploration of seasonality. Specifically, in the case of monthly data, <span class="math inline">\(B^{12} X_t = X_{t-12}\)</span> would provide a way to look at the data that occurred one year prior.
+<span id="ex:backshiftseasons" class="example"><strong>Example 3.1  (Backshift operator for seasonality) </strong></span>A certain power used for the backshift operator can be useful to deal with seasonal features in the observed time series. For example, in the case of monthly data, <span class="math inline">\(B^{12} X_t = X_{t-12}\)</span> would eventually allow to deal with cycles that occur every year while <span class="math inline">\(B^{3} X_t = X_{t-3}\)</span> would be more adapted to dealing with quarterly characteristics.
 </div>
 <p></p>
 </div>
-<div id="differencing-operator" class="section level4">
-<h4><span class="header-section-number">3.1.1.2</span> Differencing Operator</h4>
-<p>The differencing operator is helpful when trying to remove trend from the data. Many make an analogy between this operator and taking a first derivative of a function.</p>
+<div id="difference-operator" class="section level4">
+<h4><span class="header-section-number">3.1.1.2</span> Difference Operator</h4>
+<p>A very useful operator that can be defined through the backshift operator <span class="math inline">\(B\)</span> is given by the difference operator <span class="math inline">\(\nabla\)</span>. The latter is particularly helpful when there is a need to remove trends from the time series.</p>
 
 <div class="definition">
-<p><span id="def:diffop" class="definition"><strong>Definition 3.3  (Differencing Operator) </strong></span>The <strong>Differencing Operator</strong> is defined as the gradient symbol applied to a time series:</p>
-<p><span class="math display">\[\nabla {X_t} = {X_t} - {X_{t - 1}} = \left( {1 - B} \right){X_t}\]</span></p>
+<p><span id="def:diffop" class="definition"><strong>Definition 3.3  (Difference Operator) </strong></span>The <strong>Difference Operator</strong> is defined as follows:</p>
+<p><span class="math display">\[\nabla {X_t} = \left( {1 - B} \right){X_t} = {X_t} - {X_{t - 1}}.\]</span></p>
 <p>The difference operator has the following properties:</p>
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\({\nabla ^k}{X_t} = {\nabla ^{k - 1}} \left( {\nabla {X_t}}\right) = \left( {1 - B} \right)^k {X_t}\)</span></li>
-<li><span class="math inline">\({\nabla ^1}{X_t} = \nabla {X_t}\)</span></li>
-<li><span class="math inline">\(\nabla c = 0\)</span></li>
+<li><span class="math inline">\(\nabla c = 0\)</span> for <span class="math inline">\(c \in \real\)</span></li>
 <li><span class="math inline">\({\nabla ^0}{X_t} = {X_t}\)</span></li>
 </ol>
 </div>
 <p></p>
 
 <div class="example">
-<p><span id="ex:diffex" class="example"><strong>Example 3.2  (Repetitive Differencing) </strong></span>To understand the repetitive nature of the difference operation, consider the case when the number of differences is <span class="math inline">\(k = 2\)</span>:</p>
+<p><span id="ex:diffex" class="example"><strong>Example 3.2  (Repetitive Differencing) </strong></span>To understand the repetitive nature of the difference operator, consider the case when the number of differences is <span class="math inline">\(k = 2\)</span>:</p>
 <p><span class="math display">\[\begin{aligned}
   {\nabla ^2}{X_t} &amp;= \nabla \left( {\nabla {X_t}} \right) \\
-   &amp;= \nabla \left( {{X_t} - {X_{t - 1}}} \right) \\
+   &amp;= \nabla \left( {{X_t} - {X_{t - 1}}} \right) = \nabla {X_t} - \nabla {X_{t - 1}} \\
    &amp;= \left( {{X_t} - {X_{t - 1}}} \right) - \left( {{X_{t - 1}} - {X_{t - 2}}} \right) \\
    &amp;= {X_t} - 2{X_{t - 1}} + {X_{t - 2}} \\ 
 \end{aligned} \]</span></p>
-<p>Notice that at the end of the process, we are able to transform the differencing operation to rely upon the backshift operator:</p>
+<p>Notice that at the end of the process, we are able to re-express the differencing operation in terms of the backshift operator:</p>
 <span class="math display">\[\begin{aligned}
   {\nabla ^2}{X_t} &amp;= {X_t} - 2{X_{t - 1}} + {X_{t - 2}} = {X_t} - 2B{X_t} + B^2{X_t} \\
    &amp;= \left( {1 - B} \right)\left( {1 - B} \right){X_t} = {\left( {1 - B} \right)^2}{X_t} \\ 
@@ -297,45 +301,46 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <p></p>
 </div>
-<div id="seasonal-differencing-operator" class="section level4">
-<h4><span class="header-section-number">3.1.1.3</span> Seasonal Differencing Operator</h4>
-<p>As discussed previously, the backshift operator has a subtle way of shifting one time period. Trends that exists within time series sometimes span months or even years. Therefore, to remove such a deterministic component, the seasonality will have to be differenced out.</p>
+<div id="seasonal-difference-operator" class="section level4">
+<h4><span class="header-section-number">3.1.1.3</span> Seasonal Difference Operator</h4>
+<p>A specific case of the backshift operator, as highlighted earlier, is the capacity of adapting to seasonal features in the time series. Indeed, there may be trends in the time series that occur over lags of months or even years. In order to remove these trends in the process, a seasonal version of the difference operator can therefore be used.</p>
 
 <div class="definition">
 <p><span id="def:seasonaldiff" class="definition"><strong>Definition 3.4  (Seasonal Difference Operator) </strong></span>The seasonal difference operator can applied by using a seasonal backshift:</p>
-<p><span class="math display">\[{\nabla _s}{X_t} = {X_t} - {X_{t - s}} = \left( {1 - B_s} \right){X_t}\]</span></p>
-<p>As this is a modification of the difference operator, the previously discussed properties associated with the differencing operation largely are the same excluding the differentiation. That is, the seasonal difference operator is generalized such that:</p>
-<p><span class="math display">\[{\nabla ^k_s}{X_t} = {\left( {1 - B_s} \right)^k}{X_t}\]</span></p>
+<p><span class="math display">\[{\nabla _s}{X_t} = \left( {1 - B_s} \right){X_t} = {X_t} - {X_{t - s}} \]</span></p>
+<p>where <span class="math inline">\(s\)</span> denotes the lag at which the seasonal trend occurs. Being a specific case of the difference operator, the previously discussed properties associated with the difference operator generally hold. However, the seasonal difference operator is more specifically represented as follows:</p>
+<p><span class="math display">\[{\nabla ^k_s}{X_t} = {\left( {1 - B_s} \right)^k}{X_t},\]</span></p>
+<p>and therefore can be more complex to apply than a simple difference operator.</p>
 </div>
 <p></p>
 </div>
 </div>
 <div id="linear-processes" class="section level3">
 <h3><span class="header-section-number">3.1.2</span> Linear Processes</h3>
-<p>The models that that have been studied thus far have a common theme that unites them. Underlying each model, there is an input sequence of independent random errors that is mapped to a series of correlated weighted random variables. As only the output <span class="math inline">\(\left\{X_t\right\}\)</span> is observable, the type of process and subsequently weighting must be differentiated during the course of modeling.</p>
+<p>The stationary models considered so far, including the ARMA models treated further on in this chapter, can all be represented as linear processes. Indeed, a linear process is a process that can be represented as an infinite linear combination of independent random variables <span class="math inline">\(\left\{W_t\right\}\)</span> with linear coefficients generally denoted as <span class="math inline">\(\psi_j\)</span>, <span class="math inline">\(j = -\infty,...,+\infty\)</span>. The following figure gives a general idea of how a linear process can be obtained.</p>
 <div class="figure" style="text-align: center"><span id="fig:linearfilter"></span>
-<img src="images/filter/filtering.png" alt="Processing a signal"  />
+<img src="images/filter/filtering.png" alt="Linear process representation"  />
 <p class="caption">
-Figure 3.1: Processing a signal
+Figure 3.1: Linear process representation
 </p>
 </div>
-<p>Recall the Example <a href="stationary.html#ex:exar1">2.6</a> where <em>backsubstitution</em> was used to manipulate an AR(1) model into a condensed series form. From the condensed form, the ability to ascertain whether an <span class="math inline">\(X_t\)</span> existed such that the model had a solution was readily apparent. With the newfound knowledge of the <em>backshift</em> operator, the example is ripe to be revisited.</p>
+<p>To put this definition into context, recall Example <a href="stationary.html#ex:exar1">2.6</a> where <em>backsubstitution</em> was used to represent an AR(1) model as a linear combination of a white noise process <span class="math inline">\(\left\{W_t\right\}\)</span>. Using the <em>backshift</em> operator <span class="math inline">\(B\)</span> defined earlier, we can revisit this example in the following manner:</p>
 <p><span class="math display">\[\begin{aligned}
   {X_t} &amp;= \phi {X_{t - 1}} + {W_t} \\
   {X_t} - \phi {X_{t - 1}} &amp;= {W_t} \\
   \left( {1 - \phi B} \right){X_t} &amp;= {W_t} \\
   {X_t} &amp;= \frac{1}{{1 - \phi B}}{W_t} \\
-   &amp;= \sum\limits_{j = 0}^\infty  {{\phi ^j}{B^j}{W_t}}  = \sum\limits_{j = 0}^\infty  {{\phi ^j}{W_{t - j}}}  \\ 
+   &amp;= \sum\limits_{j = 0}^\infty  {{\phi ^j}{B^j}{W_t}}  = \sum\limits_{j = 0}^\infty  {{\phi ^j}{W_{t - j}}} . \\ 
 \end{aligned} \]</span></p>
-<p>Thus, just as before, there does exist a solution for an AR(1) when <span class="math inline">\(\left|\phi\right| &lt; 1\)</span>. However, there is a specific name for a process that is able to be written in the above form.</p>
+<p>As can be seen, under the condition that <span class="math inline">\(\left|\phi\right| &lt; 1\)</span>, an AR(1) can therefore be represented as a linear process. Given the above discussion and examples, let us now formalize the definition of this class of processes.</p>
 
 <div class="definition">
-<p><span id="def:lp" class="definition"><strong>Definition 3.5  (Linear Process) </strong></span>A time series, <span class="math inline">\(\left\{X_t\right\}\)</span>, is defined to be a linear process if it can be expressed as a linear combination of white noise by:</p>
+<p><span id="def:lp" class="definition"><strong>Definition 3.5  (Linear Process) </strong></span>A time series <span class="math inline">\(\left\{X_t\right\}\)</span> is defined to be a linear process if it can be expressed as a linear combination of white noise by:</p>
 <p><span class="math display">\[{X_t} = \mu + \sum\limits_{j =  - \infty }^\infty  {{\psi _j}{W_{t - j}}} \]</span></p>
 where <span class="math inline">\(W_t \sim WN(0, \sigma^2)\)</span> and <span class="math inline">\(\sum\limits_{j = - \infty }^\infty {\left| {{\psi _j}} \right|} &lt; \infty\)</span>.
 </div>
 <p></p>
-<p>Note, the later assumption is required to ensure that the series has a limit. Furthermore, the set of coefficients <span class="math display">\[{\{ {\psi _j}\} _{j =  - \infty , \cdots ,\infty }}\]</span> can be viewed as linear filter. These coefficients do not have to be all equal nor symmetric as later examples will show.</p>
+<p>Note, the latter assumption (i.e. <span class="math inline">\(\sum\limits_{j = - \infty }^\infty {\left| {{\psi _j}} \right|} &lt; \infty\)</span>) is required to ensure that the series has a limit. Hence, the set of coefficients <span class="math display">\[{\{ {\psi _j}\} _{j =  - \infty , \cdots ,\infty }}\]</span> can be viewed as linear filter that do not have to be all equal nor symmetric as later examples will show.</p>
 
 <div class="theorem">
 <p><span id="thm:lpstat" class="theorem"><strong>Theorem 3.1  (Stationarity of Linear Process) </strong></span>A linear process <span class="math inline">\(\left\{X_t\right\}\)</span> in the form of Definition <a href="linear-operators-and-processes.html#def:lp">3.5</a> is stationary with:</p>
@@ -347,76 +352,70 @@ where <span class="math inline">\(W_t \sim WN(0, \sigma^2)\)</span> and <span cl
 <p></p>
 
 <div class="proof">
-<p><span class="proof"><em>Proof. </em></span> The expectation and autocovariance are able to be obtained immediately given the series converges under <span class="math inline">\(\sum\limits_{j = - \infty }^\infty {\left| {{\psi _j}} \right|} &lt; \infty\)</span>. Therefore, we have for the expectation:</p>
+<p><span class="proof"><em>Proof. </em></span> Given that the series converges under <span class="math inline">\(\sum\limits_{j = - \infty }^\infty {\left| {{\psi _j}} \right|} &lt; \infty\)</span>, the expectation and autocovariance can be computed in a straightforward manner. Indeed, for the expectation we have:</p>
 <p><span class="math display">\[E\left[ {{X_t}} \right] = E\left[ {\mu  + \sum\limits_{j =  - \infty }^\infty  {{\psi _j}{W_{t - j}}} } \right] = \mu  + \sum\limits_{j =  - \infty }^\infty  {{\psi _j}E\left[ {{W_{t - j}}} \right]}  = \mu  + 0 = \mu \]</span></p>
-<p>In addition, the autocovariance is able to be obtained as:</p>
-<p><span class="math display">\[\begin{aligned}
+<p>As for the autocovariance, noting that <span class="math inline">\(\cov\left( {{W_{t + h - j}},{W_{t - i}}} \right) = 0\)</span> for <span class="math inline">\(i \ne j + h\)</span>, we have:</p>
+<span class="math display">\[\begin{aligned}
   \cov \left( {{X_{t + h}},{X_t}} \right) &amp;= \cov \left( {\mu  + \sum\limits_{j =  - \infty }^\infty  {{\psi _j}{W_{t + h - j}}} ,\mu  + \sum\limits_{i =  - \infty }^\infty  {{\psi _i}{W_{t - i}}} } \right) \\
    &amp;= \sum\limits_{j =  - \infty }^\infty  {\sum\limits_{i =  - \infty }^\infty  {{\psi _j}{\psi _i}\cov \left( {{W_{t + h - j}},{W_{t - i}}} \right)} }  = \sum\limits_{j =  - \infty }^\infty  {{\psi _{j + h}}{\psi _j}\cov \left( {{W_t},{W_t}} \right)}  + \sum\limits_{j =  - \infty }^\infty  {\sum\limits_{i =  - \infty }^\infty  {{\psi _j}{\psi _i}\underbrace {\cov \left( {{W_{t + h - j}},{W_{t - i}}} \right)}_{ = 0}} }  \\
-   &amp;= \sigma _W^2\sum\limits_{j =  - \infty }^\infty  {{\psi _j}{\psi _i}}  \\ 
-\end{aligned} \]</span></p>
-Within the above derivation, the key is to realize that <span class="math inline">\(\cov\left( {{W_{t + h - j}},{W_{t - i}}} \right) = 0\)</span> since <span class="math inline">\(i \ne j + h\)</span>.
+   &amp;= \sigma _W^2\sum\limits_{j =  - \infty }^\infty  {{\psi _j}{\psi _i}}.  \\ 
+\end{aligned} \]</span>
 </div>
 <p></p>
 
 <div class="example">
-<p><span id="ex:backshiftlp" class="example"><strong>Example 3.3  (Linear Processes under backshift operator) </strong></span>Linear processes are able to written in a more compact form by utilizing the backshift operator.</p>
-<span class="math display">\[\begin{aligned}
+<p><span id="ex:backshiftlp" class="example"><strong>Example 3.3  (Backshift operators for Linear Processes) </strong></span>A special notation for linear processes based on the backshift operator is as follows:</p>
+<p><span class="math display">\[\begin{aligned}
   {X_t} &amp;= \mu  + \psi \left( B \right){W_t} \\
   \psi \left( B \right) &amp;= \sum\limits_{j = 0}^\infty  {{\psi _j}{B^j}}  \\ 
-\end{aligned} \]</span>
+\end{aligned} \]</span></p>
+This notation allows to define the processes in a more compact form.
 </div>
 <p></p>
 </div>
 <div id="examples-of-linear-processes" class="section level3">
 <h3><span class="header-section-number">3.1.3</span> Examples of Linear Processes</h3>
-<p>Next, let us consider how to represent the previously discussed time series in Section <a href="basicmodels.html#basicmodels">1.3</a> as a linear process. Generally speaking, the work required to transform the time series representation into a linear process rests solely upon the ability to find a set of <span class="math inline">\(\psi_j\)</span>.</p>
+<p>Let us now consider how to represent the time series models discussed in Section <a href="basicmodels.html#basicmodels">1.3</a> as a linear process. Generally speaking, the work required to transform the traditional representation of a time series model into the form of a linear process consists mainly in finding the set of corresponding linear coefficients <span class="math inline">\(\psi_j\)</span> highlighted earlier.</p>
 
 <div class="example">
-<p><span id="ex:lpwn" class="example"><strong>Example 3.4  (Linear Process of White Noise) </strong></span> The white noise process <span class="math inline">\(\left\{X_t\right\}\)</span>, defined in <a href="basicmodels.html#wn">1.3.1</a>, can be expressed as a linear process under:</p>
+<p><span id="ex:lpwn" class="example"><strong>Example 3.4  (White Noise) </strong></span> The representation of white noise process <span class="math inline">\(\left\{X_t\right\}\)</span>, defined in <a href="basicmodels.html#wn">1.3.1</a>, as a linear process is quite straighforward since we have that:</p>
 <p><span class="math display">\[\psi _j = \begin{cases}
       1 , &amp;\mbox{ if } j = 0\\
       0 , &amp;\mbox{ if } |j| \ge 1,
 \end{cases}\]</span></p>
-<p>and <span class="math inline">\(\mu = 0\)</span>.</p>
-Therefore, <span class="math inline">\(X_t = W_t\)</span>, where <span class="math inline">\(W_t \sim WN(0, \sigma^2_W)\)</span>.
+and <span class="math inline">\(\mu = 0\)</span>. Indeed, <span class="math inline">\(X_t = W_t\)</span> with <span class="math inline">\(W_t \sim WN(0, \sigma^2_W)\)</span>, and therefore <span class="math inline">\(\psi_0 = 1\)</span> while the other coefficients are zero.
 </div>
 <p></p>
 
 <div class="example">
-<p><span id="ex:lpma1" class="example"><strong>Example 3.5  (Linear Process of Moving Average Order 1) </strong></span> Similarly, consider <span class="math inline">\(\left\{X_t\right\}\)</span> to be a MA(1) process, given by <a href="basicmodels.html#ma1">1.3.4</a>. The process can be expressed linearly under:</p>
+<p><span id="ex:lpma1" class="example"><strong>Example 3.5  (First Order Moving Average) </strong></span> Consider the MA(1) process <span class="math inline">\(\left\{X_t\right\}\)</span> defined in <a href="basicmodels.html#ma1">1.3.4</a>. The representation of this process as a linear process can be done when defining the coefficients <span class="math inline">\(\psi_j\)</span> as follows:</p>
 <p><span class="math display">\[\psi _j = \begin{cases}
       1, &amp;\mbox{ if } j = 0\\
       \theta , &amp;\mbox{ if } j = 1 \\
       0, &amp;\mbox{ if } j \ge 2,
 \end{cases}\]</span></p>
-<p>and <span class="math inline">\(\mu = 0\)</span>.</p>
-Thus, we have: <span class="math inline">\(X_t = W_t + \theta W_{t-1}\)</span>.
+and <span class="math inline">\(\mu = 0\)</span>. Also in this case, as for the white noise process, the linear representation is directly observable from the traditional representation of the MA(1) process given by <span class="math inline">\(X_t = W_t + \theta W_{t-1}\)</span>. It is in fact easy to see that <span class="math inline">\(\psi_0 = 1\)</span>, <span class="math inline">\(\psi_1 = \theta\)</span> and the others are zero.
 </div>
 <p></p>
 
 <div class="example">
-<p><span id="ex:lpsma" class="example"><strong>Example 3.6  (Linear Process and Symmetric Moving Average) </strong></span> Consider a symmetric moving average given by:</p>
+<p><span id="ex:lpsma" class="example"><strong>Example 3.6  (Symmetric Moving Average) </strong></span> Similarly to the MA(1) process, let us define a symmetric moving average which is given by:</p>
 <p><span class="math display">\[{X_t} = \frac{1}{{2q + 1}}\sum\limits_{j =  - q}^q {{W_{t + j}}} \]</span></p>
-<p>Thus, <span class="math inline">\(\left\{X_t\right\}\)</span> is defined for <span class="math inline">\(q + 1 \le t \le n-q\)</span>. The above process would be a linear process since:</p>
+<p>The process <span class="math inline">\(\left\{X_t\right\}\)</span> is therefore defined for <span class="math inline">\(q + 1 \le t \le n-q\)</span> and can also be represented as a linear process since:</p>
 <p><span class="math display">\[\psi _j = \begin{cases}
       \frac{1}{{2q + 1}} , &amp;\mbox{ if } -q \le j \le q\\
       0 , &amp;\mbox{ if } |j| &gt; q.
 \end{cases}\]</span></p>
-<p>and <span class="math inline">\(\mu = 0\)</span>.</p>
-<p>In practice, if <span class="math inline">\(q = 1\)</span>, we would have:</p>
-<span class="math display">\[{X_t} = \frac{1}{3}\left( {{W_{t - 1}} + {W_t} + {W_{t + 1}}} \right).\]</span>
+and <span class="math inline">\(\mu = 0\)</span>.
 </div>
 <p></p>
 
 <div class="example">
-<p><span id="ex:lpar1" class="example"><strong>Example 3.7  (Linear Process of Autoregressive Process of Order 1) </strong></span>A more intensive application of a linear process is <span class="math inline">\(\left\{X_t\right\}\)</span> as an AR1 process, defined in <a href="basicmodels.html#ar1">1.3.3</a>. The intensity comes from the necessity to define the weights with respect to the time lag.</p>
+<p><span id="ex:lpar1" class="example"><strong>Example 3.7  (First Order Autoregressive Process) </strong></span>A slightly less intuitive approach would be to represent an AR(1) process as a linear process. To do so, let <span class="math inline">\(\left\{X_t\right\}\)</span> in this case represent an AR(1) process, defined in <a href="basicmodels.html#ar1">1.3.3</a> as being <span class="math inline">\(X_t = \phi X_{t-1} + W_t\)</span>, with <span class="math inline">\(\left| \phi \right| &lt; 1\)</span>. If we use a first-step backsubsitution, from this we obtain that <span class="math inline">\(X_t = \phi^2 X_{t-2} + \phi W_{t-1} + W_t\)</span> and, by doing so recursively and using convergence results based on the value of <span class="math inline">\(\phi\)</span>, this process can indeed be represented as a linear process by defining the coefficients <span class="math inline">\(\psi_j\)</span> as:</p>
 <p><span class="math display">\[\psi _j = \begin{cases}
       \phi^j , &amp;\mbox{ if } j \ge 0\\
-      0 , &amp;\mbox{ if } j &lt; 0,
+      0 , &amp;\mbox{ if } j &lt; 0.
 \end{cases}\]</span></p>
-<p>and <span class="math inline">\(\mu = 0\)</span>.</p>
-Under the condition that <span class="math inline">\(\left| \phi \right| &lt; 1\)</span> the process can be considered to be the traditional <span class="math inline">\(X_t = \phi X_{t-1} + W_t\)</span>.
 </div>
 <p></p>
 </div>
